@@ -10,12 +10,12 @@ export const addUser = (req, res, next) => {
 //     imageUrl: imageUrl,
 //     userId: req.user,
 //   });
-//   user
+  user
 //     .save()
-//     .then((result) => {
-//       // console.log(result);
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
+     .then((result) => {
+        console.log(result);
+    })
+    .catch((err) => {
+       console.log(err);
+     });
 };
