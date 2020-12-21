@@ -1,5 +1,7 @@
-const express = require('express')
-const app = express()
-app.listen(3400, function()
-{console.log(`Server is listening on port 3400`)})
-module.exports = app;
+import express from "express";
+import { Database } from "./database";
+const app = express();
+Database.connect(
+  "mongodb+srv://mariam:0NOXKwlCOSuLEGiz@cluster0.4vd1w.mongodb.net/mean-stack-cms?retryWrites=true&w=majority",
+  3000
+);
