@@ -1,5 +1,5 @@
 import express from "express";
-import authMiddleware from "../middlewares/authMiddleware";
+import authMiddleware from "../middlewares/authentication";
 import {
   register,
   login,
@@ -17,7 +17,7 @@ const router = express.Router();
 
 router.post("/register", registerValidator, validationHandler, register);
 router.post("/login", loginValidator, validationHandler, login);
-router.get("/forgot-password/:userEmail", authMiddleware, forgotPassword);
+router.get("/forgot-password/:userEmail", forgotPassword);
 router.put("/forgot-password/:userEmail", resetPassword);
 
 export default router;
