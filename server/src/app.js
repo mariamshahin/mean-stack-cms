@@ -1,25 +1,10 @@
-import express from "express";
-import bodyParser from "body-parser";
+import ExpressLoader from "./loaders/Express";
 import { Database } from "./database";
-import user from "./routes/api/user";
 
-const app = express();
+const expressApp = new ExpressLoader();
 
-app.use(bodyParser.json());
-
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "OPTIONS, GET, POST, PUT, PATCH, DELETE"
-  );
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
-});
-
-app.use(user);
+expressApp.Server();
 
 Database.connect(
-  "mongodb+srv://mariam:0NOXKwlCOSuLEGiz@cluster0.4vd1w.mongodb.net/mean-stack-cms?retryWrites=true&w=majority",
-  3000
+  "mongodb+srv://mariam:0NOXKwlCOSuLEGiz@cluster0.4vd1w.mongodb.net/mean-stack-cms?retryWrites=true&w=majority"
 );
