@@ -1,19 +1,19 @@
 import mongoose from "mongoose";
-import express from "express";
-const app = express();
+import logger from "./services/LoggerService";
 
 export class Database {
   constructor() {}
 
-  static connect(uri, port) {
+  static connect(uri) {
     mongoose
       .connect(uri)
-      .then((result) => {
-        console.log("DB connected");
-        app.listen(port);
+      .then(() => {
+        console.log("Database connected")
+        logger.info("Database connection successful");
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
+        logger.error(err);
       });
   }
 }

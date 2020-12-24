@@ -1,35 +1,85 @@
 {
-  "variables": [
-    {
-      "key": "$host",
-      "value": "http://localhost:3000"
-    }
-  ],
   "info": {
     "name": "API Postman Collection",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
-  "folder": {
-    "name": "users",
-    "item": [
-      {
-        "name": "add user",
-        "request": {
-          "url": "$host/users",
-          "method": "POST",
-          "header": [
-            {
-              "key": "Content-Type",
-              "value": "application/json"
+  "item": [
+    {
+      "name": "Auth",
+      "description": "Users Authentication",
+      "variable": [
+        {
+          "key": "groub_route",
+          "value": "auth",
+          "type": "string"
+        }
+      ],
+      "item": [
+        {
+          "name": "register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/{{groub_route}}/register",
+              "host": ["{{base_url}}"],
+              "path": ["{{groub_route}}", "login"]
+            },
+            "body": {
+              "formdata": [
+                { "key": "username" },
+                { "key": "email" },
+                { "key": "password" },
+                { "key": "confirm_password" },
+                { "key": "first_name" },
+                { "key": "last_name" },
+                { "key": "summary" }
+              ]
             }
-          ],
-          "body": {
-            "mode": "raw",
-            "raw": "{\"text\":\"Duis posuere augue vel cursus pharetra. In luctus a ex nec pretium...\"}"
-          },
-          "description": ""
+          }
         },
-        "response": []
+        {
+          "name": "login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/{{groub_route}}/login",
+              "host": ["{{base_url}}"],
+              "path": ["{{groub_route}}", "register"]
+            },
+            "body": {
+              "formdata": [{ "key": "email" }, { "key": "password" }]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "access_token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "accessToken",
+        "value": "{{access_token}}",
+        "type": "string"
+      },
+      {
+        "key": "addTokenTo",
+        "value": "header",
+        "type": "string"
       }
     ]
   }

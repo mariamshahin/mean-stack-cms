@@ -9,32 +9,30 @@ const userSchema = new Schema({
   },
   email: {
     type: String,
-    required: true,
+   required: true,
   },
   password: {
     type: String,
     required: true,
     minLength: 6,
   },
+  role: {
+    type: String,
+  },
   first_name: {
     type: String,
   },
   last_name: {
     type: String,
-    required: true,
   },
   summary: {
     type: String,
   },
-  //   photo: {
+  //   image: {
   //     type: String,
   //     required: true,
   //   },
-  userId: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
+  
 });
 
 export default mongoose.model("User", userSchema);
