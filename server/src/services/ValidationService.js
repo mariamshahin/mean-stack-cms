@@ -1,6 +1,6 @@
-import { body } from "express-validator";
+import { body } from 'express-validator';
 
-import User from "../models/user";
+import User from '../models/user';
 
 export const required = (val) => body(val).trim().not().isEmpty();
 
@@ -14,7 +14,7 @@ export const registerEmail = (val) =>
     .custom((value) => {
       return User.findOne({ email: value }).then((userDoc) => {
         if (userDoc) {
-          return Promise.reject("email address already exists!");
+          return Promise.reject('email address already exists!');
         }
       });
     })
@@ -27,7 +27,7 @@ export const requiredPassword = (val) => body(val).trim().isLength({ min: 6 });
 export const confirmPassword = (val) =>
   body(val).custom((value, { req, loc, path }) => {
     if (value !== req.body.password) {
-      throw new Error("Invalid value");
+      throw new Error('Invalid value');
     } else {
       return value;
     }

@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import logger from "./services/LoggerService";
+import mongoose from 'mongoose';
+import logger from './services/LoggerService';
 
 export class Database {
   constructor() {}
@@ -8,8 +8,8 @@ export class Database {
     mongoose
       .connect(uri)
       .then(() => {
-        console.log("Database connected")
-        logger.info("Database connection successful");
+        console.log('Database connected');
+        logger.info('Database connection successful');
       })
       .catch((err) => {
         console.error(err);

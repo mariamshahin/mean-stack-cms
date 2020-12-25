@@ -1,4 +1,4 @@
-import User from "../models/user";
+import User from '../models/user';
 
 export const getAll = async (req, res, next) => {
   try {
@@ -28,7 +28,7 @@ export const getOne = (req, res, next) => {
     User.findById(userId)
       .then((user) => {
         if (!user) {
-          const error = new Error("User not found.");
+          const error = new Error('User not found.');
           error.statusCode = 404;
           throw error;
         }
@@ -43,7 +43,7 @@ export const getOne = (req, res, next) => {
         res.status(err.statusCode).json({ error: err });
       });
   } else {
-    res.status(422).json({ message: "Invalid id" });
+    res.status(422).json({ message: 'Invalid id' });
   }
 };
 
@@ -53,12 +53,12 @@ export const deleteOne = (req, res, next) => {
     User.findByIdAndDelete(userId)
       .then((user) => {
         if (!user) {
-          const error = new Error("User not found.");
+          const error = new Error('User not found.');
           error.statusCode = 404;
           throw error;
         }
         console.log(user);
-        res.status(200).json({ message: "User deleted successfully!" });
+        res.status(200).json({ message: 'User deleted successfully!' });
       })
       .catch((err) => {
         console.log(err);
@@ -68,6 +68,6 @@ export const deleteOne = (req, res, next) => {
         res.status(err.statusCode).json({ error: err });
       });
   } else {
-    res.status(422).json({ message: "Invalid id" });
+    res.status(422).json({ message: 'Invalid id' });
   }
 };

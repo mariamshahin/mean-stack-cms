@@ -1,6 +1,6 @@
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import User from "../models/user";
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import User from '../models/user';
 
 export const register = (req, res, next) => {
   const {
@@ -18,7 +18,7 @@ export const register = (req, res, next) => {
         username,
         email,
         password: hashedPw,
-        role: "subscriber",
+        role: 'subscriber',
         first_name,
         last_name,
         summary,
@@ -26,7 +26,9 @@ export const register = (req, res, next) => {
       return user.save();
     })
     .then((result) => {
-      res.status(200).json({ message: "User created successfully!", userId: result._id });
+      res
+        .status(200)
+        .json({ message: 'User created successfully!', userId: result._id });
       console.log(result);
     })
     .catch((err) => {
@@ -41,7 +43,7 @@ export const login = (req, res, next) => {
   User.findOne({ email: email })
     .then((user) => {
       if (!user) {
-        const error = new Error("User not found!");
+        const error = new Error('User not found!');
         error.statusCode = 404;
         throw error;
       }
@@ -50,7 +52,7 @@ export const login = (req, res, next) => {
     })
     .then((isEqual) => {
       if (!isEqual) {
-        const error = new Error("Wrong password!");
+        const error = new Error('Wrong password!');
         error.statusCode = 401;
         throw error;
       }
@@ -59,7 +61,7 @@ export const login = (req, res, next) => {
           email: loadedUser.email,
           userId: loadedUser._id.toString(),
         },
-        "somesuperprivatesecret"
+        'somesuperprivatesecret'
       );
       res.status(200).json({
         token: token,
@@ -84,10 +86,10 @@ export const login = (req, res, next) => {
 
 export const forgotPassword = (req, res, next) => {
   console.log(req);
-  res.json({ message: "forgotPassword!" });
+  res.json({ message: 'forgotPassword!' });
 };
 
 export const resetPassword = (req, res, next) => {
   console.log(req);
-  res.json({ message: "resetPassword!" });
+  res.json({ message: 'resetPassword!' });
 };

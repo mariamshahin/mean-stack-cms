@@ -1,2 +1,2 @@
-export { default as validationHandler } from "./errorHandler";
-export { registerValidator, loginValidator } from "./authValidator";
+export { default as validationHandler } from './errorHandler';
+export { registerValidator, loginValidator } from './authValidator';

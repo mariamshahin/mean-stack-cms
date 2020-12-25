@@ -1,14 +1,14 @@
-import express from "express";
-import cors from "cors";
-import bodyParser from "body-parser";
-import multer from "multer";
-import compression from "compression";
-import morgan from "morgan";
-import logger from "../services/LoggerService";
+import express from 'express';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import multer from 'multer';
+import compression from 'compression';
+import morgan from 'morgan';
+import logger from '../services/LoggerService';
 //const path = require( "path" );
 //const config = require( "../config" );
 
-import routes from "../routes";
+import routes from '../routes';
 
 export default class ExpressLoader {
   constructor() {
@@ -19,7 +19,7 @@ export default class ExpressLoader {
     // app.use( express.static( path.join( __dirname, "uploads" ) ) );
 
     // Set up middleware
-    app.use(morgan("dev"));
+    app.use(morgan('dev'));
     app.use(compression());
     app.use(cors());
     app.use(bodyParser.json());
@@ -55,7 +55,7 @@ export default class ExpressLoader {
 
     // Attempt to gracefully parse error object
     try {
-      if (error && typeof error === "object") {
+      if (error && typeof error === 'object') {
         parsedError = JSON.stringify(error);
       } else {
         parsedError = error;
