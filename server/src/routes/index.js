@@ -1,4 +1,5 @@
 import auth from "./auth";
+import users from "./users";
 
 export default (app) => {
   // app.use( ( req, res, next ) => {
@@ -17,4 +18,5 @@ export default (app) => {
   // } );
 
   app.use("/auth", auth);
+  app.use("/users", users);
 };

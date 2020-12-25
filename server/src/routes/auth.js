@@ -10,8 +10,8 @@ import {
 import {
   registerValidator,
   loginValidator,
-} from "../middlewares/validators/authValidator";
-import validationHandler from "../middlewares/validators/errorHandler";
+  validationHandler
+} from "../middlewares/validators";
 
 const router = express.Router();
 
