@@ -33,8 +33,8 @@ export default class ExpressLoader {
     app.use(ExpressLoader.errorHandler);
 
     // Start application
-    this.server = app.listen(3000, () => {
-      logger.info(`Express running, now listening on port ${3000}`);
+    this.server = app.listen(process.env.PORT, () => {
+      logger.info(`Express running, now listening on port ${process.env.PORT}`);
     });
   }
 

@@ -61,7 +61,8 @@ export const login = (req, res, next) => {
           email: loadedUser.email,
           userId: loadedUser._id.toString(),
         },
-        'somesuperprivatesecret'
+        process.env.AUTH_SECRET_KEY,
+        { expiresIn: '7d' }
       );
       res.status(200).json({
         token: token,

@@ -1,4 +1,5 @@
 import User from '../models/user';
+import { checkId } from '../utils/constants';
 
 export const getAll = async (req, res, next) => {
   try {
@@ -24,7 +25,7 @@ export const getAll = async (req, res, next) => {
 
 export const getOne = (req, res, next) => {
   const userId = req.params.id;
-  if (userId.match(/^[0-9a-fA-F]{24}$/)) {
+  if (checkId(userId)) {
     User.findById(userId)
       .then((user) => {
         if (!user) {
@@ -49,7 +50,7 @@ export const getOne = (req, res, next) => {
 
 export const deleteOne = (req, res, next) => {
   const userId = req.params.id;
-  if (userId.match(/^[0-9a-fA-F]{24}$/)) {
+  if (checkId(userId)) {
     User.findByIdAndDelete(userId)
       .then((user) => {
         if (!user) {

@@ -6,7 +6,7 @@ import {
   requiredPassword,
   confirmPassword,
   loginEmail,
-} from '../../services/ValidationService';
+} from '../../utils/validation';
 
 export const registerValidator = [
   required('username'),
