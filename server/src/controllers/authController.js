@@ -26,7 +26,7 @@ export const register = (req, res, next) => {
       return user.save();
     })
     .then((result) => {
-      res.status(200).json({ message: "User created!", userId: result._id });
+      res.status(200).json({ message: "User created successfully!", userId: result._id });
       console.log(result);
     })
     .catch((err) => {
