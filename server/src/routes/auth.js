@@ -17,7 +17,7 @@ const router = express.Router();
 
 router.post('/register', registerValidator, validationHandler, register);
 router.post('/login', loginValidator, validationHandler, login);
-router.get('/forgot-password/:userEmail', forgotPassword);
+router.get('/forgot-password/:userEmail', authMiddleware, forgotPassword);
 router.put('/forgot-password/:userEmail', resetPassword);
 
 export default router;
