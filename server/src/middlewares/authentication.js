@@ -12,7 +12,9 @@ export default (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (authHeader) {
     const token = authHeader.split(' ')[1];
-    jwt.verify(token, 'somesuperprivatesecret', (err, user) => {
+    console.log(process.env.AUTH_SECRET_KEY);
+
+    jwt.verify(token, process.env.AUTH_SECRET_KEY, (err, user) => {
       if (err) {
         return res.sendStatus(401);
       }
