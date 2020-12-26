@@ -1,5 +1,5 @@
 import User from '../models/user';
-import { checkId } from '../utils/constants';
+import { checkId } from '../utils/utility';
 
 export const getAll = async (req, res, next) => {
   try {
