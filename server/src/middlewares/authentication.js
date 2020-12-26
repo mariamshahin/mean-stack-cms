@@ -12,8 +12,6 @@ export default (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (authHeader) {
     const token = authHeader.split(' ')[1];
-    console.log(process.env.AUTH_SECRET_KEY);
-
     jwt.verify(token, process.env.AUTH_SECRET_KEY, (err, user) => {
       if (err) {
         return res.sendStatus(401);
@@ -24,15 +22,15 @@ export default (req, res, next) => {
         .then((user) => {
           if (user) {
             req.user = user;
-            next();
+            return next();
           }
-          return res.sendStatus(401);
+          res.sendStatus(401);
         })
         .catch((error) => {
           res.status(500).json({ error });
         });
     });
   } else {
-    res.sendStatus(401);
+    return res.sendStatus(401);
   }
 };

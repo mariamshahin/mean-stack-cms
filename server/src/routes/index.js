@@ -1,5 +1,6 @@
 import auth from './auth';
 import users from './users';
+import posts from './posts';
 
 export default (app) => {
   // app.use( ( req, res, next ) => {
@@ -19,4 +20,5 @@ export default (app) => {
 
   app.use('/auth', auth);
   app.use('/users', users);
+  app.use('/posts', posts);
 };
