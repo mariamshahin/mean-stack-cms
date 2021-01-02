@@ -26,7 +26,7 @@ router.post(
   createOne
 );
 router.get('/', getAll);
-router.get('/:id', idValidator, validationHandler, getOne);
+router.get('/:id', idValidator(), validationHandler, getOne);
 router.put(
   '/:id',
   authMiddleware,
