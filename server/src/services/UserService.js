@@ -42,9 +42,8 @@ export default class UserService extends Mongoose {
           process.env.AUTH_SECRET_KEY,
           { expiresIn: '7d' }
         );
-        result = { token, ...user };
-        result.password = undefined;
-        return result;
+        user.password = undefined;
+        result = { token, user };
       }
       return { user, matchPw, result };
     } catch (error) {
