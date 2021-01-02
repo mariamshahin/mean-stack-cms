@@ -67,6 +67,7 @@ export default class UserService extends Mongoose {
   async getUser(id) {
     try {
       const result = await this.findById(id);
+      console.log(result);
       return { result };
     } catch (error) {
       return { error };
