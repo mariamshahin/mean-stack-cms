@@ -29,13 +29,13 @@ export const getAll = async (req, res) => {
 export const getOne = async (req, res) => {
   const { id } = req.params;
   const { result, error } = await postService.getPost(id);
+  if (error) {
+    return res.status(500).json({ error: error.message });
+  }
   if (!result) {
     return res.status(404).json({
       message: 'Post not found.',
     });
-  }
-  if (error) {
-    return res.status(500).json({ error: error.message });
   }
   return res.status(200).json({
     data: result,
@@ -44,13 +44,13 @@ export const getOne = async (req, res) => {
 
 export const updateOne = async (req, res) => {
   const { result, error } = await postService.updatePost(req.body);
+  if (error) {
+    return res.status(500).json({ error: error.message });
+  }
   if (!result) {
     return res.status(404).json({
       message: 'Post not found.',
     });
-  }
-  if (error) {
-    return res.status(500).json({ error: error.message });
   }
   return res.status(200).json({
     message: 'Post updated successfully!',
@@ -60,13 +60,13 @@ export const updateOne = async (req, res) => {
 export const deleteOne = async (req, res) => {
   const { id } = req.params;
   const { result, error } = await postService.deletePost(id);
+  if (error) {
+    return res.status(500).json({ error: error.message });
+  }
   if (!result) {
     return res.status(404).json({
       message: 'Post not found.',
     });
-  }
-  if (error) {
-    return res.status(500).json({ error: error.message });
   }
   return res.status(200).json({
     message: 'Post deleted successfully!',
