@@ -1,4 +1,4 @@
-import { body } from 'express-validator';
+import { check, body } from 'express-validator';
 
 import User from '../models/user';
 
@@ -28,6 +28,15 @@ export const confirmPassword = (val) =>
   body(val).custom((value, { req, loc, path }) => {
     if (value !== req.body.password) {
       throw new Error('Invalid value');
+    } else {
+      return value;
+    }
+  });
+
+export const checkId = (val) =>
+  check(val).custom((value, { req, loc, path }) => {
+    if (!value.match(/^[0-9a-fA-F]{24}$/)) {
+      throw new Error('Invalid id');
     } else {
       return value;
     }

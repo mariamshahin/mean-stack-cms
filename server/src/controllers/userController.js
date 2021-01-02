@@ -1,74 +1,47 @@
 import User from '../models/user';
-import { checkId } from '../utils/utility';
 
-export const getAll = async (req, res, next) => {
-  try {
-    const fetchedUsers = await User.find();
-    const users = fetchedUsers.map((user) => {
-      return {
-        id: user._id,
-        username: user.username,
-        email: user.email,
-        role: user.role,
-      };
+import UserService from '../services/UserService';
+
+const userService = new UserService(User);
+
+export const getAll = async (req, res) => {
+  const { result, error } = await userService.getAllUsers();
+  if (result) {
+    return res.status(200).json({
+      data: result,
     });
-    res.status(200).json({
-      users,
-    });
-  } catch (error) {
-    if (!err.statusCode) {
-      err.statusCode = 500;
-    }
-    next(err);
   }
+  return res.status(500).json({ error: error.message });
 };
 
-export const getOne = (req, res, next) => {
-  const userId = req.params.id;
-  if (checkId(userId)) {
-    User.findById(userId)
-      .then((user) => {
-        if (!user) {
-          const error = new Error('User not found.');
-          error.statusCode = 404;
-          throw error;
-        }
-        console.log(user);
-        res.status(200).json({ user: user });
-      })
-      .catch((err) => {
-        console.log(err);
-        if (!err.statusCode) {
-          err.statusCode = 500;
-        }
-        res.status(err.statusCode).json({ error: err });
-      });
-  } else {
-    res.status(422).json({ message: 'Invalid id' });
+export const getOne = async (req, res) => {
+  const { id } = req.params;
+  const { result, error } = await userService.getUser(id);
+  if (!result) {
+    return res.status(404).json({
+      message: 'User not found.',
+    });
   }
+  if (error) {
+    return res.status(500).json({ error: error.message });
+  }
+  return res.status(200).json({
+    data: result,
+  });
 };
 
-export const deleteOne = (req, res, next) => {
-  const userId = req.params.id;
-  if (checkId(userId)) {
-    User.findByIdAndDelete(userId)
-      .then((user) => {
-        if (!user) {
-          const error = new Error('User not found.');
-          error.statusCode = 404;
-          throw error;
-        }
-        console.log(user);
-        res.status(200).json({ message: 'User deleted successfully!' });
-      })
-      .catch((err) => {
-        console.log(err);
-        if (!err.statusCode) {
-          err.statusCode = 500;
-        }
-        res.status(err.statusCode).json({ error: err });
-      });
-  } else {
-    res.status(422).json({ message: 'Invalid id' });
+export const deleteOne = async (req, res) => {
+  const { id } = req.params;
+  const { result, error } = await userService.deleteUser(id);
+  if (!result) {
+    return res.status(404).json({
+      message: 'User not found.',
+    });
   }
+  if (error) {
+    return res.status(500).json({ error: error.message });
+  }
+  return res.status(200).json({
+    message: 'User deleted successfully!',
+  });
 };
