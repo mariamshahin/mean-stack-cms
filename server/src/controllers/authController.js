@@ -18,6 +18,9 @@ export const login = async (req, res) => {
   const { user, matchPw, result, error } = await userService.AuthenticateUser(
     req.body
   );
+  if (error) {
+    return res.status(500).json({ error: error.message });
+  }
   if (!user) {
     return res.status(404).json({
       message: 'User not found!',
@@ -28,12 +31,9 @@ export const login = async (req, res) => {
       message: 'Incorrect user credentials!',
     });
   }
-  if (result) {
-    return res.status(200).json({
-      data: result,
-    });
-  }
-  return res.status(500).json({ error: error.message });
+  return res.status(200).json({
+    data: result,
+  });
 };
 
 export const forgotPassword = (req, res, next) => {

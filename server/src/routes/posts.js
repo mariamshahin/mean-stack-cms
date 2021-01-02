@@ -26,12 +26,12 @@ router.post(
   createOne
 );
 router.get('/', getAll);
-router.get('/:id', idValidator, validationHandler, getOne);
+router.get('/:id', idValidator(), validationHandler, getOne);
 router.put(
   '/:id',
   authMiddleware,
   authorization(roles.ADMIN, roles.EDITOR, roles.AUTHOR),
-  idValidator,
+  idValidator(),
   validationHandler,
   updateOne
 );
@@ -39,7 +39,7 @@ router.delete(
   '/:id',
   authMiddleware,
   authorization(roles.ADMIN, roles.EDITOR, roles.AUTHOR),
-  idValidator,
+  idValidator(),
   validationHandler,
   deleteOne
 );

@@ -34,10 +34,9 @@ export const confirmPassword = (val) =>
   });
 
 export const checkId = (val) =>
-  check(val).custom((value, { req, loc, path }) => {
+  check(val).custom((value) => {
     if (!value.match(/^[0-9a-fA-F]{24}$/)) {
       throw new Error('Invalid id');
-    } else {
-      return value;
     }
+    return value;
   });

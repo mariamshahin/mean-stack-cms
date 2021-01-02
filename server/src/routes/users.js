@@ -7,17 +7,12 @@ import { getAll, getOne, deleteOne } from '../controllers/userController';
 
 const router = express.Router();
 
-router.get(
-  '/',
-  //authMiddleware,
-  //authorization(roles.ADMIN),
-  getAll
-);
+router.get('/', authMiddleware, authorization(roles.ADMIN), getAll);
 router.get(
   '/:id',
   authMiddleware,
   authorization(roles.ADMIN),
-  idValidator,
+  idValidator(),
   validationHandler,
   getOne
 );
@@ -25,7 +20,7 @@ router.delete(
   '/:id',
   authMiddleware,
   authorization(roles.ADMIN),
-  idValidator,
+  idValidator(),
   validationHandler,
   deleteOne
 );

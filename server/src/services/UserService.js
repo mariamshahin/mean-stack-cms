@@ -8,6 +8,12 @@ export default class UserService extends Mongoose {
     super(model);
   }
 
+  deletePw(user) {
+    const updatedUser = { ...user._doc };
+    delete updatedUser.password;
+    return updatedUser;
+  }
+
   async createUser(body) {
     const { username, email, password, first_name, last_name, summary } = body;
     try {
@@ -42,9 +48,8 @@ export default class UserService extends Mongoose {
           process.env.AUTH_SECRET_KEY,
           { expiresIn: '7d' }
         );
-        result = { token, ...user };
-        result.password = undefined;
-        return result;
+        user.password = undefined;
+        result = { token, user };
       }
       return { user, matchPw, result };
     } catch (error) {
@@ -55,10 +60,7 @@ export default class UserService extends Mongoose {
   async getAllUsers() {
     try {
       const users = await this.findAll();
-      const result = users.map((user) => {
-        user.password = undefined;
-        return user;
-      });
+      const result = users.map((user) => this.deletePw(user));
       return { result };
     } catch (error) {
       return { error };
@@ -67,7 +69,8 @@ export default class UserService extends Mongoose {
 
   async getUser(id) {
     try {
-      const result = await this.findById(id);
+      const user = await this.findById(id);
+      const result = this.deletePw(user);
       return { result };
     } catch (error) {
       return { error };
