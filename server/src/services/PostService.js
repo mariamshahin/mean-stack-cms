@@ -6,7 +6,9 @@ export default class PostService extends Mongoose {
   }
 
   async createPost(body) {
-    const { title, content, user_id } = body;
+    const { user, post } = body;
+    const { title, content } = post;
+    const user_id = user._id;
     try {
       const result = await this.create({ title, content, user_id });
       return { result };
@@ -33,10 +35,12 @@ export default class PostService extends Mongoose {
     }
   }
 
-  async updatePost(body) {
-    const { title, content, user_id } = body;
+  async updatePost(id, body) {
+    const { user, post } = body;
+    const user_id = user._id;
+    const { title, content } = post;
     try {
-      const result = await this.update({ title, content, user_id });
+      const result = await this.update(id, { title, content, user_id });
       return { result };
     } catch (error) {
       return { error };

@@ -6,7 +6,10 @@ import PostService from '../services/PostService';
 const postService = new PostService(Post);
 
 export const createOne = async (req, res) => {
-  const { result, error } = await postService.createPost(req.body);
+  const { result, error } = await postService.createPost({
+    user: req.user,
+    post: req.body,
+  });
   if (result) {
     return res.status(200).json({
       message: 'Post created successfully!',
@@ -43,7 +46,15 @@ export const getOne = async (req, res) => {
 };
 
 export const updateOne = async (req, res) => {
-  const { result, error } = await postService.updatePost(req.body);
+  console.log(
+    '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!',
+    req.user
+  );
+  const { id } = req.params;
+  const { result, error } = await postService.updatePost(id, {
+    user: req.user,
+    post: req.body,
+  });
   if (error) {
     return res.status(500).json({ error: error.message });
   }

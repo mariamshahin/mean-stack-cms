@@ -3,6 +3,7 @@ import authMiddleware from '../middlewares/authentication';
 import authorization from '../middlewares/authorization';
 import {
   createPostValidator,
+  updatePostValidator,
   idValidator,
   validationHandler,
 } from '../middlewares/validators';
@@ -31,7 +32,7 @@ router.put(
   '/:id',
   authMiddleware,
   authorization(roles.ADMIN, roles.EDITOR, roles.AUTHOR),
-  idValidator(),
+  updatePostValidator,
   validationHandler,
   updateOne
 );
