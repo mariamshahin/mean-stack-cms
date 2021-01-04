@@ -7,6 +7,8 @@ export const required = (val) => body(val).trim().not().isEmpty();
 export const optionalString = (val) =>
   body(val).if(body(val).not().isEmpty()).isString().trim();
 
+export const minLength = (val, min) => body(val).trim().isLength({ min });
+
 export const registerEmail = (val) =>
   body(val)
     .isEmail()

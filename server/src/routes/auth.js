@@ -1,12 +1,6 @@
 import express from 'express';
 import authMiddleware from '../middlewares/authentication';
-import {
-  register,
-  login,
-  forgotPassword,
-  resetPassword,
-} from '../controllers/authController';
-
+import AuthController from '../controllers/AuthController';
 import {
   registerValidator,
   loginValidator,
@@ -14,6 +8,7 @@ import {
 } from '../middlewares/validators';
 
 const router = express.Router();
+const { register, login, forgotPassword, resetPassword } = new AuthController();
 
 router.post('/register', registerValidator, validationHandler, register);
 router.post('/login', loginValidator, validationHandler, login);

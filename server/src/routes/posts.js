@@ -3,19 +3,22 @@ import authMiddleware from '../middlewares/authentication';
 import authorization from '../middlewares/authorization';
 import {
   createPostValidator,
+  updatePostValidator,
   idValidator,
   validationHandler,
 } from '../middlewares/validators';
 import { roles } from '../utils/constants';
-import {
+import PostController from '../controllers/PostController';
+
+const router = express.Router();
+
+const {
   createOne,
   getAll,
   getOne,
   updateOne,
   deleteOne,
-} from '../controllers/postController';
-
-const router = express.Router();
+} = new PostController();
 
 router.post(
   '/',
@@ -31,7 +34,7 @@ router.put(
   '/:id',
   authMiddleware,
   authorization(roles.ADMIN, roles.EDITOR, roles.AUTHOR),
-  idValidator(),
+  updatePostValidator,
   validationHandler,
   updateOne
 );
