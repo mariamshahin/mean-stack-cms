@@ -3,9 +3,11 @@ import authMiddleware from '../middlewares/authentication';
 import authorization from '../middlewares/authorization';
 import { idValidator, validationHandler } from '../middlewares/validators';
 import { roles } from '../utils/constants';
-import { getAll, getOne, deleteOne } from '../controllers/userController';
+import UserController from '../controllers/UserController';
 
 const router = express.Router();
+
+const { getAll, getOne, deleteOne } = new UserController();
 
 router.get('/', authMiddleware, authorization(roles.ADMIN), getAll);
 router.get(

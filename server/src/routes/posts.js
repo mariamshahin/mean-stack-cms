@@ -8,15 +8,17 @@ import {
   validationHandler,
 } from '../middlewares/validators';
 import { roles } from '../utils/constants';
-import {
+import PostController from '../controllers/PostController';
+
+const router = express.Router();
+
+const {
   createOne,
   getAll,
   getOne,
   updateOne,
   deleteOne,
-} from '../controllers/postController';
-
-const router = express.Router();
+} = new PostController();
 
 router.post(
   '/',

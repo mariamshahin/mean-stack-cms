@@ -13,6 +13,7 @@ export default class PostService extends Mongoose {
       const result = await this.create({ title, content, user_id });
       return { result };
     } catch (error) {
+      console.log(error);
       return { error };
     }
   }
