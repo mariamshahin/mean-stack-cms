@@ -5,3 +5,7 @@ export { default as validationHandler } from './errorHandler';
 export { registerValidator, loginValidator } from './authValidator';
 export { createPostValidator, updatePostValidator } from './postValidator';
 export { createDraftValidator, updateDraftValidator } from './draftValidator';
+export {
+  createCommentValidator,
+  updateCommentValidator,
+} from './commentValidator';

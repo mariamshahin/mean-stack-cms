@@ -36,8 +36,17 @@ export default class MongooseService {
   }
 
   /**
+   * @description Retrieve all documents matching the provided keys, from the Model
+   * @param obj {object} Required: key and value for the object to retrieve
+   * @returns {Promise} Returns the results of the query
+   */
+  find(obj) {
+    return this.model.find(obj).exec();
+  }
+
+  /**
    * @description Retrieve a single document matching the provided keys, from the Model
-   * @param id {object} Required: key and value for the object to retrieve
+   * @param obj {object} Required: key and value for the object to retrieve
    * @returns {Promise} Returns the results of the query
    */
   findOne(obj) {

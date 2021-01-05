@@ -4,7 +4,7 @@ import {
   registerEmail,
   requiredPassword,
   confirmPassword,
-  loginEmail,
+  requiredEmail,
 } from '../../utils/validation';
 
 export const registerValidator = [
@@ -18,6 +18,6 @@ export const registerValidator = [
 ];
 
 export const loginValidator = [
-  loginEmail('email'),
+  requiredEmail('email'),
   requiredPassword('password'),
 ];

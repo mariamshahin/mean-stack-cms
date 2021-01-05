@@ -7,7 +7,14 @@ export const required = (val) => body(val).trim().not().isEmpty();
 export const optionalString = (val) =>
   body(val).if(body(val).not().isEmpty()).isString().trim();
 
-export const minLength = (val, min) => body(val).trim().isLength({ min });
+export const minMaxLength = (val, min, max) =>
+  body(val)
+    .trim()
+    .isLength({ min })
+    .withMessage(`Characters should be minimum ${min}`)
+    .bail()
+    .isLength({ min, max })
+    .withMessage(`Characters should be maximum ${max}`);
 
 export const registerEmail = (val) =>
   body(val)
@@ -22,7 +29,7 @@ export const registerEmail = (val) =>
     })
     .normalizeEmail();
 
-export const loginEmail = (val) => body(val).isEmail().normalizeEmail();
+export const requiredEmail = (val) => body(val).isEmail().normalizeEmail();
 
 export const requiredPassword = (val) => body(val).trim().isLength({ min: 6 });
 
