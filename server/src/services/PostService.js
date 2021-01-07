@@ -1,4 +1,5 @@
 import Mongoose from './MongooseService';
+import { deletePw } from '../utils/utility';
 
 export default class PostService extends Mongoose {
   constructor(model) {
@@ -10,10 +11,9 @@ export default class PostService extends Mongoose {
     const { title, content } = post;
     const user_id = user._id;
     try {
-      const result = await this.create({ title, content, user_id });
+      const result = await this.create({ title, content, user: user_id });
       return { result };
     } catch (error) {
-      console.log(error);
       return { error };
     }
   }
@@ -29,7 +29,8 @@ export default class PostService extends Mongoose {
 
   async getPost(id) {
     try {
-      const result = await this.findById(id);
+      const post = await this.findByIdAndPopulate(id, 'user');
+      const result = { ...post._doc, user: deletePw(post.user) };
       return { result };
     } catch (error) {
       return { error };
@@ -41,7 +42,7 @@ export default class PostService extends Mongoose {
     const user_id = user._id;
     const { title, content } = post;
     try {
-      const result = await this.update(id, { title, content, user_id });
+      const result = await this.update(id, { title, content, user: user_id });
       return { result };
     } catch (error) {
       return { error };

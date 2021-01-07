@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import Mongoose from './MongooseService';
 import { roles } from '../utils/constants';
+import { deletePw } from '../utils/utility';
 import PostService from './PostService';
 import Post from '../models/post';
 import Draft from '../models/draft';
@@ -9,12 +10,6 @@ import Draft from '../models/draft';
 export default class UserService extends Mongoose {
   constructor(model) {
     super(model);
-  }
-
-  deletePw(user) {
-    const updatedUser = { ...user._doc };
-    delete updatedUser.password;
-    return updatedUser;
   }
 
   async createUser(body) {
@@ -63,7 +58,7 @@ export default class UserService extends Mongoose {
   async getAllUsers() {
     try {
       const users = await this.findAll();
-      const result = users.map((user) => this.deletePw(user));
+      const result = users.map((user) => deletePw(user));
       return { result };
     } catch (error) {
       return { error };
@@ -79,7 +74,7 @@ export default class UserService extends Mongoose {
         user_id: id,
       });
       const user = await this.findById(id);
-      const result = { ...this.deletePw(user), posts, drafts };
+      const result = { ...deletePw(user), posts, drafts };
       return { result };
     } catch (error) {
       return { error };

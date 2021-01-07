@@ -15,7 +15,7 @@ const draftSchema = new Schema(
     //     type: String,
     //
     //   },
-    user_id: {
+    user: {
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: true,

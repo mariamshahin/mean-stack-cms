@@ -54,6 +54,16 @@ export default class MongooseService {
   }
 
   /**
+   * @description Retrieve a single document matching the provided ID, from the Model
+   * @param id {string} Required: ID for the object to retrieve
+   * @param ref {string} Required: reference in the model to populate
+   * @returns {Promise} Returns the results of the query
+   */
+  findByIdAndPopulate(id, ref) {
+    return this.model.findById(id).populate(ref).exec();
+  }
+
+  /**
    * @description Update a document matching the provided ID, with the body
    * @param id {string} ID for the document to update
    * @param body {object} Body to update the document with
