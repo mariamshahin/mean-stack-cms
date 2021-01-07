@@ -2,6 +2,9 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import Mongoose from './MongooseService';
 import { roles } from '../utils/constants';
+import PostService from './PostService';
+import Post from '../models/post';
+import Draft from '../models/draft';
 
 export default class UserService extends Mongoose {
   constructor(model) {
@@ -69,8 +72,14 @@ export default class UserService extends Mongoose {
 
   async getUser(id) {
     try {
+      const { result: posts } = await new PostService(Post).findPost({
+        user_id: id,
+      });
+      const { result: drafts } = await new PostService(Draft).findPost({
+        user_id: id,
+      });
       const user = await this.findById(id);
-      const result = this.deletePw(user);
+      const result = { ...this.deletePw(user), posts, drafts };
       return { result };
     } catch (error) {
       return { error };

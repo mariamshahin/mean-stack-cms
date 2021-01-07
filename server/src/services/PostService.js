@@ -48,6 +48,15 @@ export default class PostService extends Mongoose {
     }
   }
 
+  async findPost(obj) {
+    try {
+      const result = await this.find(obj);
+      return { result };
+    } catch (error) {
+      return { error };
+    }
+  }
+
   async deletePost(id) {
     try {
       const result = await this.delete(id);
