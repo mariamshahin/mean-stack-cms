@@ -85,4 +85,14 @@ export default class UserService extends Mongoose {
       return { error };
     }
   }
+
+  async changeRole(id, body) {
+    const { role } = body;
+    try {
+      const result = await this.update(id, { role });
+      return { result };
+    } catch (error) {
+      return { error };
+    }
+  }
 }

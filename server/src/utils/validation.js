@@ -49,3 +49,6 @@ export const checkId = (val) =>
     }
     return value;
   });
+
+export const oneOf = (val, arr) =>
+  body(val).trim().not().isEmpty().bail().isIn(arr);
