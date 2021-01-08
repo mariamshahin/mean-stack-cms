@@ -45,7 +45,6 @@ export default class PostController extends Controller {
   updateOne = async (req, res) => {
     const { user, body, file } = req;
     const { id } = req.params;
-    console.log(req.file);
     const { result, error } = await this.postService.updatePost(id, {
       user,
       body,

@@ -12,7 +12,8 @@ export default class UserService extends Mongoose {
     super(model);
   }
 
-  async createUser(body) {
+  async createUser(req) {
+    const { body, file } = req;
     const { username, email, password, first_name, last_name, summary } = body;
     try {
       const hashedPw = await bcrypt.hash(password, 12);
@@ -24,6 +25,7 @@ export default class UserService extends Mongoose {
         first_name,
         last_name,
         summary,
+        image_url: `static/${file.path}`,
       });
       return { result };
     } catch (error) {

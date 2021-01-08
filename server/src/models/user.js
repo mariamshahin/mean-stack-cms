@@ -29,10 +29,9 @@ const userSchema = new Schema(
     summary: {
       type: String,
     },
-    //   image_url: {
-    //     type: String
-    //
-    //   },
+    image_url: {
+      type: String,
+    },
   },
   { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }
 );
