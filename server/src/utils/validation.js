@@ -42,13 +42,11 @@ export const confirmPassword = (val) =>
     }
   });
 
-export const checkId = (val) =>
-  check(val).custom((value) => {
-    if (!value.match(/^[0-9a-fA-F]{24}$/)) {
-      throw new Error('Invalid id');
-    }
-    return value;
-  });
-
 export const oneOf = (val, arr) =>
   body(val).trim().not().isEmpty().bail().isIn(arr);
+
+export const checkId = (val) =>
+  check(val).custom((value) => {
+    if (!value.match(/^[0-9a-fA-F]{24}$/)) throw new Error('Invalid id');
+    return value;
+  });

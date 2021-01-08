@@ -6,12 +6,17 @@ export default class PostService extends Mongoose {
     super(model);
   }
 
-  async createPost(body) {
-    const { user, post } = body;
-    const { title, content } = post;
+  async createPost(req) {
+    const { user, body, file } = req;
+    const { title, content } = body;
     const user_id = user._id;
     try {
-      const result = await this.create({ title, content, user: user_id });
+      const result = await this.create({
+        title,
+        content,
+        user: user_id,
+        image_url: `static/${file.path}`,
+      });
       return { result };
     } catch (error) {
       return { error };
@@ -37,12 +42,17 @@ export default class PostService extends Mongoose {
     }
   }
 
-  async updatePost(id, body) {
-    const { user, post } = body;
+  async updatePost(id, req) {
+    const { user, body, file } = req;
     const user_id = user._id;
-    const { title, content } = post;
+    const { title, content } = body;
     try {
-      const result = await this.update(id, { title, content, user: user_id });
+      const result = await this.update(id, {
+        title,
+        content,
+        user: user_id,
+        image_url: `static/${file.path}`,
+      });
       return { result };
     } catch (error) {
       return { error };

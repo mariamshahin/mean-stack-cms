@@ -12,10 +12,9 @@ const postSchema = new Schema(
       type: String,
       required: true,
     },
-    //   image_url: {
-    //     type: String,
-    //
-    //   },
+    image_url: {
+      type: String,
+    },
     user: {
       type: Schema.Types.ObjectId,
       ref: 'User',

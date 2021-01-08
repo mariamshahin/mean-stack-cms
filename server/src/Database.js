@@ -1,9 +1,7 @@
 import mongoose from 'mongoose';
 import logger from './services/LoggerService';
 
-export class Database {
-  constructor() {}
-
+export default class Database {
   static connect(uri) {
     mongoose
       .connect(uri)
