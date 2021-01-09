@@ -12,9 +12,8 @@ export default class UserService extends Mongoose {
     super(model);
   }
 
-  async createUser(req) {
-    const { body, file } = req;
-    const { username, email, password, first_name, last_name, summary } = body;
+  async createUser(body) {
+    const { username, email, password } = body;
     try {
       const hashedPw = await bcrypt.hash(password, 12);
       const result = await this.create({
@@ -22,10 +21,6 @@ export default class UserService extends Mongoose {
         email,
         password: hashedPw,
         role: roles.SUBSCRIBER,
-        first_name,
-        last_name,
-        summary,
-        image_url: `static/${file.path}`,
       });
       return { result };
     } catch (error) {
@@ -52,6 +47,36 @@ export default class UserService extends Mongoose {
         result = { token, user };
       }
       return { user, matchPw, result };
+    } catch (error) {
+      return { error };
+    }
+  }
+
+  async updateUser(req) {
+    const { user, body } = req;
+    const id = user._id;
+    const { username, email, full_name, summary } = body;
+    try {
+      const result = await this.update(id, {
+        username,
+        email,
+        full_name,
+        summary,
+      });
+      return { result };
+    } catch (error) {
+      return { error };
+    }
+  }
+
+  async updateImage(req) {
+    const { user, file } = req;
+    const id = user._id;
+    try {
+      const result = await this.update(id, {
+        image_url: `static/${file.path}`,
+      });
+      return { result };
     } catch (error) {
       return { error };
     }

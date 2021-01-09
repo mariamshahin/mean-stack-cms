@@ -20,10 +20,7 @@ const userSchema = new Schema(
     role: {
       type: String,
     },
-    first_name: {
-      type: String,
-    },
-    last_name: {
+    full_name: {
       type: String,
     },
     summary: {

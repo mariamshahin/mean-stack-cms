@@ -5,6 +5,7 @@ import {
   requiredPassword,
   confirmPassword,
   requiredEmail,
+  checkFile,
 } from '../../utils/validation';
 
 export const registerValidator = [
@@ -12,12 +13,18 @@ export const registerValidator = [
   registerEmail('email'),
   requiredPassword('password'),
   confirmPassword('confirm_password'),
-  optionalString('first_name'),
-  optionalString('last_name'),
-  optionalString('summary'),
 ];
 
 export const loginValidator = [
   requiredEmail('email'),
   requiredPassword('password'),
 ];
+
+export const profileValidator = [
+  required('username'),
+  requiredEmail('email'),
+  optionalString('full_name'),
+  optionalString('summary'),
+];
+
+export const imageValidator = [checkFile('image')];

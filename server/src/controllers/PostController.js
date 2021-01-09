@@ -15,7 +15,6 @@ export default class PostController extends Controller {
       body,
       file,
     });
-
     if (result) {
       return this.created(res);
     }

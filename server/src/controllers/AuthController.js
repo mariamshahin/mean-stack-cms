@@ -9,8 +9,7 @@ export default class AuthController extends Controller {
     this.userService = new UserService(User);
   }
   register = async (req, res) => {
-    const { body, file } = req;
-    const { result, error } = await this.userService.createPost({ body, file });
+    const { result, error } = await this.userService.createPost(req.body);
     if (result) {
       return this.created(res);
     }
@@ -38,6 +37,30 @@ export default class AuthController extends Controller {
     return res.status(status.OK).json({
       data: result,
     });
+  };
+
+  updateProfile = async (req, res) => {
+    const { user, body } = req;
+    const { error } = await this.userService.updateUser({
+      user,
+      body,
+    });
+    if (error) {
+      return this.failed(res, error);
+    }
+    return this.updated(res);
+  };
+
+  updateProfileImage = async (req, res) => {
+    const { user, file } = req;
+    const { error } = await this.userService.updateImage({
+      user,
+      file,
+    });
+    if (error) {
+      return this.failed(res, error);
+    }
+    return this.updated(res);
   };
 
   forgotPassword = async (req, res, next) => {

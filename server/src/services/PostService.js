@@ -10,12 +10,13 @@ export default class PostService extends Mongoose {
     const { user, body, file } = req;
     const { title, content } = body;
     const user_id = user._id;
+    const image_url = file ? `static/${file.path}` : null;
     try {
       const result = await this.create({
         title,
         content,
         user: user_id,
-        image_url: `static/${file.path}`,
+        image_url,
       });
       return { result };
     } catch (error) {
@@ -46,12 +47,13 @@ export default class PostService extends Mongoose {
     const { user, body, file } = req;
     const user_id = user._id;
     const { title, content } = body;
+    const image_url = file ? `static/${file.path}` : null;
     try {
       const result = await this.update(id, {
         title,
         content,
         user: user_id,
-        image_url: `static/${file.path}`,
+        image_url,
       });
       return { result };
     } catch (error) {
