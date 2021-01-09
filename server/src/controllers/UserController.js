@@ -39,4 +39,16 @@ export default class UserController extends Controller {
     }
     return this.deleted(res);
   };
+
+  changeRole = async (req, res) => {
+    const { id } = req.params;
+    const { result, error } = await this.userService.changeRole(id, req.body);
+    if (error) {
+      return this.failed(res, error);
+    }
+    if (!result) {
+      return this.notFound(res);
+    }
+    return this.updated(res);
+  };
 }

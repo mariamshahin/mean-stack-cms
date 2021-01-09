@@ -2,20 +2,20 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import Mongoose from './MongooseService';
 import { roles } from '../utils/constants';
+import { deletePw } from '../utils/utility';
+import PostService from './PostService';
+import Post from '../models/post';
+import Draft from '../models/draft';
 
 export default class UserService extends Mongoose {
   constructor(model) {
     super(model);
-  }
-
-  deletePw(user) {
-    const updatedUser = { ...user._doc };
-    delete updatedUser.password;
-    return updatedUser;
+    this.post = new PostService(Post);
+    this.draft = new PostService(Draft);
   }
 
   async createUser(body) {
-    const { username, email, password, first_name, last_name, summary } = body;
+    const { username, email, password } = body;
     try {
       const hashedPw = await bcrypt.hash(password, 12);
       const result = await this.create({
@@ -23,9 +23,6 @@ export default class UserService extends Mongoose {
         email,
         password: hashedPw,
         role: roles.SUBSCRIBER,
-        first_name,
-        last_name,
-        summary,
       });
       return { result };
     } catch (error) {
@@ -51,7 +48,56 @@ export default class UserService extends Mongoose {
         user.password = undefined;
         result = { token, user };
       }
-      return { user, matchPw, result };
+      return { user, result };
+    } catch (error) {
+      return { error };
+    }
+  }
+
+  async updateUser(req) {
+    const { user, body } = req;
+    const id = user._id;
+    const { username, email, full_name, summary } = body;
+    try {
+      const result = await this.updateOne(id, {
+        username,
+        email,
+        full_name,
+        summary,
+      });
+      return { result };
+    } catch (error) {
+      return { error };
+    }
+  }
+
+  async updateImage(req) {
+    const { user, file } = req;
+    const id = user._id;
+    try {
+      const result = await this.updateOne(id, {
+        image_url: `static/${file.path}`,
+      });
+      return { result };
+    } catch (error) {
+      return { error };
+    }
+  }
+
+  async changePassword(req) {
+    const { user, body } = req;
+    const id = user._id;
+    const { old_password, new_password } = body;
+    try {
+      let result;
+      const matchPw = await bcrypt.compare(old_password, user.password);
+      if (matchPw) {
+        const hashedPw = await bcrypt.hash(new_password, 12);
+        result = await this.updateOne(id, {
+          password: hashedPw,
+        });
+      }
+      return { result };
     } catch (error) {
       return { error };
     }
@@ -60,7 +106,7 @@ export default class UserService extends Mongoose {
   async getAllUsers() {
     try {
       const users = await this.findAll();
-      const result = users.map((user) => this.deletePw(user));
+      const result = users.map((user) => deletePw(user));
       return { result };
     } catch (error) {
       return { error };
@@ -70,7 +116,17 @@ export default class UserService extends Mongoose {
   async getUser(id) {
     try {
       const user = await this.findById(id);
-      const result = this.deletePw(user);
+      let userResult, posts, drafts, result;
+      if (user) {
+        userResult = deletePw(user);
+        posts = await this.post.findPost({
+          user: id,
+        });
+        drafts = await this.draft.findPost({
+          user: id,
+        });
+        result = { ...userResult, posts: posts.result, drafts: drafts.result };
+      }
       return { result };
     } catch (error) {
       return { error };
@@ -80,6 +136,30 @@ export default class UserService extends Mongoose {
   async deleteUser(id) {
     try {
       const result = await this.delete(id);
+      if (result) {
+        this.post.updateMany(
+          {
+            user: id,
+          },
+          { user: null }
+        );
+        this.draft.updateMany(
+          {
+            user: id,
+          },
+          { user: null }
+        );
+      }
+      return { result };
+    } catch (error) {
+      return { error };
+    }
+  }
+
+  async changeRole(id, body) {
+    const { role } = body;
+    try {
+      const result = await this.updateOne(id, { role });
       return { result };
     } catch (error) {
       return { error };

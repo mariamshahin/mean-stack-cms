@@ -20,19 +20,15 @@ const userSchema = new Schema(
     role: {
       type: String,
     },
-    first_name: {
-      type: String,
-    },
-    last_name: {
+    full_name: {
       type: String,
     },
     summary: {
       type: String,
     },
-    //   image_url: {
-    //     type: String
-    //
-    //   },
+    image_url: {
+      type: String,
+    },
   },
   { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }
 );

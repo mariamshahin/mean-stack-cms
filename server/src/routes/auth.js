@@ -4,15 +4,43 @@ import AuthController from '../controllers/AuthController';
 import {
   registerValidator,
   loginValidator,
+  profileValidator,
+  imageValidator,
+  passwordValidator,
   validationHandler,
 } from '../middlewares/validators';
 
 const router = express.Router();
-const { register, login, forgotPassword, resetPassword } = new AuthController();
+const {
+  register,
+  login,
+  updateProfile,
+  updateProfileImage,
+  changePassword,
+} = new AuthController();
 
 router.post('/register', registerValidator, validationHandler, register);
 router.post('/login', loginValidator, validationHandler, login);
-router.get('/forgot-password/:userEmail', authMiddleware, forgotPassword);
-router.put('/forgot-password/:userEmail', resetPassword);
+router.put(
+  '/profile',
+  authMiddleware,
+  profileValidator,
+  validationHandler,
+  updateProfile
+);
+router.patch(
+  '/profile-image',
+  authMiddleware,
+  imageValidator,
+  validationHandler,
+  updateProfileImage
+);
+router.put(
+  '/change-password',
+  authMiddleware,
+  passwordValidator,
+  validationHandler,
+  changePassword
+);
 
 export default router;

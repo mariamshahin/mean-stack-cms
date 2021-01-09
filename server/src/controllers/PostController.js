@@ -1,21 +1,20 @@
 import Post from '../models/post';
-import User from '../models/user';
-
 import PostService from '../services/PostService';
 import Controller from './Controller';
 
 export default class PostController extends Controller {
-  constructor() {
-    super(Post.modelName);
+  constructor(modelName) {
+    super(modelName || Post.modelName);
     this.postService = new PostService(Post);
   }
 
   createOne = async (req, res) => {
+    const { user, body, file } = req;
     const { result, error } = await this.postService.createPost({
-      user: req.user,
-      post: req.body,
+      user,
+      body,
+      file,
     });
-
     if (result) {
       return this.created(res);
     }
@@ -43,28 +42,39 @@ export default class PostController extends Controller {
   };
 
   updateOne = async (req, res) => {
+    const { user, body, file } = req;
     const { id } = req.params;
-    const { result, error } = await this.postService.updatePost(id, {
-      user: req.user,
-      post: req.body,
+    const { post, result, error } = await this.postService.updatePost(id, {
+      user,
+      body,
+      file,
     });
     if (error) {
       return this.failed(res, error);
     }
-    if (!result) {
+    if (!post) {
       return this.notFound(res);
+    }
+    if (!result) {
+      return this.forbidden(res);
     }
     return this.updated(res);
   };
 
   deleteOne = async (req, res) => {
     const { id } = req.params;
-    const { result, error } = await this.postService.deletePost(id);
+    const { post, result, error } = await this.postService.deletePost(
+      id,
+      req.user
+    );
     if (error) {
       return this.failed(res, error);
     }
-    if (!result) {
+    if (!post) {
       return this.notFound(res);
+    }
+    if (!result) {
+      return this.forbidden(res);
     }
     return this.deleted(res);
   };

@@ -1,13 +1,17 @@
 import express from 'express';
 import authMiddleware from '../middlewares/authentication';
 import authorization from '../middlewares/authorization';
-import { idValidator, validationHandler } from '../middlewares/validators';
+import {
+  changeRoleValidator,
+  idValidator,
+  validationHandler,
+} from '../middlewares/validators';
 import { roles } from '../utils/constants';
 import UserController from '../controllers/UserController';
 
 const router = express.Router();
 
-const { getAll, getOne, deleteOne } = new UserController();
+const { getAll, getOne, deleteOne, changeRole } = new UserController();
 
 router.get('/', authMiddleware, authorization(roles.ADMIN), getAll);
 router.get(
@@ -25,6 +29,14 @@ router.delete(
   idValidator(),
   validationHandler,
   deleteOne
+);
+router.patch(
+  '/:id/change-role',
+  authMiddleware,
+  authorization(roles.ADMIN),
+  changeRoleValidator,
+  validationHandler,
+  changeRole
 );
 
 export default router;

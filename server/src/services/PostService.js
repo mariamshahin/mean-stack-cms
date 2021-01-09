@@ -1,19 +1,26 @@
 import Mongoose from './MongooseService';
+import { deletePw } from '../utils/utility';
+import { roles } from '../utils/constants';
 
 export default class PostService extends Mongoose {
   constructor(model) {
     super(model);
   }
 
-  async createPost(body) {
-    const { user, post } = body;
-    const { title, content } = post;
+  async createPost(req) {
+    const { user, body, file } = req;
+    const { title, content } = body;
     const user_id = user._id;
+    const image_url = file ? `static/${file.path}` : null;
     try {
-      const result = await this.create({ title, content, user_id });
+      const result = await this.create({
+        title,
+        content,
+        user: user_id,
+        image_url,
+      });
       return { result };
     } catch (error) {
-      console.log(error);
       return { error };
     }
   }
@@ -29,29 +36,71 @@ export default class PostService extends Mongoose {
 
   async getPost(id) {
     try {
-      const result = await this.findById(id);
+      let result;
+      const post = await this.findByIdAndPopulate(id, 'user');
+      if (post) {
+        result = {
+          ...post._doc,
+          user: post.user ? deletePw(post.user) : null,
+        };
+      }
       return { result };
     } catch (error) {
       return { error };
     }
   }
 
-  async updatePost(id, body) {
-    const { user, post } = body;
+  async updatePost(id, req) {
+    const { user, body, file } = req;
     const user_id = user._id;
-    const { title, content } = post;
+    const { title, content } = body;
+    const image_url = file ? `static/${file.path}` : null;
     try {
-      const result = await this.update(id, { title, content, user_id });
+      let result;
+      const post = await this.findById(id);
+      if (
+        post &&
+        user.role !== (roles.ADMIN || roles.EDITOR) &&
+        post.user.toString() !== user_id.toString()
+      ) {
+        return { post, result };
+      }
+      result = await this.updateOne(id, {
+        title,
+        content,
+        user: user_id,
+        image_url,
+      });
+      return { post, result };
+    } catch (error) {
+      return { error };
+    }
+  }
+
+  async findPost(obj) {
+    try {
+      const result = await this.find(obj);
       return { result };
     } catch (error) {
       return { error };
     }
   }
 
-  async deletePost(id) {
+  async deletePost(id, user) {
+    const user_id = user._id;
+
     try {
-      const result = await this.delete(id);
-      return { result };
+      let result;
+      const post = await this.findById(id);
+      if (
+        post &&
+        user.role !== (roles.ADMIN || roles.EDITOR) &&
+        post.user.toString() !== user_id.toString()
+      ) {
+        return { post, result };
+      }
+      result = await this.delete(id);
+      return { post, result };
     } catch (error) {
       return { error };
     }

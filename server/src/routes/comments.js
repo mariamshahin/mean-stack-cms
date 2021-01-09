@@ -23,14 +23,14 @@ router.post('/', createCommentValidator, validationHandler, createOne);
 router.get(
   '/',
   authMiddleware,
-  authorization(roles.ADMIN, roles.EDITOR, roles.AUTHOR),
+  authorization(roles.ADMIN, roles.EDITOR),
   getAll
 );
 router.get('/post/:id', idValidator(), validationHandler, getAllByPostId);
 router.get(
   '/:id',
   authMiddleware,
-  authorization(roles.ADMIN, roles.EDITOR, roles.AUTHOR),
+  authorization(roles.ADMIN, roles.EDITOR),
   idValidator(),
   validationHandler,
   getOne
@@ -38,7 +38,7 @@ router.get(
 router.delete(
   '/:id',
   authMiddleware,
-  authorization(roles.ADMIN, roles.EDITOR, roles.AUTHOR),
+  authorization(roles.ADMIN, roles.EDITOR),
   idValidator(),
   validationHandler,
   deleteOne

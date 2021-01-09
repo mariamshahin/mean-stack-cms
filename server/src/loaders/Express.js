@@ -1,22 +1,16 @@
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import multer from 'multer';
+import path from 'path';
 import compression from 'compression';
 import morgan from 'morgan';
-import logger from '../services/LoggerService';
-//const path = require( "path" );
-//const config = require( "../config" );
-
 import routes from '../routes';
+import upload from '../middlewares/upload';
+import logger from '../services/LoggerService';
 
 export default class ExpressLoader {
   constructor() {
     const app = express();
-    const multipart = multer();
-
-    // Serve static content
-    // app.use( express.static( path.join( __dirname, "uploads" ) ) );
 
     // Set up middleware
     app.use(morgan('dev'));
@@ -24,7 +18,10 @@ export default class ExpressLoader {
     app.use(cors());
     app.use(bodyParser.json());
     app.use(express.urlencoded({ extended: true }));
-    app.use(multipart.array());
+    app.use(upload);
+
+    // Serve static content
+    app.use('/static/uploads', express.static(path.join(__basedir, 'uploads')));
 
     // Pass app to routes
     routes(app);

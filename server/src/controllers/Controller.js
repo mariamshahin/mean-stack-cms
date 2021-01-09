@@ -66,6 +66,17 @@ export default class Controller {
   }
 
   /**
+   * @description Create a forbidden response with message
+   * @param res {object} Express response object
+   * @returns {Object} Returns Express response
+   */
+  forbidden(res) {
+    return res.status(status.FORBIDDEN).json({
+      error: 'Not authorized!',
+    });
+  }
+
+  /**
    * @description Create a fail response with message
    * @param res {object} Express response object
    * @param error {object} error returned from data access

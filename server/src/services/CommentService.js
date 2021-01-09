@@ -35,7 +35,7 @@ export default class CommentService extends Mongoose {
 
   async getComment(id) {
     try {
-      const result = await this.findById(id);
+      const result = await this.findByIdAndPopulate(id, 'post');
       return { result };
     } catch (error) {
       return { error };
