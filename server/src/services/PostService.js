@@ -1,6 +1,6 @@
 import Mongoose from './MongooseService';
 import { deletePw } from '../utils/utility';
-import { roles, status } from '../utils/constants';
+import { roles } from '../utils/constants';
 
 export default class PostService extends Mongoose {
   constructor(model) {
