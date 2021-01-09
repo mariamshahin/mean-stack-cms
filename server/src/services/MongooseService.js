@@ -69,8 +69,18 @@ export default class MongooseService {
    * @param body {object} Body to update the document with
    * @returns {Promise} Returns the results of the query
    */
-  update(id, body) {
+  updateOne(id, body) {
     return this.model.findByIdAndUpdate(id, body).exec();
+  }
+
+  /**
+   * @description Update all documents that matchin, with the body
+   * @param obj {obj} object to search in the dicuments
+   * @param body {object} Body to update the document with
+   * @returns {Promise} Returns the results of the query
+   */
+  updateMany(obj, body) {
+    return this.model.updateMany(obj, body).exec();
   }
 
   /**

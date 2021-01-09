@@ -36,8 +36,14 @@ export default class PostService extends Mongoose {
 
   async getPost(id) {
     try {
+      let result;
       const post = await this.findByIdAndPopulate(id, 'user');
-      const result = { ...post._doc, user: deletePw(post.user) };
+      if (post) {
+        result = {
+          ...post._doc,
+          user: post.user ? deletePw(post.user) : null,
+        };
+      }
       return { result };
     } catch (error) {
       return { error };
@@ -59,7 +65,7 @@ export default class PostService extends Mongoose {
       ) {
         return { post, result };
       }
-      result = await this.update(id, {
+      result = await this.updateOne(id, {
         title,
         content,
         user: user_id,
