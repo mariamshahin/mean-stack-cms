@@ -44,7 +44,7 @@ export default class PostController extends Controller {
   updateOne = async (req, res) => {
     const { user, body, file } = req;
     const { id } = req.params;
-    const { result, error } = await this.postService.updatePost(id, {
+    const { post, result, error } = await this.postService.updatePost(id, {
       user,
       body,
       file,
@@ -53,6 +53,9 @@ export default class PostController extends Controller {
       return this.failed(res, error);
     }
     if (!result) {
+      return this.forbidden(res);
+    }
+    if (!post) {
       return this.notFound(res);
     }
     return this.updated(res);
@@ -60,11 +63,17 @@ export default class PostController extends Controller {
 
   deleteOne = async (req, res) => {
     const { id } = req.params;
-    const { result, error } = await this.postService.deletePost(id);
+    const { post, result, error } = await this.postService.deletePost(
+      id,
+      req.user
+    );
     if (error) {
       return this.failed(res, error);
     }
     if (!result) {
+      return this.forbidden(res);
+    }
+    if (!post) {
       return this.notFound(res);
     }
     return this.deleted(res);
