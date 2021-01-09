@@ -7,6 +7,7 @@ export {
   loginValidator,
   profileValidator,
   imageValidator,
+  passwordValidator,
 } from './authValidator';
 export { createPostValidator, updatePostValidator } from './postValidator';
 export { changeRoleValidator } from './userValidator';

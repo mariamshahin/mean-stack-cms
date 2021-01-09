@@ -46,7 +46,7 @@ export default class UserService extends Mongoose {
         user.password = undefined;
         result = { token, user };
       }
-      return { user, matchPw, result };
+      return { user, result };
     } catch (error) {
       return { error };
     }
@@ -76,6 +76,25 @@ export default class UserService extends Mongoose {
       const result = await this.update(id, {
         image_url: `static/${file.path}`,
       });
+      return { result };
+    } catch (error) {
+      return { error };
+    }
+  }
+
+  async changePassword(req) {
+    const { user, body } = req;
+    const id = user._id;
+    const { old_password, new_password } = body;
+    try {
+      let result;
+      const matchPw = await bcrypt.compare(old_password, user.password);
+      if (matchPw) {
+        const hashedPw = await bcrypt.hash(new_password, 12);
+        result = await this.update(id, {
+          password: hashedPw,
+        });
+      }
       return { result };
     } catch (error) {
       return { error };

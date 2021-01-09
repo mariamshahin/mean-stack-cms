@@ -33,9 +33,9 @@ export const requiredEmail = (val) => body(val).isEmail().normalizeEmail();
 
 export const requiredPassword = (val) => body(val).trim().isLength({ min: 6 });
 
-export const confirmPassword = (val) =>
+export const confirmPassword = (val, val1) =>
   body(val).custom((value, { req }) => {
-    if (value !== req.body.password) throw new Error('Invalid value');
+    if (value !== req.body[val1]) throw new Error('Invalid value');
     return value;
   });
 

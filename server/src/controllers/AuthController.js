@@ -17,20 +17,17 @@ export default class AuthController extends Controller {
   };
 
   login = async (req, res) => {
-    const {
-      user,
-      matchPw,
-      result,
-      error,
-    } = await this.userService.AuthenticateUser(req.body);
+    const { user, result, error } = await this.userService.AuthenticateUser(
+      req.body
+    );
     if (error) {
       return this.failed(res, error);
     }
     if (!user) {
       return this.notFound(res);
     }
-    if (!matchPw) {
-      return res.status(status.UNAUTHORIZED).json({
+    if (!result) {
+      return res.status(status.UNPROCESSABLE_ENTITY).json({
         message: 'Incorrect user credentials!',
       });
     }
@@ -41,35 +38,48 @@ export default class AuthController extends Controller {
 
   updateProfile = async (req, res) => {
     const { user, body } = req;
-    const { error } = await this.userService.updateUser({
+    const { result, error } = await this.userService.updateUser({
       user,
       body,
     });
     if (error) {
       return this.failed(res, error);
     }
+    if (!result) {
+      return res.sendStatus(status.INTERNAL_SERVER_ERROR);
+    }
     return this.updated(res);
   };
 
   updateProfileImage = async (req, res) => {
     const { user, file } = req;
-    const { error } = await this.userService.updateImage({
+    const { result, error } = await this.userService.updateImage({
       user,
       file,
     });
     if (error) {
       return this.failed(res, error);
     }
+    if (!result) {
+      return res.sendStatus(status.INTERNAL_SERVER_ERROR);
+    }
     return this.updated(res);
   };
 
-  forgotPassword = async (req, res, next) => {
-    console.log(req);
-    res.json({ message: 'forgotPassword!' });
-  };
-
-  resetPassword = async (req, res, next) => {
-    console.log(req);
-    res.json({ message: 'resetPassword!' });
+  changePassword = async (req, res) => {
+    const { user, body } = req;
+    const { result, error } = await this.userService.changePassword({
+      user,
+      body,
+    });
+    if (error) {
+      return this.failed(res, error);
+    }
+    if (!result) {
+      return res.status(status.UNPROCESSABLE_ENTITY).json({
+        error: 'Incorrect Password',
+      });
+    }
+    return this.updated(res);
   };
 }

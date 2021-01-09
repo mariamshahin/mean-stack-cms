@@ -12,7 +12,7 @@ export const registerValidator = [
   required('username'),
   registerEmail('email'),
   requiredPassword('password'),
-  confirmPassword('confirm_password'),
+  confirmPassword('confirm_password', 'password'),
 ];
 
 export const loginValidator = [
@@ -25,6 +25,12 @@ export const profileValidator = [
   requiredEmail('email'),
   optionalString('full_name'),
   optionalString('summary'),
+];
+
+export const passwordValidator = [
+  requiredPassword('old_password'),
+  requiredPassword('new_password'),
+  confirmPassword('confirm_new_password', 'new_password'),
 ];
 
 export const imageValidator = [checkFile('image')];

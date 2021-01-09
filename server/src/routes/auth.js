@@ -6,6 +6,7 @@ import {
   loginValidator,
   profileValidator,
   imageValidator,
+  passwordValidator,
   validationHandler,
 } from '../middlewares/validators';
 
@@ -15,8 +16,7 @@ const {
   login,
   updateProfile,
   updateProfileImage,
-  forgotPassword,
-  resetPassword,
+  changePassword,
 } = new AuthController();
 
 router.post('/register', registerValidator, validationHandler, register);
@@ -28,7 +28,6 @@ router.put(
   validationHandler,
   updateProfile
 );
-
 router.patch(
   '/profile-image',
   authMiddleware,
@@ -36,8 +35,12 @@ router.patch(
   validationHandler,
   updateProfileImage
 );
-
-router.get('/forgot-password/:userEmail', authMiddleware, forgotPassword);
-router.put('/forgot-password/:userEmail', resetPassword);
+router.put(
+  '/change-password',
+  authMiddleware,
+  passwordValidator,
+  validationHandler,
+  changePassword
+);
 
 export default router;
