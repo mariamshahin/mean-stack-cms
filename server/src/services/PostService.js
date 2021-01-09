@@ -54,7 +54,7 @@ export default class PostService extends Mongoose {
       const post = await this.findById(id);
       if (
         post &&
-        user.role === roles.AUTHOR &&
+        user.role !== (roles.ADMIN || roles.EDITOR) &&
         post.user.toString() !== user_id.toString()
       ) {
         return { post, result };
@@ -88,7 +88,7 @@ export default class PostService extends Mongoose {
       const post = await this.findById(id);
       if (
         post &&
-        user.role === roles.AUTHOR &&
+        user.role !== (roles.ADMIN || roles.EDITOR) &&
         post.user.toString() !== user_id.toString()
       ) {
         return { post, result };

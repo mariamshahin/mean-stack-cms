@@ -52,11 +52,11 @@ export default class PostController extends Controller {
     if (error) {
       return this.failed(res, error);
     }
-    if (!result) {
-      return this.forbidden(res);
-    }
     if (!post) {
       return this.notFound(res);
+    }
+    if (!result) {
+      return this.forbidden(res);
     }
     return this.updated(res);
   };
@@ -70,11 +70,11 @@ export default class PostController extends Controller {
     if (error) {
       return this.failed(res, error);
     }
-    if (!result) {
-      return this.forbidden(res);
-    }
     if (!post) {
       return this.notFound(res);
+    }
+    if (!result) {
+      return this.forbidden(res);
     }
     return this.deleted(res);
   };
