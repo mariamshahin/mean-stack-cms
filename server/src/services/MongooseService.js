@@ -1,3 +1,5 @@
+import logger from './LoggerService';
+
 export default class MongooseService {
   /**
    * @description Create an instance of the MongooseService class
@@ -5,6 +7,7 @@ export default class MongooseService {
    */
   constructor(model) {
     this.model = model;
+    this.logger = logger;
   }
 
   /**
