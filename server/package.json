@@ -7,10 +7,11 @@
     "node": "13.12.0"
   },
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon --exec babel-node -r dotenv/config index.js",
-    "build": "babel src -d dist",
+    "clean": "rm -Rf dist",
+    "build": "npm run clean && babel src --out-dir dist --copy-files",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run build",
+    "start": "node dist/App.js",
+    "dev": "nodemon --exec babel-node -r dotenv/config src/App.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
