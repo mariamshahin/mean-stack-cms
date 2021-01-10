@@ -6,11 +6,9 @@ export default class Database {
     mongoose
       .connect(uri)
       .then(() => {
-        console.log('Database connected');
-        logger.info('Database connection successful');
+        logger.info('Database connected');
       })
       .catch((err) => {
-        console.error(err);
         logger.error(err);
       });
   }

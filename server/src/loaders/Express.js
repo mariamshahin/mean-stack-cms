@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
 import bodyParser from 'body-parser';
 import path from 'path';
 import compression from 'compression';
@@ -13,12 +14,17 @@ export default class ExpressLoader {
     const app = express();
 
     // Set up middleware
-    app.use(morgan('dev'));
+    app.use(helmet());
     app.use(compression());
     app.use(cors());
     app.use(bodyParser.json());
     app.use(express.urlencoded({ extended: true }));
     app.use(upload);
+    app.use(
+      morgan('combined', {
+        stream: { write: (message) => logger.info(message) },
+      })
+    );
 
     // Serve static content
     app.use('/static/uploads', express.static(path.join(__basedir, 'uploads')));
@@ -28,6 +34,11 @@ export default class ExpressLoader {
 
     // Setup error handling, this must be after all other middleware
     app.use(ExpressLoader.errorHandler);
+
+    // use route not found plain response
+    app.use(function (req, res) {
+      res.sendStatus(404);
+    });
 
     // Start application
     this.server = app.listen(process.env.PORT, () => {

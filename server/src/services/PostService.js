@@ -21,6 +21,7 @@ export default class PostService extends Mongoose {
       });
       return { result };
     } catch (error) {
+      this.logger.error(error);
       return { error };
     }
   }
@@ -30,6 +31,7 @@ export default class PostService extends Mongoose {
       const result = await this.findAll();
       return { result };
     } catch (error) {
+      this.logger.error(error);
       return { error };
     }
   }
@@ -46,6 +48,7 @@ export default class PostService extends Mongoose {
       }
       return { result };
     } catch (error) {
+      this.logger.error(error);
       return { error };
     }
   }
@@ -73,6 +76,7 @@ export default class PostService extends Mongoose {
       });
       return { post, result };
     } catch (error) {
+      this.logger.error(error);
       return { error };
     }
   }
@@ -82,6 +86,7 @@ export default class PostService extends Mongoose {
       const result = await this.find(obj);
       return { result };
     } catch (error) {
+      this.logger.error(error);
       return { error };
     }
   }
@@ -102,6 +107,7 @@ export default class PostService extends Mongoose {
       result = await this.delete(id);
       return { post, result };
     } catch (error) {
+      this.logger.error(error);
       return { error };
     }
   }

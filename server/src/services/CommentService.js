@@ -11,6 +11,7 @@ export default class CommentService extends Mongoose {
       const result = await this.create({ comment, name, email, post_id });
       return { result };
     } catch (error) {
+      this.logger.error(error);
       return { error };
     }
   }
@@ -20,6 +21,7 @@ export default class CommentService extends Mongoose {
       const result = await this.findAll();
       return { result };
     } catch (error) {
+      this.logger.error(error);
       return { error };
     }
   }
@@ -29,6 +31,7 @@ export default class CommentService extends Mongoose {
       const result = await this.find(obj);
       return { result };
     } catch (error) {
+      this.logger.error(error);
       return { error };
     }
   }
@@ -38,6 +41,7 @@ export default class CommentService extends Mongoose {
       const result = await this.findByIdAndPopulate(id, 'post');
       return { result };
     } catch (error) {
+      this.logger.error(error);
       return { error };
     }
   }
@@ -47,6 +51,7 @@ export default class CommentService extends Mongoose {
       const result = await this.delete(id);
       return { result };
     } catch (error) {
+      this.logger.error(error);
       return { error };
     }
   }

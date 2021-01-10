@@ -26,6 +26,7 @@ export default class UserService extends Mongoose {
       });
       return { result };
     } catch (error) {
+      this.logger.error(error);
       return { error };
     }
   }
@@ -50,6 +51,7 @@ export default class UserService extends Mongoose {
       }
       return { user, result };
     } catch (error) {
+      this.logger.error(error);
       return { error };
     }
   }
@@ -67,6 +69,7 @@ export default class UserService extends Mongoose {
       });
       return { result };
     } catch (error) {
+      this.logger.error(error);
       return { error };
     }
   }
@@ -80,6 +83,7 @@ export default class UserService extends Mongoose {
       });
       return { result };
     } catch (error) {
+      this.logger.error(error);
       return { error };
     }
   }
@@ -99,6 +103,7 @@ export default class UserService extends Mongoose {
       }
       return { result };
     } catch (error) {
+      this.logger.error(error);
       return { error };
     }
   }
@@ -109,6 +114,7 @@ export default class UserService extends Mongoose {
       const result = users.map((user) => deletePw(user));
       return { result };
     } catch (error) {
+      this.logger.error(error);
       return { error };
     }
   }
@@ -129,6 +135,7 @@ export default class UserService extends Mongoose {
       }
       return { result };
     } catch (error) {
+      this.logger.error(error);
       return { error };
     }
   }
@@ -152,6 +159,7 @@ export default class UserService extends Mongoose {
       }
       return { result };
     } catch (error) {
+      this.logger.error(error);
       return { error };
     }
   }
@@ -162,6 +170,7 @@ export default class UserService extends Mongoose {
       const result = await this.updateOne(id, { role });
       return { result };
     } catch (error) {
+      this.logger.error(error);
       return { error };
     }
   }
