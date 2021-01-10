@@ -6,6 +6,7 @@ import { deletePw } from '../utils/utility';
 import PostService from './PostService';
 import Post from '../models/post';
 import Draft from '../models/draft';
+import config from '../config';
 
 export default class UserService extends Mongoose {
   constructor(model) {
@@ -43,7 +44,7 @@ export default class UserService extends Mongoose {
             email: user.email,
             userId: user._id.toString(),
           },
-          process.env.AUTH_SECRET_KEY,
+          config.authKey,
           { expiresIn: '7d' }
         );
         user.password = undefined;
