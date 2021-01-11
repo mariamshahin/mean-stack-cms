@@ -14,9 +14,9 @@ export default class ExpressLoader {
     const app = express();
 
     // Set up middleware
+    app.use(cors());
     app.use(helmet());
     app.use(compression());
-    app.use(cors());
     app.use(bodyParser.json());
     app.use(express.urlencoded({ extended: true }));
     app.use(upload);
