@@ -12,6 +12,7 @@ import logger from '../services/LoggerService';
 export default class ExpressLoader {
   constructor() {
     const app = express();
+    const root = process.cwd();
 
     // Set up middleware
     app.use(cors());
@@ -27,7 +28,7 @@ export default class ExpressLoader {
     );
 
     // Serve static content
-    app.use('/static/uploads', express.static(path.join(__basedir, 'uploads')));
+    app.use('/static/uploads', express.static(path.join(root, 'uploads')));
 
     // Pass app to routes
     routes(app);
