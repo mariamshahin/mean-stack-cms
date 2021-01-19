@@ -61,3 +61,6 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+import 'classlist.js';
+import 'web-animations-js';
+import 'core-js/es/reflect';
