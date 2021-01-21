@@ -31,7 +31,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef,
   ) {
     this.config = this.configService.templateConf;
-    this.renderer.addClass(this.document.body, 'auth-page');
+    this.renderer.addClass(this.document.body, 'full-page');
   }
 
   ngOnInit() {
@@ -54,7 +54,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.renderer.removeClass(this.document.body, 'auth-page');
+    this.renderer.removeClass(this.document.body, 'full-page');
     if (this.layoutSub) {
       this.layoutSub.unsubscribe();
     }

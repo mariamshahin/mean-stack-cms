@@ -474,32 +474,9 @@ body {
   }
 
   // Gradient Background Colors
-  &[data-background-color="mint"] {
-    @include set-gradient-background-color(map-get($info-color, darken-2), map-get($success-color, base));
-  }
-
-  &[data-background-color="king-yna"] {
-    @include set-gradient-background-color(map-get($primary-color, darken-2), map-get($danger-color, base));
-  }
-
-  &[data-background-color="ibiza-sunset"] {
-    @include set-gradient-background-color(map-get($danger-color, darken-3), map-get($warning-color, lighten-1));
-  }
-
-  &[data-background-color="flickr"] {
-    @include set-gradient-background-color(map-get($warning-color, darken-1), map-get($info-color, darken-1));
-  }
-
-  &[data-background-color="purple-bliss"] {
-    @include set-gradient-background-color(map-get($primary-color, darken-3), map-get($info-color, base));
-  }
-
-  &[data-background-color="man-of-steel"] {
-    @include set-gradient-background-color(#2F3EA0, #AE342D);
-  }
-
-  &[data-background-color="purple-love"] {
-    @include set-gradient-background-color(map-get($primary-color, darken-2), map-get($primary-color, lighten-2));
+ 
+  &[data-background-color="bluish"] {
+    @include set-gradient-background-color(#3600b4, #60AFF0);
   }
 
   // Native Scrollbar (.menu-native-scroll)

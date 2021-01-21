@@ -25,7 +25,6 @@ export class SideMenuComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('toggleIcon') toggleIcon: ElementRef;
   public menuItems: any[];
   level: number = 0;
-  logoUrl = 'assets/img/logo.png';
   public config: any = {};
   protected innerWidth: any;
   layoutSub: Subscription;

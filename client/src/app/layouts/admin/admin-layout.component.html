@@ -2,13 +2,11 @@
 <app-navbar (seachTextEmpty)="checkNavbarSeachTextEmpty($event)"></app-navbar>
 <!-- *NAVBAR* ends -->
 
-<div class="wrapper" [ngClass]="{'show-overlay': !isNavbarSeachTextEmpty}" (click)="onWrapperClick();"
-  (window:resize)="onResize($event)">
+<div class="wrapper" (click)="onWrapperClick();" (window:resize)="onResize($event)">
 
   <!-- *SIDE* Menu starts -->
   <div appSidebar class="app-sidebar main-menu" (mouseenter)="sidebarMouseenter($event)"
-    (mouseleave)="sidebarMouseleave($event)" data-active-color="white"
-    [attr.data-background-color]="bgColor"
+    (mouseleave)="sidebarMouseleave($event)" data-active-color="white" [attr.data-background-color]="bgColor"
     [attr.data-image]="bgImage">
     <app-side-menu></app-side-menu>
   </div>

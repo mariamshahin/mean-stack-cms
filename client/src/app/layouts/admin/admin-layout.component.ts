@@ -30,9 +30,8 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   configSub: Subscription;
   layoutSub: Subscription;
   bgImage: string;
-  bgColor='man-of-steel';
+  bgColor='bluish';
   isSmallScreen = false;
-  menuPosition = 'Side';
   displayOverlayMenu = false; // Vertical Side menu for screenSize < 1200
   public config: any = {};
   public innerWidth: any;
