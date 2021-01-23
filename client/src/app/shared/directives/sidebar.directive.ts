@@ -11,8 +11,8 @@ import {
 import { Router } from '@angular/router';
 import { SidebarLinkDirective } from './sidebar-link.directive';
 import { Subscription } from 'rxjs';
-import { ConfigService } from 'app/services/config.service';
-import { LayoutService } from 'app/services/layout.service';
+import { ConfigService } from 'app/shared/services/config.service';
+import { LayoutService } from 'app/shared/services/layout.service';
 
 @Directive({ selector: '[appSidebar]' })
 export class SidebarDirective implements OnInit, AfterViewInit, OnDestroy {

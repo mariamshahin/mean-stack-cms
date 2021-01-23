@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-//import { StoreModule } from "@ngrx/store";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastrModule } from 'ngx-toastr';
 import {
@@ -11,6 +13,9 @@ import {
   PerfectScrollbarConfigInterface,
 } from 'ngx-perfect-scrollbar';
 
+import * as fromApp from './ngrx/app.reducer';
+import { AppEffects } from './ngrx/app.effects';
+
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 
@@ -18,9 +23,9 @@ import { AppComponent } from './app.component';
 import { FullLayoutComponent } from './layouts/full/full-layout.component';
 import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
 
-import { AuthService } from './services/auth/auth.service';
-import { AuthGuard } from './services/auth/auth-guard.service';
-import { WINDOW_PROVIDERS } from './services/window.service';
+import { AuthService } from './shared/services/auth/auth.service';
+import { AuthGuard } from './shared/services/auth/auth-guard.service';
+import { WINDOW_PROVIDERS } from './shared/services/window.service';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -31,10 +36,13 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   declarations: [AppComponent, FullLayoutComponent, AdminLayoutComponent],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    StoreModule.forRoot(fromApp.appReducer),
+    EffectsModule.forRoot(AppEffects),
     AppRoutingModule,
     SharedModule,
     NgbModule,
-    HttpClientModule,
     NgxSpinnerModule,
     PerfectScrollbarModule,
     ToastrModule.forRoot(),

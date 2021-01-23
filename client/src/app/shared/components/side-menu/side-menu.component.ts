@@ -13,8 +13,8 @@ import { ROUTES } from './navigation-routes.config';
 import { Router } from '@angular/router';
 import { customAnimations } from 'app/shared/animations/custom-animations';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import { ConfigService } from 'app/services/config.service';
-import { LayoutService } from 'app/services/layout.service';
+import { ConfigService } from 'app/shared/services/config.service';
+import { LayoutService } from 'app/shared/services/layout.service';
 
 @Component({
   selector: 'app-side-menu',

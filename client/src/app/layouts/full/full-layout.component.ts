@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Subscription } from 'rxjs';
-import { ConfigService } from 'app/services/config.service';
+import { ConfigService } from 'app/shared/services/config.service';
 
 @Component({
   selector: 'app-full-layout',
@@ -28,10 +28,10 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
     private configService: ConfigService,
     @Inject(DOCUMENT) private document: Document,
     private renderer: Renderer2,
-    private cdr: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef
   ) {
     this.config = this.configService.templateConf;
-    this.renderer.addClass(this.document.body, 'full-page');
+    this.renderer.addClass(this.document.body, 'auth-page');
   }
 
   ngOnInit() {
@@ -54,7 +54,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.renderer.removeClass(this.document.body, 'full-page');
+    this.renderer.removeClass(this.document.body, 'auth-page');
     if (this.layoutSub) {
       this.layoutSub.unsubscribe();
     }

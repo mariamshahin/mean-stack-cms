@@ -14,8 +14,8 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { LayoutService } from 'app/services/layout.service';
-import { ConfigService } from 'app/services/config.service';
+import { LayoutService } from 'app/shared/services/layout.service';
+import { ConfigService } from 'app/shared/services/config.service';
 
 @Component({
   selector: 'app-navbar',

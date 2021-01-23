@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from "@angular/common";
+import { CommonModule } from '@angular/common';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-//import { NgxSpinnerModule } from 'ngx-spinner';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
-import { AdminPagesRoutingModule } from "./admin-pages-routing.module";
-import { DashboardComponent } from "./dashboard/dashboard.component";
-
+import { AdminPagesRoutingModule } from './admin-pages-routing.module';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   imports: [
@@ -16,10 +15,8 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-  //  NgxSpinnerModule
+    NgxSpinnerModule,
   ],
-  declarations: [
-    DashboardComponent
-  ]
+  declarations: [DashboardComponent],
 })
-export class AdminPagesModule { }
+export class AdminPagesModule {}

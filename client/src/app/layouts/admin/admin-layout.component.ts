@@ -14,9 +14,9 @@ import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import { ConfigService } from 'app/services/config.service';
-import { LayoutService } from 'app/services/layout.service';
-import { WINDOW } from 'app/services/window.service';
+import { ConfigService } from 'app/shared/services/config.service';
+import { LayoutService } from 'app/shared/services/layout.service';
+import { WINDOW } from 'app/shared/services/window.service';
 
 @Component({
   selector: 'app-admin-layout',
@@ -29,8 +29,7 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   overlayContent = false;
   configSub: Subscription;
   layoutSub: Subscription;
-  bgImage: string;
-  bgColor='bluish';
+  bgColor: string;
   isSmallScreen = false;
   displayOverlayMenu = false; // Vertical Side menu for screenSize < 1200
   public config: any = {};
@@ -105,6 +104,8 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
 
   //adjust layout
   setMenuLayout() {
+    // Side menu background color
+    this.bgColor = this.config.layout.sidebar.backgroundColor;
     this.overlayContent = false;
     // Vertical Menu
     if (this.innerWidth < 1200) {
@@ -144,7 +145,6 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.renderer.addClass(this.document.body, 'vertical-layout');
       this.renderer.addClass(this.document.body, 'menu-hide');
-
     } else {
       // on sidebar expand
       this.renderer.addClass(this.document.body, 'vertical-layout');
