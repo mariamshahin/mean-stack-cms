@@ -17,8 +17,8 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 
 import { AppComponent } from './app.component';
-import { FullLayoutComponent } from './layouts/full/full-layout.component';
-import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
+import { FullLayoutComponent } from './core/layouts/full/full-layout.component';
+import { AdminLayoutComponent } from './core/layouts/admin/admin-layout.component';
 
 import { AuthService } from './core/auth/auth.service';
 import { AuthGuard } from './core/guards/auth-guard.service';

@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 
-import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
-import { FullLayoutComponent } from './layouts/full/full-layout.component';
+import { AdminLayoutComponent } from './core/layouts/admin/admin-layout.component';
+import { FullLayoutComponent } from './core/layouts/full/full-layout.component';
 
-import { FULL_ROUTES } from './routes/full-layout.routes';
-import { ADMIN_ROUTES } from './routes/admin-layout.routes';
+import { FULL_ROUTES } from './shared/routes/full-layout.routes';
+import { ADMIN_ROUTES } from './shared/routes/admin-layout.routes';
 
 import { AuthGuard } from './core/guards/auth-guard.service';
 
