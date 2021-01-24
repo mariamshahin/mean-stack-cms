@@ -6,8 +6,8 @@ export const ADMIN_ROUTES: Routes = [
   {
     path: 'admin',
     loadChildren: () =>
-      import('app/pages/admin-pages/admin-pages.module').then(
-        (m) => m.AdminPagesModule
+      import('app/modules/admin-module/admin.module').then(
+        (m) => m.AdminModule
       ),
   },
 ];

@@ -1,10 +1,7 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastrModule } from 'ngx-toastr';
 import {
@@ -13,18 +10,18 @@ import {
   PerfectScrollbarConfigInterface,
 } from 'ngx-perfect-scrollbar';
 
-import * as fromApp from './ngrx/app.reducer';
-import { AppEffects } from './ngrx/app.effects';
+import * as fromApp from './store/app.reducer';
 
 import { AppRoutingModule } from './app-routing.module';
+import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 
 import { AppComponent } from './app.component';
 import { FullLayoutComponent } from './layouts/full/full-layout.component';
 import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
 
-import { AuthService } from './shared/services/auth/auth.service';
-import { AuthGuard } from './shared/services/auth/auth-guard.service';
+import { AuthService } from './core/auth/auth.service';
+import { AuthGuard } from './core/guards/auth-guard.service';
 import { WINDOW_PROVIDERS } from './shared/services/window.service';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -35,12 +32,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 @NgModule({
   declarations: [AppComponent, FullLayoutComponent, AdminLayoutComponent],
   imports: [
-    BrowserModule,
     BrowserAnimationsModule,
-    HttpClientModule,
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot(AppEffects),
     AppRoutingModule,
+    CoreModule,
     SharedModule,
     NgbModule,
     NgxSpinnerModule,

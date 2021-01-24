@@ -7,7 +7,7 @@ import { FullLayoutComponent } from './layouts/full/full-layout.component';
 import { FULL_ROUTES } from './routes/full-layout.routes';
 import { ADMIN_ROUTES } from './routes/admin-layout.routes';
 
-import { AuthGuard } from './shared/services/auth/auth-guard.service';
+import { AuthGuard } from './core/guards/auth-guard.service';
 
 const routes: Routes = [
   {
