@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PasswordMatch } from 'app/shared/validators/password-match.validator';
+import { FormControlModel } from 'app/shared/components/ui-elements/form-control/form-control.model';
 
 @Component({
   selector: 'app-register-page',
@@ -26,10 +27,35 @@ export class RegisterPageComponent {
     }
   );
 
+  formTemplateControls = [
+    new FormControlModel({
+      name: 'username',
+      placeholder: 'Username',
+    }),
+    new FormControlModel({
+      type: 'email',
+      name: 'email',
+      placeholder: 'Email',
+    }),
+    new FormControlModel({
+      type: 'password',
+      name: 'password',
+      placeholder: 'Password',
+    }),
+    new FormControlModel({
+      type: 'password',
+      name: 'confirm_password',
+      placeholder: 'Confirm password',
+    }),
+  ];
   constructor(private router: Router) {}
 
   get rf() {
     return this.registerForm.controls;
+  }
+
+  get controls() {
+    return this.formTemplateControls;
   }
 
   //  On submit click, reset field value

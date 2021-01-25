@@ -21,7 +21,7 @@ import { FullLayoutComponent } from './core/layouts/full/full-layout.component';
 import { AdminLayoutComponent } from './core/layouts/admin/admin-layout.component';
 
 import { AuthService } from './core/auth/auth.service';
-import { AuthGuard } from './core/guards/auth-guard.service';
+import { AuthGuard } from './core/guards/auth.guard';
 import { WINDOW_PROVIDERS } from './shared/services/window.service';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {

@@ -7,12 +7,12 @@ import { FullLayoutComponent } from './core/layouts/full/full-layout.component';
 import { FULL_ROUTES } from './shared/routes/full-layout.routes';
 import { ADMIN_ROUTES } from './shared/routes/admin-layout.routes';
 
-import { AuthGuard } from './core/guards/auth-guard.service';
+import { AuthGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'admin/dashboard',
+    redirectTo: 'dashboard/register',
     pathMatch: 'full',
   },
   {
