@@ -1,8 +1,7 @@
-import { Component, OnInit, Input, Self, Optional } from '@angular/core';
+import { Component, Input, Self, Optional } from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
-  FormGroup,
   NgControl,
 } from '@angular/forms';
 
@@ -11,8 +10,7 @@ import {
   templateUrl: './form-control.component.html',
   styleUrls: ['./form-control.component.scss'],
 })
-export class FormControlComponent implements OnInit, ControlValueAccessor {
-  @Input() formGroup: FormGroup;
+export class FormControlComponent implements ControlValueAccessor {
   @Input() type: 'text' | 'email' | 'password' = 'text';
   @Input() formControlName: string;
   @Input() placeholder: string;
@@ -36,18 +34,8 @@ export class FormControlComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  ngOnInit() {
-    this.formControl = this.formGroup.get(this.formControlName);
-    this.hasErrors = this.formControl.errors;
-    this.isInvalid = this.formControl.invalid;
-  }
-
   writeValue(value: any): void {
     this.value = value;
-  }
-
-  setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
   }
 
   registerOnChange(fn: any): void {
@@ -56,6 +44,10 @@ export class FormControlComponent implements OnInit, ControlValueAccessor {
 
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
   }
 
   onChange(event) {}

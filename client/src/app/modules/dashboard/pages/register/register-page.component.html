@@ -11,7 +11,7 @@
                 <p>Fill the below form to create a new account.</p>
                 <form [formGroup]="registerForm">
                   <div *ngFor="let control of controls">
-                    <app-form-control [formGroup]="registerForm" [formControlName]="control.options.name"
+                    <app-form-control [formControlName]="control.options.name"
                       [placeholder]="control.options.placeholder" [isFormSubmitted]="registerFormSubmitted">
                     </app-form-control>
                   </div>

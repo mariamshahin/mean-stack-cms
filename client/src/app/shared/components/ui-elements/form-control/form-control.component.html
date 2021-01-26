@@ -1,11 +1,12 @@
 <div class="form-group">
-  <input class="form-control mb-2" [type]="type" [placeholder]="placeholder" [value]="value" [disabled]="disabled"
+  <input class="form-control mb-2" [type]="type" [placeholder]="placeholder" [value]="value"
     (input)="onChange($event.target.value)" (blur)="onTouched()"
-    [ngClass]="{ 'is-invalid': isFormSubmitted && isInvalid, 'is-valid': isFormSubmitted && !isInvalid }"
+    [ngClass]="{ 'is-invalid': isFormSubmitted && !ngControl.control.valid, 'is-valid': isFormSubmitted && ngControl.control.valid }"
     [required]="isRequired">
-  <div *ngIf="isFormSubmitted && (isInvalid || isRequired)" class="help-block mt-1 text-danger"> <i
-      class="ft-alert-circle align-middle"></i> {{placeholder}} is required</div>
+  <div *ngIf="isFormSubmitted && (!ngControl.control.valid || ngControl.control.errors?.required)"
+    class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> {{placeholder}} is required</div>
   <div *ngFor="let error of errors">
-    <div *ngIf="isFormSubmitted && (isInvalid || (hasErrors && hasErrors[error.errName]))"
+    <div
+      *ngIf="isFormSubmitted && (ngControl.control.valid || (ngControl.control.errors && ngControl.control.errors[error.errName]))"
       class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> {{error.errMsg}}</div>
   </div>

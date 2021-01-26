@@ -58,13 +58,14 @@ export class RegisterPageComponent {
     return this.formTemplateControls;
   }
 
-  //  On submit click, reset field value
   onSubmit() {
     this.registerFormSubmitted = true;
     console.log(this.registerForm);
     if (this.registerForm.invalid) {
       return;
     }
+    
+
     //this.router.navigate(['/login']);
   }
 }
