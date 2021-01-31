@@ -1,23 +1,19 @@
-import { FormGroup } from '@angular/forms';
+import { Control } from 'app/shared/models/form.model';
 
-export interface Control {
+export class FormControlModel implements Control {
   type?: 'text' | 'email' | 'password';
   name: string;
   placeholder: string;
   errors?: { errName: string; errMsg: string }[];
   required?: boolean;
   disabled?: boolean;
-}
-
-export class FormControlModel {
-  options: Control;
 
   constructor(options: Control) {
-    this.options = options;
-    this.options.type = options.type || 'text';
-    this.options.required = options.required || true;
-    this.options.disabled = options.disabled || false;
+    this.type = options.type || 'text';
+    this.name = options.name;
+    this.placeholder = options.placeholder;
+    this.errors = options.errors;
+    this.required = options.required || true;
+    this.disabled = options.disabled || false;
   }
 }
-
-

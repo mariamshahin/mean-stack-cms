@@ -24,7 +24,6 @@
     <button class="btn btn-primary scroll-top" type="button" *ngIf="isScrollTopVisible" (click)="scrollToTop()"><i
         class="ft-arrow-up"></i></button>
   </div>
-
   <div class="sidenav-overlay" (click)="onOutsideClick($event);"
     [ngClass]="{'d-none': displayOverlayMenu && hideSidebar && !overlayContent , 'd-block': displayOverlayMenu && !hideSidebar && overlayContent && innerWidth < 1200}">
   </div>

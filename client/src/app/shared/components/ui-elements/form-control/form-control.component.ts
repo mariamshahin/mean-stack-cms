@@ -16,13 +16,15 @@ export class FormControlComponent implements ControlValueAccessor {
   @Input() placeholder: string;
   @Input() isFormSubmitted: boolean;
   @Input() errors: { errName: string; errMsg: string }[] = [];
-  @Input() isRequired: boolean = true;
-  @Input() disabled: boolean = false;
+  @Input() isRequired = true;
+  @Input() disabled = false;
 
   formControl: AbstractControl;
   value: any = '';
   hasErrors: {} | null;
   isInvalid: boolean;
+  errorMessage: string;
+  showError = false;
 
   constructor(
     @Self()
@@ -50,7 +52,7 @@ export class FormControlComponent implements ControlValueAccessor {
     this.disabled = isDisabled;
   }
 
-  onChange(event) {}
+  onChange(event): void {}
 
-  onTouched() {}
+  onTouched(): void {}
 }

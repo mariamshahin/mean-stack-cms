@@ -1,21 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { PasswordMatch } from 'app/shared/validators/password-match.validator';
+import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { EmailPattern, PasswordMatch } from 'app/shared/validators';
 import { FormControlModel } from 'app/shared/components/ui-elements/form-control/form-control.model';
+import { DashboardState, moduleState } from '../../store';
+import { register } from '../../store/register/register.actions';
 
 @Component({
   selector: 'app-register-page',
   templateUrl: './register-page.component.html',
   styleUrls: ['./register-page.component.scss'],
 })
-export class RegisterPageComponent {
+export class RegisterPageComponent implements OnInit {
   registerFormSubmitted = false;
+  subscription: Subscription;
 
   registerForm = new FormGroup(
     {
       username: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
+      email: new FormControl('', [Validators.required, EmailPattern]),
       password: new FormControl('', [
         Validators.required,
         Validators.minLength(6),
@@ -46,26 +50,33 @@ export class RegisterPageComponent {
       type: 'password',
       name: 'confirm_password',
       placeholder: 'Confirm password',
+      errors: [{ errName: 'PasswordMatch', errMsg: 'pa' }],
     }),
   ];
-  constructor(private router: Router) {}
 
-  get rf() {
+  ngOnInit(): void {
+    this.subscription = this.store
+      .select(moduleState)
+      .subscribe((state) => console.log(state));
+  }
+
+  constructor(private store: Store<DashboardState>) {}
+
+  get rf(): object {
     return this.registerForm.controls;
   }
 
-  get controls() {
+  get controls(): object {
     return this.formTemplateControls;
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.registerFormSubmitted = true;
     console.log(this.registerForm);
+
     if (this.registerForm.invalid) {
       return;
     }
-    
-
-    //this.router.navigate(['/login']);
+    this.store.dispatch(register(this.registerForm.value));
   }
 }

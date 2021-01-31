@@ -1,7 +1,10 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastrModule } from 'ngx-toastr';
 import {
@@ -10,19 +13,18 @@ import {
   PerfectScrollbarConfigInterface,
 } from 'ngx-perfect-scrollbar';
 
-import * as fromApp from './store/app.reducer';
-
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
+import { reducers } from './store';
+import { CustomSerializer } from './store/custom-serializer';
 
 import { AppComponent } from './app.component';
 import { FullLayoutComponent } from './core/layouts/full/full-layout.component';
 import { AdminLayoutComponent } from './core/layouts/admin/admin-layout.component';
 
-import { AuthService } from './core/auth/auth.service';
-import { AuthGuard } from './core/guards/auth.guard';
 import { WINDOW_PROVIDERS } from './shared/services/window.service';
+import { environment } from '../environments/environment';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -33,24 +35,31 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   declarations: [AppComponent, FullLayoutComponent, AdminLayoutComponent],
   imports: [
     BrowserAnimationsModule,
-    StoreModule.forRoot(fromApp.appReducer),
     AppRoutingModule,
     CoreModule,
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([]),
     SharedModule,
     NgbModule,
-    NgxSpinnerModule,
     PerfectScrollbarModule,
+    NgxSpinnerModule,
     ToastrModule.forRoot(),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+    }),
+    StoreRouterConnectingModule.forRoot({
+      serializer: CustomSerializer,
+    }),
   ],
   providers: [
-    AuthService,
-    AuthGuard,
     {
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
     },
     WINDOW_PROVIDERS,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
