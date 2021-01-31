@@ -77,6 +77,6 @@ export class RegisterPageComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
-    this.store.dispatch(register(this.registerForm.value));
+    this.store.dispatch(register({ payload: this.registerForm.value }));
   }
 }

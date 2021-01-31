@@ -13,6 +13,7 @@ import {
   PerfectScrollbarConfigInterface,
 } from 'ngx-perfect-scrollbar';
 
+import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
@@ -24,7 +25,6 @@ import { FullLayoutComponent } from './core/layouts/full/full-layout.component';
 import { AdminLayoutComponent } from './core/layouts/admin/admin-layout.component';
 
 import { WINDOW_PROVIDERS } from './shared/services/window.service';
-import { environment } from '../environments/environment';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -53,6 +53,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     }),
   ],
   providers: [
+    { provide: 'API_BASE_URL', useValue: environment.apiUrl },
     {
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,

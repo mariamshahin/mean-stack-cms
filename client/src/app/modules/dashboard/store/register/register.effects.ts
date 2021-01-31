@@ -18,9 +18,9 @@ import { DashboardService } from '../../dashboard.service';
 export class RegisterEffects {
   register$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(RegisterActions.register, AlertActions.closeAlert),
-      exhaustMap((payload) =>
-        this.dashboardService.register(payload).pipe(
+      ofType(RegisterActions.register),
+      exhaustMap((action) =>
+        this.dashboardService.register(action.payload).pipe(
           map(() =>
             RouterActions.routerNavigate({ path: ['/dashboard', 'login'] })
           ),

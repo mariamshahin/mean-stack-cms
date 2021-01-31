@@ -9,10 +9,12 @@ export enum RegisterActionsTypes {
 export const register = createAction(
   RegisterActionsTypes.Register,
   props<{
-    username: string;
-    email: string;
-    password: string;
-    confirm_password: string;
+    payload: {
+      username: string;
+      email: string;
+      password: string;
+      confirm_password: string;
+    };
   }>()
 );
 
