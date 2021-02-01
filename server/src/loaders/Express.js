@@ -1,5 +1,4 @@
 import express from 'express';
-import cors from 'cors';
 import helmet from 'helmet';
 import bodyParser from 'body-parser';
 import path from 'path';
@@ -13,11 +12,8 @@ export default class ExpressLoader {
   constructor() {
     const app = express();
     const root = process.cwd();
-    const corsOptions = {
-      origin: process.env.ORIGIN || '*',
-    };
+
     // Set up middleware
-    app.use(cors(corsOptions));
     app.use(helmet());
     app.use(compression());
     app.use(bodyParser.json());
