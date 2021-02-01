@@ -19,7 +19,7 @@ export default class ExpressLoader {
     };
 
     // Set up middleware
-    //app.use(cors(corsOptions));
+    app.use(cors(corsOptions));
     app.use(helmet());
     app.use(compression());
     app.use(bodyParser.json());
