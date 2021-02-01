@@ -34,10 +34,13 @@ export default class UserService extends Mongoose {
 
   async AuthenticateUser(body) {
     const { email, password } = body;
+    console.log(body);
     try {
       let token, result;
       const user = await this.findOne({ email });
-      const matchPw = await bcrypt.compare(password, user.password);
+      const matchPw = user
+        ? await bcrypt.compare(password, user.password)
+        : null;
       if (user && matchPw) {
         token = jwt.sign(
           {

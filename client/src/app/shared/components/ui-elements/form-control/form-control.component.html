@@ -1,0 +1,17 @@
+<div class="form-group">
+  <input class="form-control mb-2" [type]="type" [placeholder]="placeholder" [value]="value"
+    (input)="onChange($event.target.value)" (blur)="onTouched()"
+    [ngClass]="{ 'is-invalid': (isFormSubmitted && ngControl.control.invalid) || (ngControl.control.dirty && ngControl.control.invalid), 'is-valid': (isFormSubmitted && ngControl.control.invalid) || (ngControl.control.dirty && ngControl.control.valid) }"
+    [required]="isRequired">
+  <div *ngIf="isFormSubmitted && (ngControl.control.invalid || ngControl.control.errors)"
+    class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i>
+    {{ngControl.control.errors? ngControl.control.errors.required? placeholder+' is required' :
+    ngControl.control.errors.email? 'Email is invalid' : ngControl.control.errors.mustMatch? 'Passwords must match' :
+    ngControl.control.errors.minlength?'Password minimum length is ' + ngControl.control.errors.minlength.requiredLength
+    + ' characters': ''
+    :''}}</div>
+  <div *ngFor="let error of errors">
+    <div
+      *ngIf="isFormSubmitted && (ngControl.control.invalid || (ngControl.control.errors && ngControl.control.errors[error.errName]))"
+      class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> {{error.errMsg}}</div>
+  </div>
