@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { EmailPattern, PasswordMatch } from 'app/shared/validators';
 import { FormControlModel } from 'app/shared/components/ui-elements/form-control/form-control.model';
-import { DashboardState, moduleState } from '../../store';
+import { DashboardState } from '../../store';
 import { register } from '../../store/register/register.actions';
 
 @Component({
@@ -12,7 +12,7 @@ import { register } from '../../store/register/register.actions';
   templateUrl: './register-page.component.html',
   styleUrls: ['./register-page.component.scss'],
 })
-export class RegisterPageComponent implements OnInit {
+export class RegisterPageComponent {
   registerFormSubmitted = false;
   subscription: Subscription;
 
@@ -54,17 +54,7 @@ export class RegisterPageComponent implements OnInit {
     }),
   ];
 
-  ngOnInit(): void {
-    this.subscription = this.store
-      .select(moduleState)
-      .subscribe((state) => console.log(state));
-  }
-
   constructor(private store: Store<DashboardState>) {}
-
-  get rf(): object {
-    return this.registerForm.controls;
-  }
 
   get controls(): object {
     return this.formTemplateControls;
@@ -72,8 +62,6 @@ export class RegisterPageComponent implements OnInit {
 
   onSubmit(): void {
     this.registerFormSubmitted = true;
-    console.log(this.registerForm);
-
     if (this.registerForm.invalid) {
       return;
     }

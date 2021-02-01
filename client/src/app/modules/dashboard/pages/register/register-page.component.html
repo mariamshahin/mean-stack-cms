@@ -1,35 +1,18 @@
 <!--Registration Page Starts-->
-<section id="regestration" class="bg-overlay">
-  <div class="row auth-height full-height-vh m-0">
-    <div class="col-12 d-flex align-items-center justify-content-center">
-      <div class="card overflow-hidden">
-        <div class="card-content">
-          <div class="card-body">
-            <div class="row m-0">
-              <div class="col-12 px-4 py-3">
-                <h4 class="card-title mb-2">Create Account</h4>
-                <p>Fill the below form to create a new account.</p>
-                <form [formGroup]="registerForm">
-                  <div *ngFor="let control of controls">
-                    <app-form-control [formControlName]="control.name" [type]="control.type"
-                      [placeholder]="control.placeholder" [isFormSubmitted]="registerFormSubmitted">
-                    </app-form-control>
-                  </div>
-                  <app-alert></app-alert>
-                  <div class="d-flex justify-content-between flex-sm-row flex-column">
-                    <app-button [outline]="true" [routerLink]="['/dashboard', 'login']">Back To Login</app-button>
-                    <app-button type="submit" (onClick)="onSubmit()">Register</app-button>
-                  </div>
-                </form>
-                <div class="d-flex justify-content-between align-items-center">
-                  <ngx-spinner></ngx-spinner>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+<app-dashboard>
+  <h4 class="card-title mb-2">Create Account</h4>
+  <p>Fill the below form to create a new account.</p>
+  <form [formGroup]="registerForm">
+    <div *ngFor="let control of controls">
+      <app-form-control [formControlName]="control.name" [type]="control.type" [placeholder]="control.placeholder"
+        [isFormSubmitted]="registerFormSubmitted">
+      </app-form-control>
     </div>
-  </div>
-</section>
+    <app-alert></app-alert>
+    <div class="d-flex justify-content-between flex-sm-row flex-column">
+      <app-button [outline]="true" [routerLink]="['/dashboard', 'login']">Back To Login</app-button>
+      <app-button type="submit" (onClick)="onSubmit()">Register</app-button>
+    </div>
+  </form>
+</app-dashboard>
 <!--Registration Page Ends-->

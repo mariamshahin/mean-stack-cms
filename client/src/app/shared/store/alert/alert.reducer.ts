@@ -18,7 +18,6 @@ export const alertReducer = createReducer(
   on(openAlert, (state, { message }) => ({
     ...state,
     isOpen: true,
-    dispatched: true,
     message,
   })),
   on(closeAlert, (state) => ({

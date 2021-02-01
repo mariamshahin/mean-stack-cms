@@ -7,6 +7,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { ClickOutsideModule } from 'ng-click-outside';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
@@ -26,6 +27,7 @@ import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { AlertComponent } from './components/ui-elements/alert/alert.component';
 import { FormControlComponent } from './components/ui-elements/form-control/form-control.component';
 import { ButtonComponent } from './components/ui-elements/button/button.component';
+import { DashboardComponent } from './layouts/dashboard/dashboard.component';
 
 // DIRECTIVES
 import { SidebarLinkDirective } from './directives/sidebar-link.directive';
@@ -43,6 +45,7 @@ import { SidebarDirective } from './directives/sidebar.directive';
     ReactiveFormsModule,
     PerfectScrollbarModule,
     ClickOutsideModule,
+    NgxSpinnerModule,
     ReactiveComponentModule,
     StoreModule.forFeature(featureKey, reducerToken),
     EffectsModule.forFeature(moduleEffects),
@@ -51,6 +54,7 @@ import { SidebarDirective } from './directives/sidebar.directive';
     CommonModule,
     FooterComponent,
     NavbarComponent,
+    DashboardComponent,
     SideMenuComponent,
     AlertComponent,
     FormControlComponent,
@@ -60,6 +64,7 @@ import { SidebarDirective } from './directives/sidebar.directive';
   declarations: [
     FooterComponent,
     NavbarComponent,
+    DashboardComponent,
     AlertComponent,
     SideMenuComponent,
     FormControlComponent,

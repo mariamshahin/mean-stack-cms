@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import {
@@ -22,7 +21,6 @@ import { RegisterPageComponent } from './pages/register/register-page.component'
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxSpinnerModule,
     StoreModule.forFeature(featureKey, reducerToken),
     EffectsModule.forFeature(moduleEffects),
   ],
