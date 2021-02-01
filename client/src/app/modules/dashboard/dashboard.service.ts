@@ -7,7 +7,7 @@ import { AuthUser } from './dashboard.model';
 
 @Injectable({ providedIn: 'root' })
 export class DashboardService {
-  registerUrl = 'auth/login';
+  registerUrl = 'auth/register';
 
   constructor(private http: HttpClient) {}
 
