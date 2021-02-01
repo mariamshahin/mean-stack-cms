@@ -7,11 +7,10 @@
     "node": "15.5.1"
   },
   "scripts": {
+    "dev": "nodemon --exec babel-node -r dotenv/config src",
     "clean": "rm -Rf dist",
     "build": "npm run clean && babel src --out-dir dist --copy-files",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run build",
     "start": "node dist",
-    "dev": "nodemon --exec babel-node -r dotenv/config src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
