@@ -36,6 +36,7 @@
     "bootstrap": "^4.5.3",
     "classlist.js": "^1.1.20150312",
     "core-js": "^3.6.5",
+    "express": "^4.17.1",
     "ng-click-outside": "^7.0.1",
     "ngx-device-detector": "^2.0.5",
     "ngx-perfect-scrollbar": "^10.1.0",
