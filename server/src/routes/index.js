@@ -5,9 +5,10 @@ import drafts from './drafts';
 import comments from './comments';
 
 export default (app) => {
-  app.use('/auth', auth);
-  app.use('/users', users);
-  app.use('/posts', posts);
-  app.use('/drafts', drafts);
-  app.use('/comments', comments);
+  const prefix = '/api';
+  app.use(prefix + '/auth', auth);
+  app.use(prefix + '/users', users);
+  app.use(prefix + '/posts', posts);
+  app.use(prefix + '/drafts', drafts);
+  app.use(prefix + '/comments', comments);
 };
