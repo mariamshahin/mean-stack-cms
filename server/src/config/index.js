@@ -4,4 +4,5 @@ export default {
   env: process.env.NODE_ENV || 'development',
   logDir: process.env.LOG_DIR || 'logs',
   authKey: process.env.AUTH_SECRET_KEY,
+  origin: process.env.ORIGIN || '*',
 };
