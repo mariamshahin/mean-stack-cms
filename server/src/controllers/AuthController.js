@@ -9,7 +9,7 @@ export default class AuthController extends Controller {
     this.userService = new UserService(User);
   }
   register = async (req, res) => {
-    const { result, error } = await this.userService.createPost(req.body);
+    const { result, error } = await this.userService.createUser(req.body);
     if (result) {
       return this.created(res);
     }
