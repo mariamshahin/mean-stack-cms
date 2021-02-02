@@ -23,19 +23,24 @@ export const registerEmail = (val) =>
     .custom((value) => {
       return User.findOne({ email: value }).then((userDoc) => {
         if (userDoc) {
-          return Promise.reject('email address already exists!');
+          return Promise.reject('Email address already exists!');
         }
       });
     })
     .normalizeEmail();
 
-export const requiredEmail = (val) => body(val).isEmail().normalizeEmail();
+export const requiredEmail = (val) =>
+  body(val).isEmail().withMessage('Invalid email address').normalizeEmail();
 
-export const requiredPassword = (val) => body(val).trim().isLength({ min: 6 });
+export const requiredPassword = (val) =>
+  body(val)
+    .trim()
+    .isLength({ min: 6 })
+    .withMessage('Password should be minimum 6 characters');
 
 export const confirmPassword = (val, val1) =>
   body(val).custom((value, { req }) => {
-    if (value !== req.body[val1]) throw new Error('Invalid value');
+    if (value !== req.body[val1]) throw new Error('Passwords must match');
     return value;
   });
 
@@ -50,6 +55,6 @@ export const checkId = (val) =>
 
 export const checkFile = (val) =>
   check(val).custom((value, { req }) => {
-    if (!req.file) throw new Error('Invalid file');
+    if (!req.file) throw new Error('File field is required');
     return true;
   });
