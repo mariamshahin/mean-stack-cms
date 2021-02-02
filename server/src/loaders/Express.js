@@ -5,7 +5,6 @@ import bodyParser from 'body-parser';
 import path from 'path';
 import compression from 'compression';
 import morgan from 'morgan';
-import config from '../config';
 import routes from '../routes';
 import upload from '../middlewares/upload';
 import logger from '../services/LoggerService';
@@ -15,11 +14,11 @@ export default class ExpressLoader {
     const app = express();
     const root = process.cwd();
     const corsOptions = {
-      origin: config.origin,
+      origin: true,
     };
 
     // Set up middleware
-    //app.use(cors(corsOptions));
+    app.use(cors(corsOptions));
     app.use(helmet());
     app.use(compression());
     app.use(bodyParser.json());
