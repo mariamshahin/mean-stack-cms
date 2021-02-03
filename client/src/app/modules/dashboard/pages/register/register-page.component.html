@@ -3,11 +3,11 @@
   <h4 class="card-title mb-2">Create Account</h4>
   <p>Fill the below form to create a new account.</p>
   <form [formGroup]="registerForm">
-    <div *ngFor="let control of controls">
+    <ng-container *ngFor="let control of controls">
       <app-form-control [formControlName]="control.name" [type]="control.type" [placeholder]="control.placeholder"
         [isFormSubmitted]="registerFormSubmitted">
       </app-form-control>
-    </div>
+    </ng-container>
     <app-alert></app-alert>
     <div class="d-flex justify-content-between flex-sm-row flex-column">
       <app-button [outline]="true" [routerLink]="['/dashboard', 'login']">Back To Login</app-button>

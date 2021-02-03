@@ -14,17 +14,13 @@ export class RegisterEffects {
     this.actions$.pipe(
       ofType(RegisterActions.register),
       exhaustMap((action) =>
-        this.dashboardService.register(action.payload).pipe(
-          map(() =>
-            RouterActions.routerNavigate({ path: ['/dashboard', 'login'] })
-          ),
-          map(() =>
-            ToastActions.showToast({
-              message: 'there is a message',
-              title: 'user created',
-            })
+        this.dashboardService
+          .register(action.payload)
+          .pipe(
+            map(() =>
+              RouterActions.routerNavigate({ path: ['/dashboard', 'login'] })
+            )
           )
-        )
       )
     )
   );

@@ -4,6 +4,9 @@ import {
   ControlValueAccessor,
   NgControl,
 } from '@angular/forms';
+import { Store, select } from '@ngrx/store';
+import { map } from 'rxjs/operators';
+import { SharedState, selectSharedState } from 'app/shared/store';
 
 @Component({
   selector: 'app-form-control',
@@ -19,6 +22,11 @@ export class FormControlComponent implements ControlValueAccessor {
   @Input() isRequired = true;
   @Input() disabled = false;
 
+  serverValidation$ = this.store.pipe(
+    select(selectSharedState),
+    map((state) => state.alert.errors.map((error) => error.field))
+  );
+
   formControl: AbstractControl;
   value: any = '';
   hasErrors: {} | null;
@@ -29,7 +37,8 @@ export class FormControlComponent implements ControlValueAccessor {
   constructor(
     @Self()
     @Optional()
-    public ngControl: NgControl
+    public ngControl: NgControl,
+    private store: Store<SharedState>
   ) {
     if (this.ngControl) {
       this.ngControl.valueAccessor = this;
