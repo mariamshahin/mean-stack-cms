@@ -5,3 +5,4 @@ export default {
   logDir: process.env.LOG_DIR || 'logs',
   authKey: process.env.AUTH_SECRET_KEY,
 };
+console.log('!!!');

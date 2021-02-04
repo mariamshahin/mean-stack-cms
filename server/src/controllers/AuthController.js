@@ -32,7 +32,7 @@ export default class AuthController extends Controller {
       });
     }
     return res.status(status.OK).json({
-      data: result,
+      ...result,
     });
   };
 
