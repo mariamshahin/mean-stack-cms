@@ -3,7 +3,7 @@ import { status } from '../utils/constants';
 export default class Controller {
   /**
    * @description Create an instance of the Controller class
-   * @param modelName {mongoose.model.modelName} Mongoose Model name to use for the instance
+   * @param modelName {string} Mongoose Model name to use for the instance
    */
   constructor(modelName) {
     this.modelName = modelName;

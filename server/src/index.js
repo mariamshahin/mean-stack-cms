@@ -7,11 +7,10 @@ import Database from './Database';
 if (config.env === 'development') require('dotenv').config();
 
 const dir = 'uploads';
+const expressApp = new ExpressLoader();
 
 if (!fs.existsSync(dir)) {
   fs.mkdirSync(dir);
 }
-
-new ExpressLoader().Server;
-
+expressApp.server();
 Database.connect(config.dbUrl);

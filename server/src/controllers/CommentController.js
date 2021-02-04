@@ -48,21 +48,6 @@ export default class CommentController extends Controller {
     return this.found(res, result);
   };
 
-  updateOne = async (req, res) => {
-    const { id } = req.params;
-    const { result, error } = await this.commentService.updateComment(
-      id,
-      req.body
-    );
-    if (error) {
-      return this.failed(res, error);
-    }
-    if (!result) {
-      return this.notFound(res);
-    }
-    return this.updated(res);
-  };
-
   deleteOne = async (req, res) => {
     const { id } = req.params;
     const { result, error } = await this.commentService.deleteComment(id);

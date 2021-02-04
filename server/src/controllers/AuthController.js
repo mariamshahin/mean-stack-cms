@@ -11,13 +11,15 @@ export default class AuthController extends Controller {
   register = async (req, res) => {
     const { result, error } = await this.userService.createUser(req.body);
     if (result) {
-      return this.created(res);
+      return res.status(status.OK).json({
+        ...result,
+      });
     }
     return this.failed(res, error);
   };
 
   login = async (req, res) => {
-    const { user, result, error } = await this.userService.AuthenticateUser(
+    const { user, result, error } = await this.userService.authenticateUser(
       req.body
     );
     if (error) {

@@ -45,13 +45,13 @@ export default class ExpressLoader {
     });
 
     // Start application
-    this.server = app.listen(process.env.PORT, () => {
+    this.listen = app.listen(process.env.PORT, () => {
       logger.info(`Express running, now listening on port ${process.env.PORT}`);
     });
   }
 
-  Server() {
-    return this.server;
+  server() {
+    return this.listen;
   }
 
   /**
