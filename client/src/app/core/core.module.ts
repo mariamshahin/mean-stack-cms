@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { SharedModule } from 'app/shared/shared.module';
 import { interceptorProviders } from './interceptors';
+import { DashboardModule } from 'app/modules/dashboard/dashboard.module';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { interceptorProviders } from './interceptors';
     HttpClientModule,
     NgxSpinnerModule,
     SharedModule,
+    DashboardModule,
   ],
   providers: [interceptorProviders],
 })

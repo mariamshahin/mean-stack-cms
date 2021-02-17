@@ -1,11 +1,19 @@
-import { Component, Input, Self, Optional } from '@angular/core';
+import {
+  Component,
+  Input,
+  Self,
+  Optional,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
   NgControl,
 } from '@angular/forms';
-import { Store, select } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
 import { SharedState, selectSharedState } from 'app/shared/store';
 
 @Component({
@@ -13,8 +21,9 @@ import { SharedState, selectSharedState } from 'app/shared/store';
   templateUrl: './form-control.component.html',
   styleUrls: ['./form-control.component.scss'],
 })
-export class FormControlComponent implements ControlValueAccessor {
-  @Input() type: 'text' | 'email' | 'password' = 'text';
+export class FormControlComponent
+  implements ControlValueAccessor, OnInit, OnDestroy {
+  @Input() type: 'text' | 'email' | 'password' | 'textarea' = 'text';
   @Input() formControlName: string;
   @Input() placeholder: string;
   @Input() isFormSubmitted: boolean;
@@ -26,13 +35,15 @@ export class FormControlComponent implements ControlValueAccessor {
     select(selectSharedState),
     map((state) => state.alert.errors.map((error) => error.field))
   );
-
+  subscription: Subscription;
   formControl: AbstractControl;
   value: any = '';
+  initialValue: any;
   hasErrors: {} | null;
   isInvalid: boolean;
   errorMessage: string;
   showError = false;
+  isChanged = false;
 
   constructor(
     @Self()
@@ -43,6 +54,15 @@ export class FormControlComponent implements ControlValueAccessor {
     if (this.ngControl) {
       this.ngControl.valueAccessor = this;
     }
+  }
+
+  ngOnInit() {
+    this.initialValue = this.ngControl.value;
+    this.subscription = this.ngControl.valueChanges.subscribe((data) =>
+      data === this.initialValue
+        ? (this.isChanged = false)
+        : (this.isChanged = true)
+    );
   }
 
   writeValue(value: any): void {
@@ -64,4 +84,8 @@ export class FormControlComponent implements ControlValueAccessor {
   onChange(event): void {}
 
   onTouched(): void {}
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 }

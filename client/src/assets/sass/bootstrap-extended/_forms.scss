@@ -91,9 +91,8 @@ form {
 form,
 .form-group {
   label {
-    text-transform: uppercase;
     font-size: 0.85rem;
-    font-weight: 500;
+    font-weight: 400;
   }
 }
 
@@ -101,22 +100,22 @@ form,
 .form-control {
   background-clip: inherit;
 
-  &:focus{
+  &:focus {
     // placeholder transition on focus-in
-    &::placeholder{
+    &::placeholder {
       transform: translate(5px);
-      transition: all .3s ease;
+      transition: all 0.3s ease;
     }
-    ~.form-control-position{
-      i{
+    ~ .form-control-position {
+      i {
         color: map-get($primary-color, base);
       }
     }
   }
   // placeholder transition on focus-out
-  &:not(:focus){
-    &::placeholder{
-      transition: all .3s ease;
+  &:not(:focus) {
+    &::placeholder {
+      transition: all 0.3s ease;
     }
   }
   // placeholer
@@ -137,7 +136,7 @@ form,
 
   // validation feedback
   &[class*="is-"] {
-    ~[class*="-feedback"] {
+    ~ [class*="-feedback"] {
       i:before {
         font-size: 0.5rem;
         margin-right: 2px;
@@ -178,7 +177,6 @@ form,
   }
 }
 
-
 //---------validation tooltip-----------
 .needs-validation {
   .valid-tooltip,
@@ -200,7 +198,7 @@ form,
         }
       }
       input:checked {
-        &~label:after {
+        & ~ label:after {
           top: 8px !important;
           left: 8px !important;
         }
@@ -251,32 +249,31 @@ form,
   -webkit-appearance: none;
 }
 
-
 //-------------Radio----------------
 //----------------------------------
-.radio{
+.radio {
   input[type="radio"] {
     /* Basic Bootstrap Radio Buttons Hide */
     display: none;
 
     // Checked Radio
-    &:checked{
-      ~label::after {
+    &:checked {
+      ~ label::after {
         opacity: 1;
-        transform : scale(1);
-        transition : all .3s cubic-bezier(.35,.9,.4,.9);
+        transform: scale(1);
+        transition: all 0.3s cubic-bezier(0.35, 0.9, 0.4, 0.9);
       }
     }
     // Disabled Radio
-    &:disabled{
-      &~label {
+    &:disabled {
+      & ~ label {
         color: $gray-500;
       }
-      ~label::before {
+      ~ label::before {
         background-color: $body-bg !important;
         border: 1px solid $input-border-color !important;
       }
-      ~label::after {
+      ~ label::after {
         background-color: map-get($map: $grey-color, $key: lighten-1);
       }
     }
@@ -307,17 +304,17 @@ form,
       border-radius: 50%;
       left: 4px;
       opacity: 0;
-      transform : scale(3.6);
+      transform: scale(3.6);
     }
   }
   // small radio
   &.radio-sm {
     input {
-      &~label::before{
+      & ~ label::before {
         width: 15px;
         height: 15px;
       }
-      &~label::after{
+      & ~ label::after {
         width: 9px;
         height: 9px;
         left: 3px;
@@ -326,23 +323,22 @@ form,
   }
 }
 
-
 //-------------Checkbox-------------
 //----------------------------------
-.checkbox{
+.checkbox {
   position: relative;
 
-  input[type='checkbox'] {
+  input[type="checkbox"] {
     // basic checkbox - display none
     display: none;
     // checkbox checked
     &:checked {
-      &~label {
+      & ~ label {
         // after
         &:after {
           border-top-style: none;
           border-right-style: none;
-          -ms-transform: rotate(-45deg);    // IE9
+          -ms-transform: rotate(-45deg); // IE9
           transform: rotate(-45deg);
           height: 0.4rem;
           width: 0.8rem;
@@ -355,8 +351,8 @@ form,
       }
     }
     // disabled checkbox
-    &:disabled{
-      ~label{
+    &:disabled {
+      ~ label {
         color: $gray-500;
         // before
         &:before {
@@ -365,7 +361,7 @@ form,
         }
       }
       &:checked {
-        ~label {
+        ~ label {
           // after
           &:after {
             border-color: map-get($grey-color, lighten-1);
@@ -375,14 +371,14 @@ form,
     }
   }
 
-  label{
+  label {
     // label css in check box
     margin-left: 1.75rem;
     margin-bottom: 0;
 
     // Before - Outer
     &:before {
-      content: '';
+      content: "";
       height: 20px;
       width: 20px;
       position: absolute;
@@ -393,7 +389,7 @@ form,
     }
     // After - Inner
     &:after {
-      content: ' ';
+      content: " ";
       height: 20px;
       width: 20px;
       border: 1px solid $input-border-color;
@@ -406,9 +402,9 @@ form,
   }
 
   // Small Checkbox
-  &.checkbox-sm{
+  &.checkbox-sm {
     // checked checkbox
-    input:checked ~ label:after{
+    input:checked ~ label:after {
       height: 5px;
       width: 8px;
       top: 7px;
@@ -416,7 +412,8 @@ form,
     }
     label {
       // unchecked checkbox
-      &::before, &::after {
+      &::before,
+      &::after {
         width: 15px;
         height: 15px;
         top: 3px;
@@ -429,11 +426,11 @@ form,
 //-------------Switch---------------
 //----------------------------------
 .custom-switch {
-  input[type='checkbox'] {
+  input[type="checkbox"] {
     &:focus:not(:checked) ~ .custom-control-label::before {
       border-color: $gray-500;
     }
-    &~label {
+    & ~ label {
       // Before - Outer bg, border
       &:before {
         top: 0;
@@ -448,12 +445,12 @@ form,
         width: 1.2rem;
         height: 1.2rem;
         border-radius: 1rem;
-        transition: all .25s ease;
+        transition: all 0.25s ease;
       }
     }
     // checked switch
     &:checked {
-      &~label {
+      & ~ label {
         &:after {
           left: -3.5rem;
           background-color: $white !important;
@@ -462,7 +459,6 @@ form,
     }
   }
 }
-
 
 //--------Input tag---------
 .form-control.tagging {
@@ -493,7 +489,6 @@ form,
     background-color: transparent;
   }
 }
-
 
 //--------Editor---------
 .ql-editor {

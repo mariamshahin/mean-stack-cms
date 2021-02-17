@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { EmailPattern, PasswordMatch } from 'app/shared/validators';
 import { FormControlModel } from 'app/shared/components/ui-elements/form-control/form-control.model';
+import { EmailPattern, PasswordMatch } from 'app/shared/validators';
 import { DashboardState } from '../../store';
 import { register } from '../../store/register/register.actions';
 
@@ -13,9 +12,6 @@ import { register } from '../../store/register/register.actions';
   styleUrls: ['./register-page.component.scss'],
 })
 export class RegisterPageComponent {
-  registerFormSubmitted = false;
-  subscription: Subscription;
-
   registerForm = new FormGroup(
     {
       username: new FormControl('', [Validators.required]),
@@ -50,7 +46,6 @@ export class RegisterPageComponent {
       type: 'password',
       name: 'confirm_password',
       placeholder: 'Confirm password',
-      errors: [{ errName: 'PasswordMatch', errMsg: 'pa' }],
     }),
   ];
 
@@ -61,7 +56,6 @@ export class RegisterPageComponent {
   }
 
   onSubmit(): void {
-    this.registerFormSubmitted = true;
     if (this.registerForm.invalid) {
       return;
     }

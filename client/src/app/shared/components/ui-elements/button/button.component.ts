@@ -9,14 +9,15 @@ import { Color } from 'app/shared/models/style.model';
 export class ButtonComponent implements OnInit {
   @Input() type: 'button' | 'submit' = 'button';
   @Input() color: Color | 'primary' = 'primary';
-  @Input() round: boolean = false;
-  @Input() outline: boolean = false;
-  @Input() light: boolean = false;
-  @Output() onClick = new EventEmitter<any>();
+  @Input() round = false;
+  @Input() outline = false;
+  @Input() light = false;
+  @Input() disabled = false;
+  @Output() submit = new EventEmitter<any>();
 
   colorClass: string;
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.colorClass = this.outline
       ? `btn-outline-${this.color}`
       : `btn-${this.color}`;
@@ -26,7 +27,7 @@ export class ButtonComponent implements OnInit {
     this.colorClass += this.light ? ` bg-light-${this.color}` : '';
   }
 
-  onClickButton(event) {
-    this.onClick.emit(event);
+  onClickButton(event): void {
+    this.submit.emit(event);
   }
 }

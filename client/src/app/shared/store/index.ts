@@ -4,6 +4,7 @@ import {
   ActionReducerMap,
   createFeatureSelector,
   createSelector,
+  ActionReducer,
 } from '@ngrx/store';
 import * as fromAlert from './alert/alert.reducer';
 import { RouterEffects } from './router/router.effects';
@@ -22,7 +23,7 @@ export const reducerToken = new InjectionToken<ActionReducerMap<SharedState>>(
   featureKey
 );
 
-export function getReducers() {
+export function getReducers(): ActionReducer<SharedState> {
   return reducers;
 }
 
@@ -34,6 +35,9 @@ export const selectSharedModule = createFeatureSelector<SharedState>(
   featureKey
 );
 
-export const selectSharedState = createSelector(selectSharedModule, (state) => state);
+export const selectSharedState = createSelector(
+  selectSharedModule,
+  (state) => state
+);
 
 export const moduleEffects = [RouterEffects];

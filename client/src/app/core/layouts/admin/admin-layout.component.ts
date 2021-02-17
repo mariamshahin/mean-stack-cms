@@ -25,7 +25,7 @@ import { WINDOW } from 'app/shared/services/window.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdminLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
-  hideSidebar: boolean = true;
+  hideSidebar = true;
   overlayContent = false;
   configSub: Subscription;
   layoutSub: Subscription;
@@ -51,7 +51,6 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {
     this.config = this.configService.templateConf;
     this.innerWidth = window.innerWidth;
-
     // On toggle sidebar menu
     this.layoutSub = layoutService.toggleSidebar$.subscribe((isShow) => {
       this.hideSidebar = !isShow;
@@ -63,7 +62,6 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
       this.toggleSidebar();
     });
   }
-
   ngOnInit() {
     this.configSub = this.configService.templateConf$.subscribe(
       (templateConf) => {
@@ -79,7 +77,7 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     //hide overlay class on router change
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((routeChange) => {
+      .subscribe(() => {
         if (this.innerWidth < 1200) {
           this.layoutService.toggleSidebarSmallScreen(false);
           this.overlayContent = false;
@@ -104,16 +102,37 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
 
   //adjust layout
   setMenuLayout() {
+    this.overlayContent = false;
     // Side menu background color
     this.bgColor = this.config.layout.sidebar.backgroundColor;
-    this.overlayContent = false;
+    this.renderer.removeClass(this.document.body, 'blank-page');
+
     // Vertical Menu
     if (this.innerWidth < 1200) {
       // If Screen size < 1200
       this.displayOverlayMenu = true;
+      this.renderer.removeClass(this.document.body, 'vertical-layout');
+      this.renderer.removeClass(this.document.body, 'vertical-menu');
+
+      this.renderer.removeClass(this.document.body, 'horizontal-layout');
+      this.renderer.removeClass(this.document.body, 'horizontal-menu');
+      this.renderer.removeClass(this.document.body, 'horizontal-menu-padding');
+      this.renderer.removeClass(this.document.body, 'menu-expanded');
+      this.renderer.removeClass(this.document.body, 'vertical-menu');
+      this.renderer.removeClass(this.document.body, 'menu-open');
+      this.renderer.removeClass(this.document.body, 'nav-collapsed');
     } else {
       // If Screen size > 1200
       this.displayOverlayMenu = false;
+      this.renderer.addClass(this.document.body, 'vertical-layout');
+      this.renderer.addClass(this.document.body, 'vertical-menu');
+      this.renderer.setAttribute(
+        this.document.body,
+        'data-menu',
+        'vertical-menu'
+      );
+      this.renderer.removeClass(this.document.body, 'menu-hide');
+      this.renderer.removeClass(this.document.body, 'vertical-overlay-menu');
     }
   }
   loadLayout() {
@@ -121,7 +140,6 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     //toggle side menu
 
     this.setMenuLayout();
-    console.log(this.config.layout.sidebar.size);
     // For Sidebar width
 
     // vertical/Side menu expanded/collapse

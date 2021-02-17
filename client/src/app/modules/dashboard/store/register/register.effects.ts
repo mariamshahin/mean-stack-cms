@@ -1,26 +1,28 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { of } from 'rxjs';
-import { catchError, exhaustMap, map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { DashboardService } from '../../dashboard.service';
+import { User } from 'app/shared/models/data.model';
 import * as RegisterActions from './register.actions';
-import * as AlertActions from 'app/shared/store/alert/alert.actions';
-import * as RouterActions from 'app/shared/store/router/router.actions';
-import * as ToastActions from 'app/shared/store/toastr/toastr.actions';
+import * as LoginActions from '../login/login.actions';
 
 @Injectable()
 export class RegisterEffects {
   register$ = createEffect(() =>
     this.actions$.pipe(
       ofType(RegisterActions.register),
-      exhaustMap((action) =>
-        this.dashboardService
-          .register(action.payload)
-          .pipe(
-            map(() =>
-              RouterActions.routerNavigate({ path: ['/dashboard', 'login'] })
-            )
+      switchMap((action) =>
+        this.dashboardService.register(action.payload).pipe(
+          map((data: User) =>
+            LoginActions.loginSuccess({
+              data,
+              route: {
+                path: ['/admin', 'profile'],
+                extras: { state: { redirect: true } },
+              },
+            })
           )
+        )
       )
     )
   );

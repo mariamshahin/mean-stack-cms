@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { LoginGuard } from 'app/core/guards/auto-login.guard';
 import { LoginPageComponent } from './pages/login/login-page.component';
 import { RegisterPageComponent } from './pages/register/register-page.component';
 
@@ -10,16 +11,12 @@ const routes: Routes = [
       {
         path: 'login',
         component: LoginPageComponent,
-        data: {
-          title: 'Login',
-        },
+        canActivate: [LoginGuard],
       },
       {
         path: 'register',
         component: RegisterPageComponent,
-        data: {
-          title: 'Register',
-        },
+        canActivate: [LoginGuard],
       },
     ],
   },
