@@ -17,10 +17,10 @@ const fileFilter = (req, file, cb) => {
     cb(null, false);
   }
 };
-const fileSize = 2 * 1024 * 1024;
+const fileSize = 1 * 1024 * 1024;
 
 export default multer({
   storage,
   fileFilter,
-  limits: { fileSize },
+  limits: { fileSize, files: 1 },
 }).single('image');

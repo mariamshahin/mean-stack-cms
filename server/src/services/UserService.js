@@ -72,13 +72,19 @@ export default class UserService extends Mongoose {
     const { user, body } = req;
     const id = user._id;
     const { username, email, full_name, summary } = body;
+    const options = { new: true };
     try {
-      const result = await this.updateOne(id, {
-        username,
-        email,
-        full_name,
-        summary,
-      });
+      const user = await this.updateOne(
+        id,
+        {
+          username,
+          email,
+          full_name,
+          summary,
+        },
+        options
+      );
+      const result = deletePw(user);
       return { result };
     } catch (error) {
       this.logger.error(error);
@@ -89,10 +95,16 @@ export default class UserService extends Mongoose {
   async updateImage(req) {
     const { user, file } = req;
     const id = user._id;
+    const options = { new: true };
     try {
-      const result = await this.updateOne(id, {
-        image_url: `static/${file.path}`,
-      });
+      const user = await this.updateOne(
+        id,
+        {
+          image_url: `static/${file.path}`,
+        },
+        options
+      );
+      const result = deletePw(user);
       return { result };
     } catch (error) {
       this.logger.error(error);

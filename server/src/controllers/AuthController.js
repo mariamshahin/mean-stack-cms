@@ -34,7 +34,7 @@ export default class AuthController extends Controller {
       });
     }
     return res.status(status.OK).json({
-      ...result,
+      data: result,
     });
   };
 
@@ -47,10 +47,7 @@ export default class AuthController extends Controller {
     if (error) {
       return this.failed(res, error);
     }
-    if (!result) {
-      return res.sendStatus(status.INTERNAL_SERVER_ERROR);
-    }
-    return this.updated(res);
+    return this.updated(res, result);
   };
 
   updateProfileImage = async (req, res) => {
@@ -65,7 +62,7 @@ export default class AuthController extends Controller {
     if (!result) {
       return res.sendStatus(status.INTERNAL_SERVER_ERROR);
     }
-    return this.updated(res);
+    return this.updated(res, result);
   };
 
   changePassword = async (req, res) => {

@@ -23,11 +23,13 @@ export default class Controller {
   /**
    * @description return an update resourse success response
    * @param res {object} Express response object
+   * @param data {object} altered data returned from service
    * @returns {Object} Returns Express response
    */
-  updated(res) {
+  updated(res, data) {
     return res.status(status.OK).json({
       message: `${this.modelName} updated successfully!`,
+      data,
     });
   }
 
