@@ -1,7 +1,7 @@
 import { Control } from 'app/shared/models/form.model';
 
 export class FormControlModel implements Control {
-  type?: 'text' | 'email' | 'password';
+  type?: 'text' | 'email' | 'password' | 'textarea';
   name: string;
   placeholder: string;
   errors?: { errName: string; errMsg: string }[];

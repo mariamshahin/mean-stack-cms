@@ -1,10 +1,27 @@
 <ng-container *ngrxLet="alert$ as alert">
-  <ng-container *ngIf="alert.isOpen">
+  <ng-container *ngIf="alert.isOpen;else inputAlert">
     <ngb-alert type="light-danger" class="bg-light-danger mb-2" [dismissible]="false">
       <div class="alert-icon-left">
         <i class="ft-alert-triangle mr-2"></i>
-        <span>{{alert.message || 'Something went wrong!'}}</span>
+        <span class="text-bold-600">{{alert.message}}</span>
+      </div>
+      <div>
+        <ul>
+          <ng-container *ngFor="let error of alert.errors">
+            <li>{{error.message}}</li>
+          </ng-container>
+        </ul>
       </div>
     </ngb-alert>
   </ng-container>
+  <ng-template #inputAlert>
+    <ng-container *ngIf="isOpen">
+      <ngb-alert type="light-danger" class="bg-light-danger mb-2" [dismissible]="false">
+        <div class="alert-icon-left">
+          <i class="ft-alert-triangle mr-2"></i>
+          <span class="text-bold-600">{{message}}</span>
+        </div>
+      </ngb-alert>
+    </ng-container>
+  </ng-template>
 </ng-container>

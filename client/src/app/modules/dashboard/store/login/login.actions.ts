@@ -1,16 +1,42 @@
 import { createAction, props } from '@ngrx/store';
+import { Login } from '../../dashboard.model';
+import { User, Route } from 'app/shared/models/data.model';
 
-export const register = createAction(
-  '[Auth] Register',
+export enum LoginActionsTypes {
+  Login = '[Auth] Login',
+  LoginSuccess = '[Auth] Login Success',
+  LoginFail = '[Auth] Login Fail',
+  Logout = '[Auth] Logout',
+  UpdateUser = '[Auth] Update User',
+}
+
+export const login = createAction(
+  LoginActionsTypes.Login,
   props<{
-    username: string;
-    email: string;
-    password: string;
-    confirm_password: string;
+    payload: Login;
   }>()
 );
 
-// export const login = createAction(
-//   '[Auth] Login',
-//   props<{ username: string; password: string }>()
-// );
+export const loginSuccess = createAction(
+  LoginActionsTypes.LoginSuccess,
+  props<{
+    data: User;
+    route?: Route;
+  }>()
+);
+
+export const loginFail = createAction(
+  LoginActionsTypes.LoginFail,
+  props<{
+    error: string;
+  }>()
+);
+
+export const updateUser = createAction(
+  LoginActionsTypes.UpdateUser,
+  props<{
+    data: User;
+  }>()
+);
+
+export const logout = createAction(LoginActionsTypes.Logout);

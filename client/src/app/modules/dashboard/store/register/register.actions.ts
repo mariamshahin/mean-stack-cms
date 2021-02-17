@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store';
+import { Register } from '../../dashboard.model';
 
 export enum RegisterActionsTypes {
   Register = '[Auth] Register',
@@ -9,12 +10,7 @@ export enum RegisterActionsTypes {
 export const register = createAction(
   RegisterActionsTypes.Register,
   props<{
-    payload: {
-      username: string;
-      email: string;
-      password: string;
-      confirm_password: string;
-    };
+    payload: Register;
   }>()
 );
 

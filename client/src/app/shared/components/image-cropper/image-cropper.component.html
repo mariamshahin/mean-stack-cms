@@ -1,0 +1,11 @@
+<div *ngIf="isLoading">
+  <div class="d-flex justify-content-center">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+</div>
+<app-alert [isOpen]="isError" [message]="errorMessage" *ngIf="isError"></app-alert>
+<image-cropper [imageFile]="imageFile?.file" [maintainAspectRatio]="true" [roundCropper]="true" [aspectRatio]="1 / 1"
+  format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
+  (loadImageFailed)="loadImageFailed()"></image-cropper>

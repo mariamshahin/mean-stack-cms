@@ -12,10 +12,13 @@ import {
   QueryList,
   HostListener,
 } from '@angular/core';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
 import { LayoutService } from 'app/shared/services/layout.service';
 import { ConfigService } from 'app/shared/services/config.service';
+import { DashboardState, selectDashboard } from 'app/modules/dashboard/store';
+import { logout } from 'app/modules/dashboard/store/login/login.actions';
 
 @Component({
   selector: 'app-navbar',
@@ -25,23 +28,21 @@ import { ConfigService } from 'app/shared/services/config.service';
 export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   toggleClass = 'ft-maximize';
   isSmallScreen = false;
-  protected innerWidth: any;
-  hideSidebar: boolean = true;
-  public isCollapsed = true;
+  hideSidebar = true;
   layoutSub: Subscription;
   configSub: Subscription;
-
-  @ViewChild('search') searchElement: ElementRef;
-  @ViewChildren('searchResults') searchResults: QueryList<any>;
-
-  @Output()
-  toggleHideSidebar = new EventEmitter<Object>();
-
+  protected innerWidth: any;
+  public isCollapsed = true;
   public config: any = {};
 
+  userData$ = this.store.pipe(
+    select(selectDashboard),
+    map((state) => state.login.data?.user)
+  );
+
   constructor(
+    private store: Store<DashboardState>,
     private layoutService: LayoutService,
-    private router: Router,
     private configService: ConfigService,
     private cdr: ChangeDetectorRef
   ) {
@@ -101,5 +102,9 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   toggleSidebar() {
     this.layoutService.toggleSidebarSmallScreen(this.hideSidebar);
+  }
+
+  logout() {
+    this.store.dispatch(logout());
   }
 }

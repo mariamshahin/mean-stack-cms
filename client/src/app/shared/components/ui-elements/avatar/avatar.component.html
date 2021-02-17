@@ -1,0 +1,10 @@
+<ng-container *ngrxLet="userData$ as user">
+  <ng-template [ngIf]="user.image_url" [ngIfElse]="placeholder">
+    <img class="avatar" [src]="apiUrl + '/' + user.image_url" [alt]="user.username" [width]="width" [height]="height" />
+  </ng-template>
+  <ng-template #placeholder>
+    <img class="avatar" [src]="'https://avatars.dicebear.com/4.5/api/jdenticon/' + user.username + '.svg'"
+      [alt]="user.username" [width]="width" [height]="height" />
+  </ng-template>
+  <ng-content></ng-content>
+</ng-container>

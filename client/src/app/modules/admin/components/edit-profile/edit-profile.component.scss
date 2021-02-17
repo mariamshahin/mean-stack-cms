@@ -1,0 +1,22 @@
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100px;
+  height: 100px;
+  background-color: rgba(156, 156, 156, 0.5);
+  border-radius: 50%;
+  margin-top: 30px;
+  cursor: pointer;
+
+  .icon {
+    position: absolute;
+    top: 33px;
+    right: 38px;
+    font-size: 24px;
+    color: rgb(94, 94, 94);
+  }
+}
+.profile-photo {
+  cursor: pointer;
+}

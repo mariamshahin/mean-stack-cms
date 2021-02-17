@@ -3,7 +3,7 @@ import logger from './LoggerService';
 export default class MongooseService {
   /**
    * @description Create an instance of the MongooseService class
-   * @param model {mongoose.model} Mongoose Model to use for the instance
+   * @param model {object} Mongoose Model to use for the instance
    */
   constructor(model) {
     this.model = model;
@@ -70,15 +70,16 @@ export default class MongooseService {
    * @description Update a document matching the provided ID, with the body
    * @param id {string} ID for the document to update
    * @param body {object} Body to update the document with
+   * @param options {object} Options to pass to query function
    * @returns {Promise} Returns the results of the query
    */
-  updateOne(id, body) {
-    return this.model.findByIdAndUpdate(id, body).exec();
+  updateOne(id, body, options) {
+    return this.model.findByIdAndUpdate(id, body, options).exec();
   }
 
   /**
    * @description Update all documents that matchin, with the body
-   * @param obj {obj} object to search in the dicuments
+   * @param obj {object} object to search in the dicuments
    * @param body {object} Body to update the document with
    * @returns {Promise} Returns the results of the query
    */

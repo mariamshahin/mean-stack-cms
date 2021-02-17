@@ -9,6 +9,7 @@ export const openAlert = createAction(
   AlertActionsTypes.OpenAlert,
   props<{
     message: string;
+    errors: { message: string; field: string }[];
   }>()
 );
 

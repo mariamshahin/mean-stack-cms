@@ -1,18 +1,25 @@
-<!--Registration Page Starts-->
+<!--Registration Page Start-->
 <app-dashboard>
-  <h4 class="card-title mb-2">Create Account</h4>
-  <p>Fill the below form to create a new account.</p>
-  <form [formGroup]="registerForm">
-    <div *ngFor="let control of controls">
+  <div class="border-bottom mb-3">
+    <h4 class="card-title mb-2">Create Account</h4>
+    <p>Fill the below form to create a new account.</p>
+  </div>
+  <form [formGroup]="registerForm" #form="ngForm">
+    <ng-container *ngFor="let control of controls">
       <app-form-control [formControlName]="control.name" [type]="control.type" [placeholder]="control.placeholder"
-        [isFormSubmitted]="registerFormSubmitted">
+        [isFormSubmitted]="form.submitted">
       </app-form-control>
-    </div>
+    </ng-container>
     <app-alert></app-alert>
-    <div class="d-flex justify-content-between flex-sm-row flex-column">
-      <app-button [outline]="true" [routerLink]="['/dashboard', 'login']">Back To Login</app-button>
-      <app-button type="submit" (onClick)="onSubmit()">Register</app-button>
+    <div class="row">
+      <div class="col-12 d-flex justify-content-center my-2">
+        <app-button type="submit" (submit)="onSubmit()">Register</app-button>
+      </div>
+      <div class="col-12 d-flex justify-content-center my-2">
+        <span class="font-small-3">Already registered? <a [routerLink]="['/dashboard', 'login']">Back To
+            Login</a></span>
+      </div>
     </div>
   </form>
 </app-dashboard>
-<!--Registration Page Ends-->
+<!--Registration Page End-->

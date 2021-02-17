@@ -15,16 +15,32 @@ export default class UserService extends Mongoose {
     this.draft = new PostService(Draft);
   }
 
+  handleAuth(user) {
+    return jwt.sign(
+      {
+        email: user.email,
+        userId: user._id.toString(),
+      },
+      config.authKey,
+      { expiresIn: '7d' }
+    );
+  }
+
   async createUser(body) {
     const { username, email, password } = body;
     try {
+      let token, result;
       const hashedPw = await bcrypt.hash(password, 12);
-      const result = await this.create({
+      const user = await this.create({
         username,
         email,
         password: hashedPw,
         role: roles.SUBSCRIBER,
       });
+      if (user) {
+        token = this.handleAuth(user);
+        result = { token, user };
+      }
       return { result };
     } catch (error) {
       this.logger.error(error);
@@ -32,9 +48,8 @@ export default class UserService extends Mongoose {
     }
   }
 
-  async AuthenticateUser(body) {
+  async authenticateUser(body) {
     const { email, password } = body;
-    console.log(body);
     try {
       let token, result;
       const user = await this.findOne({ email });
@@ -42,14 +57,7 @@ export default class UserService extends Mongoose {
         ? await bcrypt.compare(password, user.password)
         : null;
       if (user && matchPw) {
-        token = jwt.sign(
-          {
-            email: user.email,
-            userId: user._id.toString(),
-          },
-          config.authKey,
-          { expiresIn: '7d' }
-        );
+        token = this.handleAuth(user);
         user.password = undefined;
         result = { token, user };
       }
@@ -64,13 +72,19 @@ export default class UserService extends Mongoose {
     const { user, body } = req;
     const id = user._id;
     const { username, email, full_name, summary } = body;
+    const options = { new: true };
     try {
-      const result = await this.updateOne(id, {
-        username,
-        email,
-        full_name,
-        summary,
-      });
+      const user = await this.updateOne(
+        id,
+        {
+          username,
+          email,
+          full_name,
+          summary,
+        },
+        options
+      );
+      const result = deletePw(user);
       return { result };
     } catch (error) {
       this.logger.error(error);
@@ -81,10 +95,16 @@ export default class UserService extends Mongoose {
   async updateImage(req) {
     const { user, file } = req;
     const id = user._id;
+    const options = { new: true };
     try {
-      const result = await this.updateOne(id, {
-        image_url: `static/${file.path}`,
-      });
+      const user = await this.updateOne(
+        id,
+        {
+          image_url: `static/${file.path}`,
+        },
+        options
+      );
+      const result = deletePw(user);
       return { result };
     } catch (error) {
       this.logger.error(error);
