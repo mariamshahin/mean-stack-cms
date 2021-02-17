@@ -1,56 +1,38 @@
-// import { createReducer, on, Action } from '@ngrx/store';
+import { createReducer, on, Action } from '@ngrx/store';
+import { loginSuccess, loginFail, updateUser } from './login.actions';
+import { User } from 'app/shared/models/data.model';
 
-// import { register } from './login.actions';
+export const featureKey = 'login';
 
-// export const featureKey = 'login';
+export interface State {
+  data: User;
+  error: string;
+}
 
-// export interface State {
-//   isOpen: boolean;
-//   message: string;
-// }
+export const initialState: Readonly<State> = {
+  data: null,
+  error: null,
+};
 
-// export const initialState: Readonly<State> = {
-//   isOpen: false,
-//   message: null,
-// };
+export const loginReducer = createReducer(
+  initialState,
+  on(loginSuccess, (state, { data }) => ({
+    ...state,
+    data,
+  })),
+  on(loginFail, (state, { error }) => ({
+    ...state,
+    error,
+  })),
+  on(updateUser, (state, { data }) => ({
+    ...state,
+    data: { ...state.data, user: { ...state.data.user, ...data } },
+  }))
+);
 
-// export const _reducer = createReducer(
-//   initialState,
-//   on(openAlert, (state, { message }) => ({
-//     isOpen: true,
-//     message,
-//     ...state,
-//   })),
-//   on(closeAlert, (state) => ({
-//     isOpen: false,
-//     message: null,
-//     ...state,
-//   }))
-// );
-
-// export function reducer(state: State = initialState, action: Action) {
-//   return _reducer(state, action);
-// }
-
-
-
-
-
-// import { createReducer, on, Action } from '@ngrx/store';
-
-// import { register, login } from './dashboard.actions';
-// import { AuthUser } from '../dashboard.model';
-
-// //export const initialState: Readonly<AuthUser> = {};
-
-// // export const registerReducer = createReducer(
-// //   initialState,
-// //   on(register, (state, { payload }) => ({
-// //     ...state
-// //   }))
-// // );
-
-// // export const loginReducer = createReducer(
-// //   initialState,
-// //   on(login, (state, { Book }) => [...Book])
-// // );
+export function reducer(
+  state: State = initialState,
+  action: Action
+): Readonly<State> {
+  return loginReducer(state, action);
+}

@@ -1,5 +1,5 @@
 <ng-container *ngrxLet="alert$ as alert">
-  <ng-container *ngIf="alert.isOpen">
+  <ng-container *ngIf="alert.isOpen;else inputAlert">
     <ngb-alert type="light-danger" class="bg-light-danger mb-2" [dismissible]="false">
       <div class="alert-icon-left">
         <i class="ft-alert-triangle mr-2"></i>
@@ -14,4 +14,14 @@
       </div>
     </ngb-alert>
   </ng-container>
+  <ng-template #inputAlert>
+    <ng-container *ngIf="isOpen">
+      <ngb-alert type="light-danger" class="bg-light-danger mb-2" [dismissible]="false">
+        <div class="alert-icon-left">
+          <i class="ft-alert-triangle mr-2"></i>
+          <span class="text-bold-600">{{message}}</span>
+        </div>
+      </ngb-alert>
+    </ng-container>
+  </ng-template>
 </ng-container>

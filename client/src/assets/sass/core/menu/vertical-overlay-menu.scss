@@ -20,7 +20,6 @@
 // Vertical Overlay Menu
 //=========================
 .vertical-overlay-menu {
-
   //Content expanded
   .content {
     @include main-menu-width(0);
@@ -32,8 +31,8 @@
       width: 175px;
 
       .nav-item {
-        padding-top: .25rem;
-        padding-bottom: .25rem;
+        padding-top: 0.25rem;
+        padding-bottom: 0.25rem;
       }
     }
 
@@ -52,7 +51,7 @@
     .navigation {
       li a {
         letter-spacing: 0.6px;
-        font-size: .95rem;
+        font-size: 0.95rem;
       }
     }
   }
@@ -61,10 +60,9 @@
   .main-menu {
     opacity: 0;
     transform: translate3d(0, 0, 0);
-    transition: opacity .25s, transform .25s;
+    transition: opacity 0.25s, transform 0.25s;
     width: $menu-expanded-width;
     left: -($menu-expanded-width);
-
 
     .navigation {
       .navigation-header {
@@ -73,9 +71,9 @@
         }
       }
 
-      >li {
-        >a {
-          >i {
+      > li {
+        > a {
+          > i {
             font-size: 1.2rem;
             margin-right: 12px;
             float: left;
@@ -111,7 +109,7 @@
     .main-menu {
       opacity: 1;
       transform: translate3d($menu-expanded-width, 0, 0);
-      transition: opacity .25s, transform .25s;
+      transition: opacity 0.25s, transform 0.25s;
       z-index: 998;
     }
   }
@@ -124,7 +122,6 @@
 
   // Flipped menu open
   &.menu-flipped {
-
     // Main menu hidden on flipped
     .main-menu {
       right: -($menu-expanded-width);
@@ -155,11 +152,11 @@
     }
   }
 
-  &:not([class*='application']) .main-panel .main-content {
+  &:not([class*="application"]) .main-panel .main-content {
     min-height: calc((var(--vh, 1vh) * 100) - 7.44rem);
   }
 
-  &[class*='application'] .main-panel .main-content {
+  &[class*="application"] .main-panel .main-content {
     min-height: calc((var(--vh, 1vh) * 100) - 8.45rem);
   }
 
@@ -219,8 +216,7 @@
 }
 
 // Layout Boxed for down to sm screen
-@media screen and (max-width : 575px) {
-
+@media screen and (max-width: 575px) {
   // main-menu for Box-layout
   .vertical-overlay-menu {
     &.boxed-layout {
@@ -239,11 +235,11 @@
   &.vertical-overlay-menu.menu-collapsed {
     .main-menu {
       .navigation {
-        >li>a {
+        > li > a {
           padding: 14px 16px !important;
         }
 
-        >li.navigation-header .feather.icon-minus {
+        > li.navigation-header .feather.icon-minus {
           padding: 12px 0px;
         }
       }
@@ -254,8 +250,8 @@
     .main-menu {
       .navigation {
         li.has-sub {
-          >a:not(.mm-next):after {
-            content: '\f104';
+          > a:not(.mm-next):after {
+            content: "\f104";
           }
         }
       }

@@ -1,7 +1,7 @@
 import {
   required,
   optionalString,
-  registerEmail,
+  emailExist,
   requiredPassword,
   confirmPassword,
   requiredEmail,
@@ -10,7 +10,7 @@ import {
 
 export const registerValidator = [
   required('username'),
-  registerEmail('email'),
+  emailExist('email'),
   requiredPassword('password'),
   confirmPassword('confirm_password', 'password'),
 ];

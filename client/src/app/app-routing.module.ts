@@ -12,21 +12,15 @@ import { AuthGuard } from './core/guards/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard/register',
-    pathMatch: 'full',
-  },
-  {
-    path: '',
     component: FullLayoutComponent,
-    data: { title: 'full Views' },
     children: FULL_ROUTES,
   },
   {
     path: '',
     component: AdminLayoutComponent,
-    data: { title: 'admin Views' },
     children: ADMIN_ROUTES,
-   // canActivate: [AuthGuard],
+    // roles: string[] required in module routing data for auth guard
+    canActivateChild: [AuthGuard],
   },
   {
     path: '**',

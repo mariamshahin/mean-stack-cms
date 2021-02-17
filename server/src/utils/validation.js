@@ -16,9 +16,10 @@ export const minMaxLength = (val, min, max) =>
     .isLength({ min, max })
     .withMessage(`Characters should be maximum ${max}`);
 
-export const registerEmail = (val) =>
+export const emailExist = (val) =>
   body(val)
     .isEmail()
+    .withMessage('Invalid email address')
     .bail()
     .custom((value) => {
       return User.findOne({ email: value }).then((userDoc) => {
@@ -55,6 +56,6 @@ export const checkId = (val) =>
 
 export const checkFile = (val) =>
   check(val).custom((value, { req }) => {
-    if (!req.file) throw new Error('File field is required');
+    if (!req.file) throw new Error(`${val} is required`);
     return true;
   });

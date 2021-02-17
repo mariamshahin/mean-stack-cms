@@ -8,10 +8,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { ClickOutsideModule } from 'ng-click-outside';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { FileUploadModule } from 'ng2-file-upload';
 
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { ReactiveComponentModule } from '@ngrx/component';
+import { ImageCropperModule } from 'ngx-image-cropper';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import {
   featureKey,
@@ -24,9 +27,13 @@ import {
 import { FooterComponent } from './components/footer/footer.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
+import { FileUploadComponent } from './components/file-upload/file-upload.component';
+import { ImageCropperComponent } from './components/image-cropper/image-cropper.component';
 import { AlertComponent } from './components/ui-elements/alert/alert.component';
 import { FormControlComponent } from './components/ui-elements/form-control/form-control.component';
 import { ButtonComponent } from './components/ui-elements/button/button.component';
+import { AvatarComponent } from './components/ui-elements/avatar/avatar.component';
+import { ModalComponent } from './components/ui-elements/modal/modal.component';
 import { DashboardComponent } from './layouts/dashboard/dashboard.component';
 
 // DIRECTIVES
@@ -46,12 +53,16 @@ import { SidebarDirective } from './directives/sidebar.directive';
     PerfectScrollbarModule,
     ClickOutsideModule,
     NgxSpinnerModule,
+    FileUploadModule,
     ReactiveComponentModule,
+    ImageCropperModule,
+    FontAwesomeModule,
     StoreModule.forFeature(featureKey, reducerToken),
     EffectsModule.forFeature(moduleEffects),
   ],
   exports: [
     CommonModule,
+    FontAwesomeModule,
     FooterComponent,
     NavbarComponent,
     DashboardComponent,
@@ -59,6 +70,10 @@ import { SidebarDirective } from './directives/sidebar.directive';
     AlertComponent,
     FormControlComponent,
     ButtonComponent,
+    AvatarComponent,
+    ModalComponent,
+    FileUploadComponent,
+    ImageCropperComponent,
     SidebarDirective,
   ],
   declarations: [
@@ -69,6 +84,10 @@ import { SidebarDirective } from './directives/sidebar.directive';
     SideMenuComponent,
     FormControlComponent,
     ButtonComponent,
+    AvatarComponent,
+    ModalComponent,
+    FileUploadComponent,
+    ImageCropperComponent,
     SidebarLinkDirective,
     SidebarDropdownDirective,
     SidebarAnchorToggleDirective,

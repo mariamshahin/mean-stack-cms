@@ -1,0 +1,17 @@
+<div ng2FileDrop class="py-3 mb-3 text-center font-medium-5 text-uppercase grey drop-zone"
+  [ngClass]="{'nv-file-over': hasDropZoneOver}" [uploader]="uploader" (click)="fileInput.click();"
+  (fileOver)="fileOver($event)">
+  <span class="file-input">
+    <input type="file" #fileInput ng2FileSelect [uploader]="uploader" />
+  </span>
+  <div class="zone-content">
+    <span class="d-block">
+      Drage and drop an image file or click here
+    </span>
+    <span class="d-block font-small-3">Allowed file types (png, jpg, jpeg)</span>
+    <span class="d-block font-small-3">Maximum file size {{toMegaBytes(this.maxFileSize)}} Mb</span>
+  </div>
+  <i class="fas fa-cloud-upload-alt"></i>
+  <fa-icon class="d-block mt-2 font-large-1" [icon]="faCloudUploadAlt"></fa-icon>
+</div>
+<app-alert [isOpen]="isError" [message]="errorMessage" *ngIf="isError"></app-alert>

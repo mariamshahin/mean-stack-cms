@@ -3,7 +3,7 @@ import { status } from '../utils/constants';
 export default class Controller {
   /**
    * @description Create an instance of the Controller class
-   * @param modelName {mongoose.model.modelName} Mongoose Model name to use for the instance
+   * @param modelName {string} Mongoose Model name to use for the instance
    */
   constructor(modelName) {
     this.modelName = modelName;
@@ -23,11 +23,13 @@ export default class Controller {
   /**
    * @description return an update resourse success response
    * @param res {object} Express response object
+   * @param data {object} altered data returned from service
    * @returns {Object} Returns Express response
    */
-  updated(res) {
+  updated(res, data) {
     return res.status(status.OK).json({
       message: `${this.modelName} updated successfully!`,
+      data,
     });
   }
 

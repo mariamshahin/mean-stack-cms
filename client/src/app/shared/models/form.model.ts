@@ -1,5 +1,5 @@
 export interface Control {
-  type?: 'text' | 'email' | 'password';
+  type?: 'text' | 'email' | 'password' | 'textarea';
   name: string;
   placeholder: string;
   errors?: { errName: string; errMsg: string }[];

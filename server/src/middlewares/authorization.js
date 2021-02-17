@@ -1,7 +1,7 @@
 /**
  * @description Check user authorization using user role
  * @param role {string} Any number of roles to check
- * @returns {Promise<*>}
+ * @returns {any}
  */
 export default (...roles) => {
   return function (req, res, next) {
@@ -12,7 +12,6 @@ export default (...roles) => {
       }
       next();
     } catch (error) {
-      console.log(error);
       res.status(500).json({ error });
     }
   };

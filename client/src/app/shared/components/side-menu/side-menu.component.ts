@@ -59,7 +59,7 @@ export class SideMenuComponent implements OnInit, AfterViewInit, OnDestroy {
     );
     this.layoutSub = this.layoutService.overlaySidebarToggle$.subscribe();
   }
-  
+
   @HostListener('window:resize', ['$event'])
   onWindowResize(event) {
     if (this.resizeTimeout) {
@@ -77,7 +77,6 @@ export class SideMenuComponent implements OnInit, AfterViewInit, OnDestroy {
     let conf = this.config;
     conf.layout.sidebar.collapsed = !this.config.layout.sidebar.collapsed;
     this.configService.applyTemplateConfigChange({ layout: conf.layout });
-    console.log(conf.layout.sidebar.collapsed);
     setTimeout(() => {
       this.fireRefreshEventOnWindow();
     }, 300);

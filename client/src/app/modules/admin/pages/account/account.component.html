@@ -1,0 +1,52 @@
+<div class="row">
+    <div class="col-12">
+        <div class="content-header">Account Settings</div>
+        <p class="content-sub-header mb-1">Configure account settings to your needs.</p>
+    </div>
+</div>
+<!-- Account Settings starts -->
+<div class="row">
+    <div class="col-md-3 mt-3">
+        <!-- Nav tabs -->
+        <ul class="nav flex-column nav-pills" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link" href="javascript:;" [ngClass]="{active: activeTab === 'edit-profile'}"
+                    (click)="setActiveTab('edit-profile')" id="edit-profile-tab" data-toggle="tab" role="tab"
+                    aria-controls="edit-profile" aria-selected="true">
+                    <i class="ft-settings mr-1 align-middle"></i>
+                    <span class="align-middle">Edit Profile</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="javascript:;" [ngClass]="{active: activeTab === 'change-password'}"
+                    (click)="setActiveTab('change-password')" id="change-password-tab" data-toggle="tab" role="tab"
+                    aria-controls="change-password" aria-selected="false">
+                    <i class="ft-lock mr-1 align-middle"></i>
+                    <span class="align-middle">Change Password</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-9">
+        <!-- Tab panes -->
+        <div class="card">
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="tab-content">
+                        <!-- Edit Profile Tab -->
+                        <div class="tab-pane" [ngClass]="{active: activeTab === 'edit-profile'}" id="edit-profile"
+                            role="tabpanel" aria-labelledby="edit-profile-tab">
+                            <app-edit-profile></app-edit-profile>
+                        </div>
+                        <!-- Change Password Tab -->
+                        <div class="tab-pane" [ngClass]="{active: activeTab === 'change-password'}" id="change-password"
+                            role="tabpanel" aria-labelledby="change-password-tab">
+                            <app-change-password></app-change-password>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Account Settings ends -->

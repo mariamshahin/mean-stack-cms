@@ -1,8 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
-import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-//import { AuthService } from 'app/shared/auth/auth.service';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { Component } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { FormControlModel } from 'app/shared/components/ui-elements/form-control/form-control.model';
+import { EmailPattern } from 'app/shared/validators';
+import { DashboardState } from '../../store';
+import { login } from '../../store/login/login.actions';
 
 @Component({
   selector: 'app-login-page',
@@ -10,51 +12,37 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./login-page.component.scss'],
 })
 export class LoginPageComponent {
-  loginFormSubmitted = false;
-  isLoginFailed = false;
-
   loginForm = new FormGroup({
-    username: new FormControl('guest@apex.com', [Validators.required]),
-    password: new FormControl('Password', [Validators.required]),
-    rememberMe: new FormControl(true),
+    email: new FormControl('', [Validators.required, EmailPattern]),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(6),
+    ]),
   });
 
-  constructor(
-    private router: Router,
-    //private authService: AuthService,
-    private spinner: NgxSpinnerService,
-    private route: ActivatedRoute
-  ) {}
+  formTemplateControls = [
+    new FormControlModel({
+      type: 'email',
+      name: 'email',
+      placeholder: 'Email',
+    }),
+    new FormControlModel({
+      type: 'password',
+      name: 'password',
+      placeholder: 'Password',
+    }),
+  ];
 
-  get lf() {
-    return this.loginForm.controls;
+  constructor(private store: Store<DashboardState>) {}
+
+  get controls(): object {
+    return this.formTemplateControls;
   }
 
-  // On submit button click
-  onSubmit() {
-    this.loginFormSubmitted = true;
+  onSubmit(): void {
     if (this.loginForm.invalid) {
       return;
     }
-
-    this.spinner.show(undefined, {
-      type: 'ball-triangle-path',
-      size: 'medium',
-      bdColor: 'rgba(0, 0, 0, 0.8)',
-      color: '#fff',
-      fullScreen: true,
-    });
-
-    // this.authService
-    //   .signinUser(this.loginForm.value.username, this.loginForm.value.password)
-    //   .then((res) => {
-    //     this.spinner.hide();
-    //     this.router.navigate(['/dashboard/dashboard1']);
-    //   })
-    //   .catch((err) => {
-    //     this.isLoginFailed = true;
-    //     this.spinner.hide();
-    //     console.log('error: ' + err);
-    //   });
+    this.store.dispatch(login({ payload: this.loginForm.value }));
   }
 }

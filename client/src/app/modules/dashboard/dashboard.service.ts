@@ -1,17 +1,25 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { AuthUser } from './dashboard.model';
+import { Register, Login } from './dashboard.model';
+import { User } from 'app/shared/models/data.model';
 
 @Injectable({ providedIn: 'root' })
 export class DashboardService {
-  registerUrl = 'auth/register';
+  private registerUrl = 'auth/register';
+  private loginUrl = 'auth/login';
 
   constructor(private http: HttpClient) {}
 
-  register(data: object): Observable<object> {
-    return this.http.post(this.registerUrl, data);
+  register(data: Register): Observable<User> {
+    return this.http.post<User>(this.registerUrl, data);
+  }
+
+  login(data: Login): Observable<{ data: User }> {
+    return this.http.post<{ data: User }>(this.loginUrl, data);
+  }
+
+  logout(): void {
+    localStorage.clear();
   }
 }
