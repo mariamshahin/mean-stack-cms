@@ -2,7 +2,6 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import bodyParser from 'body-parser';
-import multer from 'multer';
 import path from 'path';
 import compression from 'compression';
 import morgan from 'morgan';
