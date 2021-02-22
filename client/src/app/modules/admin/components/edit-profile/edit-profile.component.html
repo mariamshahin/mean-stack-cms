@@ -20,8 +20,9 @@
     <app-file-upload (selectFile)="selectFile($event)"></app-file-upload>
     <app-image-cropper [imageFile]="imageFile" (imageCrop)="imageCrop($event)"></app-image-cropper>
     <app-alert></app-alert>
-    <div class="d-flex justify-content-center mt-5" *ngIf="croppedImage">
-      <app-button type="submit" [disabled]="!croppedImage" (submit)="submitUploadImage()">Submit</app-button>
+    <div class="d-flex justify-content-center mt-2" *ngIf="croppedImage">
+      <app-button class="px-4" type="submit" [disabled]="!croppedImage" (submit)="submitUploadImage()">Submit
+      </app-button>
     </div>
   </div>
 </app-modal>

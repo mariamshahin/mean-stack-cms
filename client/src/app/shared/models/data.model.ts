@@ -1,4 +1,5 @@
 import { NavigationExtras } from '@angular/router';
+import { TemplateRef } from '@angular/core';
 
 export enum Role {
   admin = 'admin',
@@ -24,6 +25,13 @@ export interface Route {
   queryParams?: object;
   extras?: NavigationExtras;
   redirect?: boolean;
+}
+
+export interface DataTableColumn {
+  name?: string;
+  prop: string;
+  flexGrow: number;
+  cellTemplate?: TemplateRef<any>;
 }
 
 export class User {

@@ -1,4 +1,4 @@
-import { Component, Input, Inject, Output } from '@angular/core';
+import { Component, Input, Inject } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { DashboardState, selectDashboard } from 'app/modules/dashboard/store';
@@ -11,6 +11,8 @@ import { DashboardState, selectDashboard } from 'app/modules/dashboard/store';
 export class AvatarComponent {
   @Input() width = 50;
   @Input() height = 50;
+  @Input() profile = true;
+  @Input() user: { [key: string]: any };
 
   userData$ = this.store.pipe(
     select(selectDashboard),

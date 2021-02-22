@@ -1,15 +1,9 @@
 import {
   Component,
-  Output,
-  EventEmitter,
   OnDestroy,
   OnInit,
   AfterViewInit,
   ChangeDetectorRef,
-  ViewChild,
-  ElementRef,
-  ViewChildren,
-  QueryList,
   HostListener,
 } from '@angular/core';
 import { Subscription } from 'rxjs';

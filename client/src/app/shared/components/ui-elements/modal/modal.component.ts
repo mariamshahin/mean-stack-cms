@@ -31,12 +31,12 @@ export class ModalComponent {
   }
 
   close(): void {
-    this.modalRef.close();
+    this.modalRef?.close();
     this.cleanUp.emit();
   }
 
   dismiss(): void {
-    this.modalRef.dismiss();
+    this.modalRef?.dismiss();
     this.cleanUp.emit();
   }
 }

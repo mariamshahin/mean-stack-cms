@@ -1,0 +1,214 @@
+<ng-container *ngrxLet="userData$ as user">
+    <div class="row">
+        <div class="col-12 col-sm-7">
+            <div class="media d-flex align-items-center">
+                <app-avatar [user]="user" [width]="60" [height]="60" [profile]="false"></app-avatar>
+                <div class="media-body ml-3">
+                    <h4>
+                        <span class="users-view-name mr-1">{{user?.full_name ?
+                            user?.full_name : user?.username}}</span>
+                        <span class="text-muted font-medium-1">
+                            <span>@</span>
+                            <span class="users-view-username">{{user?.username}}</span>
+                        </span>
+                    </h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
+            <app-button class="mx-1" (click)="openRoleModal()">Change Role</app-button>
+            <app-button class="mx-1" color="danger" (click)="openDeleteModal()">Delete User</app-button>
+        </div>
+    </div>
+    <div class="row">
+        <!-- User Data Start -->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-xl-4">
+                                <table class="table table-borderless">
+                                    <tbody>
+                                        <tr>
+                                            <td>Registered:</td>
+                                            <td>{{user?.created_at | date: 'dd/MM/yyyy'}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Role:</td>
+                                            <td class="users-view-role">{{user?.role}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email:</td>
+                                            <td>{{user?.email}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- User Data End -->
+        <!-- Posts Start -->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Latest Posts</h5>
+                </div>
+                <div class="card-content">
+                    <div class="card-body table-responsive text-center">
+                        <div *ngIf="user;else loading">
+                            <div *ngIf="user.posts.length;else noPosts">
+                                <table class="table text-center m-0">
+                                    <thead>
+                                        <tr>
+                                            <th
+                                                *ngFor="let title of ['','Title','Content','Create Date','Last Update','']">
+                                                {{title}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let post of user.posts">
+                                            <td>
+
+                                                <img *ngIf="post.image_url;else placeholder" class="post-image"
+                                                    [src]="apiUrl + '/' + post.image_url" [alt]="post.title">
+                                            </td>
+
+                                            <td>
+                                                <div class="post-content">{{post.title}}</div>
+                                            </td>
+                                            <td>
+                                                <div class="post-content">
+                                                    {{post.content}}
+                                                </div>
+                                            </td>
+                                            <td>{{post.created_at | date: 'dd/MM/yyyy'}}</td>
+                                            <td>{{post.updated_at | date: 'dd/MM/yyyy'}}</td>
+                                            <td>
+                                                <a [routerLink]="['/admin','posts',post._id]" class="btn btn-primary">
+                                                    <span> Edit Post</span>
+                                                    <i class="ft-edit-2 font-medium-2 ml-2"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Posts End -->
+        <!-- Drafts Start -->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Latest Drafts</h5>
+                </div>
+                <div class="card-content">
+                    <div class="card-body table-responsive text-center">
+                        <div *ngIf="user;else loading">
+                            <div *ngIf="user.drafts.length;else noDrafts">
+                                <table class="table text-center m-0">
+                                    <thead>
+                                        <tr>
+                                            <th
+                                                *ngFor="let title of ['','Title','Content','Create Date','Last Update','']">
+                                                {{title}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let draft of user.drafts">
+                                            <td>
+
+                                                <img *ngIf="daft.image_url;else placeholder" class="post-image"
+                                                    [src]="apiUrl + '/' + draft.image_url" [alt]="draft.title">
+
+                                            </td>
+                                            <td>
+                                                <div class="post-content">{{draft.title}}</div>
+                                            </td>
+                                            <td>
+                                                <div class="post-content">{{draft.content}}</div>
+                                            </td>
+                                            <td>{{draft.created_at | date: 'dd/MM/yyyy'}}</td>
+                                            <td>{{draft.updated_at | date: 'dd/MM/yyyy'}}</td>
+                                            <td>
+                                                <a [routerLink]="['/admin','drafts',draft._id]" class="btn btn-primary">
+                                                    <span> Edit Draft</span>
+                                                    <i class="ft-edit-2 font-medium-2 ml-2"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Drafts End -->
+    </div>
+    <ng-template #loading>
+        <span>Loading...</span>
+    </ng-template>
+    <ng-template #noPosts>No Posts Found</ng-template>
+    <ng-template #noDrafts>No Drafts Found</ng-template>
+    <ng-template #placeholder><img src="https://via.placeholder.com/120/DBDEE5/6c757d?text=No+Image">
+    </ng-template>
+    <!-- Modal Start -->
+    <app-modal #changeRoleModal title="Change User Role">
+        <div class="m-5">
+            <form [formGroup]="changeRoleForm">
+                <ul class="list-unstyled mb-0">
+                    <div class="row">
+                        <div *ngFor="let role of roles" class="col-12 col-md-6 my-1">
+                            <li class="d-inline-block">
+                                <div class="radio radio-primary">
+                                    <input type="radio" [id]="role" [value]="role" formControlName="role"
+                                        [checked]="role === user?.role">
+                                    <label [for]="role">{{role}}</label>
+                                </div>
+                            </li>
+                        </div>
+                    </div>
+                </ul>
+            </form>
+            <app-alert></app-alert>
+            <div class="d-flex justify-content-center mt-3">
+                <app-button class="px-4" type="submit"
+                    [disabled]="!crf.dirty || crf.invalid || crf.controls.role.value === user?.role"
+                    (submit)="submitChangeRole()">
+                    Submit
+                </app-button>
+            </div>
+        </div>
+    </app-modal>
+    <!-- Modal End -->
+    <!-- Modal Start -->
+    <app-modal #deleteUserModal title="Delete User">
+        <div class="m-5">
+            <div class="row">
+                <div class="col-12 d-flex justify-content-center mb-3"><i
+                        class="ft-alert-triangle text-warning font-large-3"></i>
+                </div>
+                <div class="col-12 d-flex justify-content-center font-medium-3 text-bold-600 my-1">Are you sure!</div>
+                <div class="col-12 d-flex justify-content-center font-medium-3 my-1">You are about to delete "<span
+                        class="text-danger">{{user?.full_name ? user?.full_name : user?.username}}</span>" permanently
+                </div>
+                <div class="col-12 d-flex justify-content-center my-1">All user data will be deleted
+                    permanently but user's content will not be deleted</div>
+            </div>
+            <app-alert></app-alert>
+            <div class="d-flex justify-content-center mt-3">
+                <app-button class="px-4" type="submit" (submit)="submitDeleteUser()">Submit</app-button>
+            </div>
+        </div>
+    </app-modal>
+    <!-- Modal End -->
+</ng-container>

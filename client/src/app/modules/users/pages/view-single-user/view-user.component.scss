@@ -1,0 +1,13 @@
+.post-image {
+  height: 80px;
+}
+
+.post-content {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 200px;
+  min-width: 100px;
+}

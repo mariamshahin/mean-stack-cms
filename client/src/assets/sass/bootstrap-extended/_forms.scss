@@ -284,6 +284,7 @@ form,
     display: flex;
     align-items: center;
     margin-bottom: 0;
+    cursor: pointer;
 
     // Before - Outer Circle
     &::before {
