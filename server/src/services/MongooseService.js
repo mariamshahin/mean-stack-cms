@@ -23,10 +23,11 @@ export default class MongooseService {
 
   /**
    * @description Retrieve all documents from the Model
+   * @param options {object} Optional: Query options to execute
    * @returns {Promise} Returns the results of the query
    */
-  findAll() {
-    return this.model.find().exec();
+  findAll(options) {
+    return this.model.find(options).exec();
   }
 
   /**
@@ -45,6 +46,16 @@ export default class MongooseService {
    */
   find(obj) {
     return this.model.find(obj).exec();
+  }
+
+  /**
+   * @description Retrieve and sort by latest documents with limited documents matching the provided keys, from the Model
+   * @param obj {object} Required: key and value for the object to retrieve
+   * @param limit {number} Optional: Number of records to retrieve
+   * @returns {Promise} Returns the results of the query
+   */
+  findLast(obj, limit) {
+    return this.model.find(obj).sort('-updated_at').limit(limit).exec();
   }
 
   /**

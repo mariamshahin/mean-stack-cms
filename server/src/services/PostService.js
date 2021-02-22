@@ -91,6 +91,16 @@ export default class PostService extends Mongoose {
     }
   }
 
+  async findlastPost(obj, limit) {
+    try {
+      const result = await this.findLast(obj, limit);
+      return { result };
+    } catch (error) {
+      this.logger.error(error);
+      return { error };
+    }
+  }
+
   async deletePost(id, user) {
     const user_id = user._id;
 

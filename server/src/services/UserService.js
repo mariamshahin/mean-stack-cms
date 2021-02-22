@@ -132,9 +132,10 @@ export default class UserService extends Mongoose {
     }
   }
 
-  async getAllUsers() {
+  async getAllUsers(user) {
+    const options = { _id: { $ne: user._id } };
     try {
-      const users = await this.findAll();
+      const users = await this.findAll(options);
       const result = users.map((user) => deletePw(user));
       return { result };
     } catch (error) {
@@ -149,12 +150,18 @@ export default class UserService extends Mongoose {
       let userResult, posts, drafts, result;
       if (user) {
         userResult = deletePw(user);
-        posts = await this.post.findPost({
-          user: id,
-        });
-        drafts = await this.draft.findPost({
-          user: id,
-        });
+        posts = await this.post.findlastPost(
+          {
+            user: id,
+          },
+          5
+        );
+        drafts = await this.draft.findlastPost(
+          {
+            user: id,
+          },
+          5
+        );
         result = { ...userResult, posts: posts.result, drafts: drafts.result };
       }
       return { result };
@@ -190,8 +197,9 @@ export default class UserService extends Mongoose {
 
   async changeRole(id, body) {
     const { role } = body;
+    const options = { new: true };
     try {
-      const result = await this.updateOne(id, { role });
+      const result = await this.updateOne(id, { role }, options);
       return { result };
     } catch (error) {
       this.logger.error(error);
