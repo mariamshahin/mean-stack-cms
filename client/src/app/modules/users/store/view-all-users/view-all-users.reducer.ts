@@ -1,5 +1,5 @@
 import { createReducer, on, Action } from '@ngrx/store';
-import { usersSuccess } from './view-users.actions';
+import { usersSuccess } from './view-all-users.actions';
 import { User } from 'app/shared/models/data.model';
 
 export const featureKey = 'viewUsers';

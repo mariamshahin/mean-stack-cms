@@ -15,11 +15,11 @@ import {
 import { changeUserRole } from '../../store/change-user-role/change-user-role.actions';
 
 @Component({
-  selector: 'app-view-user',
-  templateUrl: './view-user.component.html',
-  styleUrls: ['./view-user.component.scss'],
+  selector: 'app-view-single-user',
+  templateUrl: './view-single-user.component.html',
+  styleUrls: ['./view-single-user.component.scss'],
 })
-export class ViewUserComponent implements OnInit, OnDestroy {
+export class ViewSingleUserComponent implements OnInit, OnDestroy {
   @ViewChild(DatatableComponent) table: DatatableComponent;
   @ViewChild('changeRoleModal') changeRoleModal: ModalComponent;
   @ViewChild('deleteUserModal') deleteUserModal: ModalComponent;

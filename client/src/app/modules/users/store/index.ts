@@ -6,11 +6,11 @@ import {
   createSelector,
   ActionReducer,
 } from '@ngrx/store';
-import * as formUsers from './view-users/view-users.reducer';
+import * as formUsers from './view-all-users/view-all-users.reducer';
 import * as formUser from './view-single-user/view-single-user.reducer';
 import * as formRole from './change-user-role/change-user-role.reducer';
-import { UsersEffects } from './view-users/view-users.effects';
-import { UserEffects } from './view-single-user/view-single-user.effects';
+import { AllUsersEffects } from './view-all-users/view-all-users.effects';
+import { SingleUserEffects } from './view-single-user/view-single-user.effects';
 import { RoleEffects } from './change-user-role/change-user-role.effects';
 
 export const featureKey = 'users';
@@ -43,4 +43,4 @@ export const selectUsers = createFeatureSelector<UsersState>(featureKey);
 
 export const moduleState = createSelector(selectUsers, (state) => state);
 
-export const moduleEffects = [UsersEffects, UserEffects, RoleEffects];
+export const moduleEffects = [AllUsersEffects, SingleUserEffects, RoleEffects];

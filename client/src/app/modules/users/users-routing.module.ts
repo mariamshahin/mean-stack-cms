@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ViewUsersComponent } from './pages/view-all-users/view-users.component';
-import { ViewUserComponent } from './pages/view-single-user/view-user.component';
+import { ViewAllUsersComponent } from './pages/view-all-users/view-all-users.component';
+import { ViewSingleUserComponent } from './pages/view-single-user/view-single-user.component';
 
 const routes: Routes = [
   {
@@ -10,11 +10,11 @@ const routes: Routes = [
     children: [
       {
         path: 'users',
-        component: ViewUsersComponent,
+        component: ViewAllUsersComponent,
       },
       {
         path: 'users/:id',
-        component: ViewUserComponent,
+        component: ViewSingleUserComponent,
       },
     ],
   },

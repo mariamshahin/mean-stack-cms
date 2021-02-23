@@ -6,7 +6,7 @@ import * as UserActions from './view-single-user.actions';
 import * as RouterActions from 'app/shared/store/router/router.actions';
 
 @Injectable()
-export class UserEffects {
+export class SingleUserEffects {
   viewSingleUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(UserActions.viewSingleUser),

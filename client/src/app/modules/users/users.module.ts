@@ -17,8 +17,8 @@ import {
 // Components
 
 // Pages
-import { ViewUsersComponent } from './pages/view-all-users/view-users.component';
-import { ViewUserComponent } from './pages/view-single-user/view-user.component';
+import { ViewAllUsersComponent } from './pages/view-all-users/view-all-users.component';
+import { ViewSingleUserComponent } from './pages/view-single-user/view-single-user.component';
 
 @NgModule({
   imports: [
@@ -32,7 +32,7 @@ import { ViewUserComponent } from './pages/view-single-user/view-user.component'
     StoreModule.forFeature(featureKey, reducerToken),
     EffectsModule.forFeature(moduleEffects),
   ],
-  declarations: [ViewUsersComponent, ViewUserComponent],
+  declarations: [ViewAllUsersComponent, ViewSingleUserComponent],
   providers: [reducerProvider],
 })
 export class UsersModule {}
