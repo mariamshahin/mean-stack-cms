@@ -7,11 +7,13 @@ export default class PostService extends Mongoose {
     super(model);
   }
 
-  async createPost(req) {
-    const { user, body, file } = req;
+  async createPost({ user, body, file }) {
+    let image_url;
     const { title, content } = body;
     const user_id = user._id;
-    const image_url = file ? `static/${file.path}` : null;
+    if (file) {
+      image_url = `static/${file.path}`;
+    }
     try {
       const result = await this.create({
         title,
@@ -26,9 +28,15 @@ export default class PostService extends Mongoose {
     }
   }
 
-  async getAllPosts() {
+  async getAllPosts(req) {
+    const { user } = req;
     try {
-      const result = await this.findAll();
+      let result;
+      if (user && user.role !== roles.ADMIN && user.role !== roles.AUTHOR) {
+        result = await this.findLast({ user: user._id }, '-updated_at', null);
+      } else {
+        result = await this.findAllAndPopulate(null, '-updated_at', 'user');
+      }
       return { result };
     } catch (error) {
       this.logger.error(error);
@@ -53,11 +61,13 @@ export default class PostService extends Mongoose {
     }
   }
 
-  async updatePost(id, req) {
-    const { user, body, file } = req;
+  async updatePost({ user, body, file }, id) {
+    let image_url;
     const user_id = user._id;
     const { title, content } = body;
-    const image_url = file ? `static/${file.path}` : null;
+    if (file) {
+      image_url = `static/${file.path}`;
+    }
     try {
       let result;
       const post = await this.findById(id);
@@ -83,7 +93,7 @@ export default class PostService extends Mongoose {
 
   async findPost(obj) {
     try {
-      const result = await this.find(obj);
+      const result = await this.find(obj, '-updated_at');
       return { result };
     } catch (error) {
       this.logger.error(error);
@@ -91,9 +101,9 @@ export default class PostService extends Mongoose {
     }
   }
 
-  async findlastPost(obj, limit) {
+  async findlastPost(obj, sort, limit) {
     try {
-      const result = await this.findLast(obj, limit);
+      const result = await this.findLast(obj, sort, limit);
       return { result };
     } catch (error) {
       this.logger.error(error);

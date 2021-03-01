@@ -135,7 +135,7 @@ export default class UserService extends Mongoose {
   async getAllUsers(user) {
     const options = { _id: { $ne: user._id } };
     try {
-      const users = await this.findAll(options);
+      const users = await this.findAll(options, '-created_at');
       const result = users.map((user) => deletePw(user));
       return { result };
     } catch (error) {
@@ -154,12 +154,14 @@ export default class UserService extends Mongoose {
           {
             user: id,
           },
+          '-updated_at',
           5
         );
         drafts = await this.draft.findlastPost(
           {
             user: id,
           },
+          '-updated_at',
           5
         );
         result = { ...userResult, posts: posts.result, drafts: drafts.result };

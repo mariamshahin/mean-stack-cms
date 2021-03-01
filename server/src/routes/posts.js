@@ -1,6 +1,8 @@
 import express from 'express';
 import authMiddleware from '../middlewares/authentication';
 import authorization from '../middlewares/authorization';
+import checkUser from '../middlewares/checkUser';
+
 import {
   createPostValidator,
   updatePostValidator,
@@ -28,7 +30,7 @@ router.post(
   validationHandler,
   createOne
 );
-router.get('/', getAll);
+router.get('/', checkUser, getAll);
 router.get('/:id', idValidator(), validationHandler, getOne);
 router.put(
   '/:id',

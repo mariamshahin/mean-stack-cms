@@ -5,7 +5,6 @@ const storage = multer.diskStorage({
     cb(null, 'uploads');
   },
   filename: (req, file, cb) => {
-    console.log(file);
     const originalname = file.originalname;
     const storageName = originalname.replace(/\s+/g, '-').toLowerCase();
     cb(null, `${Date.now()}-${storageName}`);
