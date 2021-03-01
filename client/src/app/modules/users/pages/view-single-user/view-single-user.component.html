@@ -89,7 +89,7 @@
                                             <td>{{post.updated_at | date: 'dd/MM/yyyy'}}</td>
                                             <td>
                                                 <a [routerLink]="['/admin','posts',post._id]" class="btn btn-primary">
-                                                    <span> Edit Post</span>
+                                                    <span>Edit Post</span>
                                                     <i class="ft-edit-2 font-medium-2 ml-2"></i>
                                                 </a>
                                             </td>
@@ -192,20 +192,17 @@
     <!-- Modal End -->
     <!-- Modal Start -->
     <app-modal #deleteUserModal title="Delete User">
-        <div class="m-5">
-            <div class="row">
-                <div class="col-12 d-flex justify-content-center mb-3"><i
-                        class="ft-alert-triangle text-warning font-large-3"></i>
-                </div>
-                <div class="col-12 d-flex justify-content-center font-medium-3 text-bold-600 my-1">Are you sure!</div>
-                <div class="col-12 d-flex justify-content-center font-medium-3 my-1">You are about to delete "<span
-                        class="text-danger">{{user?.full_name ? user?.full_name : user?.username}}</span>" permanently
-                </div>
-                <div class="col-12 d-flex justify-content-center my-1">All user data will be deleted
-                    permanently but user's content will not be deleted</div>
+        <div class="d-flex flex-column justify-content-center m-5">
+            <div class="text-center mb-3">
+                <i class="ft-alert-triangle text-warning font-large-3"></i>
+                <span class="d-block font-medium-3 text-bold-600 my-2">Are you sure!</span>
+                <span class="d-block my-1">You are about to delete</span>
+                <span class="d-block text-danger my-1">{{user?.full_name ? user?.full_name : user?.username}}</span>
+                <span class="d-block my-2">All user data will be deleted
+                    permanently but user's content will not be deleted</span>
             </div>
             <app-alert></app-alert>
-            <div class="d-flex justify-content-center mt-3">
+            <div class="d-flex justify-content-center mt-2">
                 <app-button class="px-4" type="submit" (submit)="submitDeleteUser()">Submit</app-button>
             </div>
         </div>

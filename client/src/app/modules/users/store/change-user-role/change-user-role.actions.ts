@@ -1,9 +1,10 @@
 import { createAction, props } from '@ngrx/store';
-import { User } from 'app/shared/models/data.model';
+import { UserData } from 'app/shared/models/data.model';
 
 export enum ChangeUserRoleActionsTypes {
   ChangeUserRole = '[Users] Change User Role',
   ChangeUserRoleSuccess = '[Users] Change User Role Success',
+  ChangeUserRoleFail = '[Users] Change User Role Fail',
 }
 
 export const changeUserRole = createAction(
@@ -17,6 +18,13 @@ export const changeUserRole = createAction(
 export const changeRoleSuccess = createAction(
   ChangeUserRoleActionsTypes.ChangeUserRoleSuccess,
   props<{
-    user;
+    user: UserData;
+  }>()
+);
+
+export const changeRoleFail = createAction(
+  ChangeUserRoleActionsTypes.ChangeUserRoleFail,
+  props<{
+    error: string;
   }>()
 );

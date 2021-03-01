@@ -1,0 +1,86 @@
+<div class="row">
+    <div class="col-12 col-md-6">
+        <div class="content-header">Posts</div>
+        <p class="content-sub-header mb-1">view and manage all posts</p>
+    </div>
+    <div class="col-12 col-md-6 d-flex justify-content-end align-items-center">
+        <app-button class="mx-1" [outline]="true" [routerLink]="['/admin','create-post']">Create New Post <i
+                class="ft-edit-1 font-medium-3 ml-2"></i>
+        </app-button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-content">
+                <div class="card-body">
+                    <ng-container *ngrxLet="postsData$ as posts">
+                        <ngx-datatable class="bootstrap core-bootstrap" [columnMode]="ColumnMode.force"
+                            [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="limitRef"
+                            [scrollbarH]="true" [rows]="posts" [columns]="columns">
+                        </ngx-datatable>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Start -->
+<app-modal #deletePostModal title="Delete Post">
+    <div class="d-flex flex-column justify-content-center m-5">
+        <div class="text-center mb-3">
+            <i class="ft-alert-triangle text-warning font-large-3"></i>
+            <span class="d-block font-medium-3 text-bold-600 my-2">Are you sure!</span>
+            <span class="d-block my-1">You are about to delete</span>
+            <span class="d-block text-danger my-1">{{rowData?.title}}</span>
+            <span class="d-block my-2">All post data will be deleted permanently</span>
+        </div>
+        <app-alert></app-alert>
+        <div class="d-flex justify-content-center mt-2">
+            <app-button class="px-4" type="submit" (submit)="submitDeletePost()">Submit</app-button>
+        </div>
+    </div>
+</app-modal>
+<!-- Modal End -->
+<ng-template #rowHeader let-row="row" ngx-datatable-cell-template>
+    <div class="d-flex flex-row align-items-center">
+        <div class="ml-1 mr-3 cursor-pointer" (click)="openDeleteModal($event,row)">
+            <i class="ft-trash-2 text-danger font-medium-3"></i>
+        </div>
+        <a class="mr-1" [routerLink]="['/admin','posts',row?._id]">
+            <i class="ft-edit font-medium-3"></i>
+        </a>
+    </div>
+</ng-template>
+<ng-template #avatar let-row="row" let-title="value" ngx-datatable-cell-template>
+    <div class="d-flex align-items-center">
+        <a [routerLink]="['/admin','posts',row._id]">
+            <img *ngIf="row?.image_url;else placeholder" [src]="apiUrl + '/' + row.image_url" class="post-image" />
+        </a>
+        <div class="cell-line-height ml-2">
+            <a class="line-height-1 mb-0" [routerLink]="['/admin','posts',row._id]">{{title}}</a>
+        </div>
+    </div>
+</ng-template>
+<ng-template #date let-row="row" let-date="value" ngx-datatable-cell-template>
+    <div>
+        {{date | date: 'dd/MM/yyyy'}}
+    </div>
+</ng-template>
+<ng-template #content let-row="row" let-content="value" ngx-datatable-cell-template>
+    <quill-view-html class="post-content" [content]="content" theme="snow"></quill-view-html>
+</ng-template>
+<ng-template #user let-row="row" let-user="value" ngx-datatable-cell-template>
+    <ng-container *ngrxLet="userData$ as user">
+        <a *ngIf="user.role === 'admin' && row.user;else userName" [routerLink]="['/admin','users',row.user?._id]">
+            {{row.user.full_name ? row.user.full_name : row.user.username}}
+        </a>
+        <ng-template #userName>
+            <div [ngClass]="{'text-primary':row.user,'text-danger':!row.user}">
+                {{row.user? row.user.full_name + ' @' + row.user.username :'Deleted User'}}
+            </div>
+        </ng-template>
+    </ng-container>
+</ng-template>
+<ng-template #placeholder><img src="https://via.placeholder.com/120/DBDEE5/6c757d?text=No+Image">
+</ng-template>

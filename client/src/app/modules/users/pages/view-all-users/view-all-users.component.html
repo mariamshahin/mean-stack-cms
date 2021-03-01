@@ -10,7 +10,7 @@
             <div class="card-content">
                 <div class="card-body">
                     <ng-container *ngrxLet="usersData$ as users">
-                        <ngx-datatable class="bootstrap core-bootstrap" [columnMode]="ColumnMode.flex"
+                        <ngx-datatable class="bootstrap core-bootstrap" [columnMode]="ColumnMode.force"
                             [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="limitRef"
                             [scrollbarH]="true" [rows]="users" [columns]="columns">
                         </ngx-datatable>

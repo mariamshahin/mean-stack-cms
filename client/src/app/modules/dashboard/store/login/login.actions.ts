@@ -7,7 +7,6 @@ export enum LoginActionsTypes {
   LoginSuccess = '[Auth] Login Success',
   LoginFail = '[Auth] Login Fail',
   Logout = '[Auth] Logout',
-  UpdateUser = '[Auth] Update User',
 }
 
 export const login = createAction(
@@ -29,13 +28,6 @@ export const loginFail = createAction(
   LoginActionsTypes.LoginFail,
   props<{
     error: string;
-  }>()
-);
-
-export const updateUser = createAction(
-  LoginActionsTypes.UpdateUser,
-  props<{
-    data: User;
   }>()
 );
 

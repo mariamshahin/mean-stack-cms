@@ -6,6 +6,7 @@ import {
   createSelector,
   ActionReducer,
 } from '@ngrx/store';
+import * as formAuth from './auth/auth.reducer';
 import * as formProfile from './update-profile/update-profile.reducer';
 import * as fromImage from './update-image/update-image.reducer';
 import * as fromPassword from './change-password/change-password.reducer';
@@ -16,12 +17,14 @@ import { PasswordEffects } from './change-password/change-password.effects';
 export const featureKey = 'admin';
 
 export interface AdminState {
+  [formAuth.featureKey]: formAuth.State;
   [formProfile.featureKey]: formProfile.State;
   [fromImage.featureKey]: fromImage.State;
   [fromPassword.featureKey]: fromPassword.State;
 }
 
 export const reducers = combineReducers({
+  [formAuth.featureKey]: formAuth.reducer,
   [formProfile.featureKey]: formProfile.reducer,
   [fromImage.featureKey]: fromImage.reducer,
   [fromPassword.featureKey]: fromPassword.reducer,

@@ -16,7 +16,7 @@ import { customAnimations } from 'app/shared/animations/custom-animations';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { ConfigService } from 'app/shared/services/config.service';
 import { LayoutService } from 'app/shared/services/layout.service';
-import { DashboardState, selectDashboard } from 'app/modules/dashboard/store';
+import { AdminState, selectAdmin } from 'app/modules/admin/store';
 
 @Component({
   selector: 'app-side-menu',
@@ -36,12 +36,12 @@ export class SideMenuComponent implements OnInit, AfterViewInit, OnDestroy {
   resizeTimeout;
 
   userData$ = this.store.pipe(
-    select(selectDashboard),
-    map((state) => state.login.data?.user)
+    select(selectAdmin),
+    map((state) => state.auth.data?.user)
   );
 
   constructor(
-    private store: Store<DashboardState>,
+    private store: Store<AdminState>,
     private layoutService: LayoutService,
     private configService: ConfigService,
     private cdr: ChangeDetectorRef,

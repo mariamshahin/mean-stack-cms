@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { map, switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { switchMap, map, catchError, takeUntil } from 'rxjs/operators';
 import { UsersService } from '../../users.service';
 import * as UserActions from './view-single-user.actions';
 import * as RouterActions from 'app/shared/store/router/router.actions';
@@ -16,6 +17,12 @@ export class SingleUserEffects {
             UserActions.userSuccess({
               user: data,
             })
+          ),
+          catchError((error) => of(UserActions.userFail({ error }))),
+          takeUntil(
+            this.actions$.pipe(
+              ofType(UserActions.userSuccess, UserActions.userFail)
+            )
           )
         )
       )
@@ -27,12 +34,27 @@ export class SingleUserEffects {
       ofType(UserActions.deleteUser),
       switchMap(({ id }) =>
         this.usersService.deleteUser(id).pipe(
-          map(() =>
-            RouterActions.routerNavigate({
-              route: { path: ['/admin', 'users'] },
-            })
+          map(({ message }) =>
+            UserActions.deleteSuccess({ response: message })
+          ),
+          catchError((error) => of(UserActions.deleteFail({ error }))),
+          takeUntil(
+            this.actions$.pipe(
+              ofType(UserActions.deleteSuccess, UserActions.deleteFail)
+            )
           )
         )
+      )
+    )
+  );
+
+  navigate$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActions.deleteSuccess),
+      map(() =>
+        RouterActions.routerNavigate({
+          route: { path: ['/admin', 'users'] },
+        })
       )
     )
   );

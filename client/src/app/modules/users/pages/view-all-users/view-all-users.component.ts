@@ -28,7 +28,7 @@ export class ViewAllUsersComponent implements OnInit {
 
   usersData$ = this.store.pipe(
     select(selectUsers),
-    map((state) => state.viewUsers.users)
+    map((state) => state.viewAllUsers.users)
   );
 
   ColumnMode = ColumnMode;
@@ -45,12 +45,12 @@ export class ViewAllUsersComponent implements OnInit {
     this.columns = [
       {
         prop: 'username',
-        flexGrow: 1,
         cellTemplate: this.avatar,
+        minWidth: 150,
       },
-      { prop: 'email', flexGrow: 1 },
-      { prop: 'full_name', name: 'Full Name', flexGrow: 1 },
-      { prop: 'role', flexGrow: 1 },
+      { prop: 'email' },
+      { prop: 'full_name', name: 'Full Name' },
+      { prop: 'role' },
     ];
   }
 }

@@ -10,14 +10,30 @@ export enum Role {
 }
 
 export interface UserData {
-  _id: string;
+  _id: number;
   username: string;
   email: string;
   role: Role;
   full_name?: string;
   summary?: string;
   image_url?: string;
+  created_at: string;
   updated_at: string;
+}
+
+export interface User {
+  token?: string;
+  user: UserData;
+}
+
+export interface Post {
+  _id: number;
+  title: string;
+  content: string;
+  image_url?: string;
+  created_at: string;
+  updated_at: string;
+  user: string;
 }
 
 export interface Route {
@@ -30,23 +46,8 @@ export interface Route {
 export interface DataTableColumn {
   name?: string;
   prop: string;
-  flexGrow: number;
   cellTemplate?: TemplateRef<any>;
-}
-
-export class User {
-  token?: string;
-  user: UserData;
-
-  constructor(data) {
-    this.token = data.token;
-    this.user._id = data.user._id;
-    this.user.username = data.user.username;
-    this.user.email = data.user.email;
-    this.user.role = data.user.role;
-    this.user.full_name = data.user.full_name || '';
-    this.user.summary = data.user.summary || '';
-    this.user.image_url = data.user.image_url || '';
-    this.user.updated_at = data.user.updated_at;
-  }
+  width?: number;
+  minWidth?: number;
+  maxWidth?: number;
 }

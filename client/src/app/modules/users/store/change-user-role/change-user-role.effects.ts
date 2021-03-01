@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { map, switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { switchMap, map, catchError, takeUntil } from 'rxjs/operators';
 import { UsersService } from '../../users.service';
 import * as RoleActions from './change-user-role.actions';
 import * as UserActions from '../view-single-user/view-single-user.actions';
@@ -18,6 +19,15 @@ export class RoleEffects {
               RoleActions.changeRoleSuccess({
                 user: data,
               })
+            ),
+            catchError((error) => of(RoleActions.changeRoleFail({ error }))),
+            takeUntil(
+              this.actions$.pipe(
+                ofType(
+                  RoleActions.changeRoleSuccess,
+                  RoleActions.changeRoleFail
+                )
+              )
             )
           )
       )

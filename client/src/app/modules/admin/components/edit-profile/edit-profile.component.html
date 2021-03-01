@@ -18,7 +18,7 @@
 <app-modal #modal title="Update Profile Photo">
   <div class="m-5">
     <app-file-upload (selectFile)="selectFile($event)"></app-file-upload>
-    <app-image-cropper [imageFile]="imageFile" (imageCrop)="imageCrop($event)"></app-image-cropper>
+    <app-image-cropper [imageFile]="imageFile" [round]="true" (imageCrop)="imageCrop($event)"></app-image-cropper>
     <app-alert></app-alert>
     <div class="d-flex justify-content-center mt-2" *ngIf="croppedImage">
       <app-button class="px-4" type="submit" [disabled]="!croppedImage" (submit)="submitUploadImage()">Submit

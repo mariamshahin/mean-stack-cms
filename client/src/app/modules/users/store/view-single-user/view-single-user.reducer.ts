@@ -1,15 +1,17 @@
 import { createReducer, on, Action } from '@ngrx/store';
-import { userSuccess } from './view-single-user.actions';
+import { userSuccess, userFail } from './view-single-user.actions';
 import { User } from 'app/shared/models/data.model';
 
 export const featureKey = 'viewSingleUser';
 
 export interface State {
-  user;
+  user: any;
+  error: string;
 }
 
 export const initialState: Readonly<State> = {
   user: null,
+  error: null,
 };
 
 export const userReducer = createReducer(
@@ -17,6 +19,10 @@ export const userReducer = createReducer(
   on(userSuccess, (state, { user }) => ({
     ...state,
     user,
+  })),
+  on(userFail, (state, { error }) => ({
+    ...state,
+    error,
   }))
 );
 

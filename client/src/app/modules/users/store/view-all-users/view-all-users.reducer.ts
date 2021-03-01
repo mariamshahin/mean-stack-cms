@@ -1,15 +1,17 @@
 import { createReducer, on, Action } from '@ngrx/store';
-import { usersSuccess } from './view-all-users.actions';
+import { usersSuccess, usersFail } from './view-all-users.actions';
 import { User } from 'app/shared/models/data.model';
 
-export const featureKey = 'viewUsers';
+export const featureKey = 'viewAllUsers';
 
 export interface State {
   users: User[];
+  error: string;
 }
 
 export const initialState: Readonly<State> = {
   users: null,
+  error: null,
 };
 
 export const usersReducer = createReducer(
@@ -17,6 +19,10 @@ export const usersReducer = createReducer(
   on(usersSuccess, (state, { users }) => ({
     ...state,
     users,
+  })),
+  on(usersFail, (state, { error }) => ({
+    ...state,
+    error,
   }))
 );
 

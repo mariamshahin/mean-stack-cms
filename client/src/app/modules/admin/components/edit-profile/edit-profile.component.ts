@@ -5,7 +5,6 @@ import { map } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
 import { ModalComponent } from 'app/shared/components/ui-elements/modal/modal.component';
-import { selectDashboard } from 'app/modules/dashboard/store';
 import { selectAdmin } from 'app/modules/admin/store';
 import { FormControlModel } from 'app/shared/components/ui-elements/form-control/form-control.model';
 import { updateProfile } from '../../store/update-profile/update-profile.actions';
@@ -20,8 +19,8 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   @ViewChild('modal') modalComponent: ModalComponent;
   faCamera = faCamera;
   userData$ = this.store.pipe(
-    select(selectDashboard),
-    map((state) => state.login.data?.user)
+    select(selectAdmin),
+    map((state) => state.auth.data?.user)
   );
   updateImage$ = this.store.pipe(
     select(selectAdmin),
@@ -118,6 +117,7 @@ export class EditProfileComponent implements OnInit, OnDestroy {
     if (!this.croppedImage) {
       return;
     }
+    console.log(this.croppedImage);
     this.store.dispatch(
       updateImage({
         payload: {

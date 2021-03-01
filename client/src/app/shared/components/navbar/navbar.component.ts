@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { LayoutService } from 'app/shared/services/layout.service';
 import { ConfigService } from 'app/shared/services/config.service';
-import { DashboardState, selectDashboard } from 'app/modules/dashboard/store';
+import { AdminState, selectAdmin } from 'app/modules/admin/store';
 import { logout } from 'app/modules/dashboard/store/login/login.actions';
 
 @Component({
@@ -30,12 +30,12 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   public config: any = {};
 
   userData$ = this.store.pipe(
-    select(selectDashboard),
-    map((state) => state.login.data?.user)
+    select(selectAdmin),
+    map((state) => state.auth.data?.user)
   );
 
   constructor(
-    private store: Store<DashboardState>,
+    private store: Store<AdminState>,
     private layoutService: LayoutService,
     private configService: ConfigService,
     private cdr: ChangeDetectorRef

@@ -1,7 +1,7 @@
 import { Component, Input, Inject } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
-import { DashboardState, selectDashboard } from 'app/modules/dashboard/store';
+import { AdminState, selectAdmin } from 'app/modules/admin/store';
 
 @Component({
   selector: 'app-avatar',
@@ -15,12 +15,12 @@ export class AvatarComponent {
   @Input() user: { [key: string]: any };
 
   userData$ = this.store.pipe(
-    select(selectDashboard),
-    map((state) => state.login.data?.user)
+    select(selectAdmin),
+    map((state) => state.auth.data?.user)
   );
 
   constructor(
     @Inject('API_BASE_URL') public apiUrl: string,
-    private store: Store<DashboardState>
+    private store: Store<AdminState>
   ) {}
 }

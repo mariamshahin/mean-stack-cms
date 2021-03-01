@@ -1,15 +1,17 @@
 import { createReducer, on, Action } from '@ngrx/store';
-import { changeRoleSuccess } from './change-user-role.actions';
-import { User } from 'app/shared/models/data.model';
+import { changeRoleSuccess, changeRoleFail } from './change-user-role.actions';
+import { UserData } from 'app/shared/models/data.model';
 
 export const featureKey = 'changeUserRole';
 
 export interface State {
-  user;
+  user: UserData;
+  error: string;
 }
 
 export const initialState: Readonly<State> = {
   user: null,
+  error: null,
 };
 
 export const roleReducer = createReducer(
@@ -17,6 +19,10 @@ export const roleReducer = createReducer(
   on(changeRoleSuccess, (state, { user }) => ({
     ...state,
     user,
+  })),
+  on(changeRoleFail, (state, { error }) => ({
+    ...state,
+    error,
   }))
 );
 

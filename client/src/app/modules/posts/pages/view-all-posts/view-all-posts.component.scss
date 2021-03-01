@@ -1,0 +1,17 @@
+.post-image {
+  width: 120px;
+}
+
+.post-content {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 400px;
+  min-width: 100px;
+}
+
+cursor-pointer {
+  cursor: pointer;
+}

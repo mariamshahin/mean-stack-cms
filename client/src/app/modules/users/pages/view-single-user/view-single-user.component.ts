@@ -62,8 +62,6 @@ export class ViewSingleUserComponent implements OnInit, OnDestroy {
       this.routeParams = route.params;
     });
     this.userSub = this.userData$.subscribe((user) => {
-      if (user) {
-      }
       this.userData = user;
     });
     this.roleSub = this.roleData$.subscribe(() => {

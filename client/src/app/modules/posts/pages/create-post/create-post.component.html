@@ -1,0 +1,62 @@
+<div class="row">
+    <div class="col-12 col-md-6">
+        <div class="content-header">Create New Post</div>
+        <p class="content-sub-header mb-1">Edit and publish new post.</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-content">
+                <div class="card-body">
+                    <form [formGroup]="createPostForm" #form="ngForm">
+                        <div class="form-group col-12 my-3">
+                            <label class="text-bold-600 mb-3" for="title">Post Title: <span
+                                    class="text-danger">*</span></label>
+                            <textarea rows="2" class="form-control mb-2" placeholder="Enter post title.."
+                                formControlName="title"
+                                [ngClass]="{ 'is-invalid': form.submitted && f.title.invalid, 'is-valid': form.submitted && !f.title.invalid }"
+                                required></textarea>
+                            <div *ngIf="form.submitted && (f.title.invalid || f.title.errors?.required)"
+                                class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> Post
+                                title is required</div>
+                        </div>
+                        <div class="form-group col-12 my-3">
+                            <label class="text-bold-600 mb-3" for="content">Post Content: <span
+                                    class="text-danger">*</span></label>
+                            <quill-editor formControlName="content" placeholder="Enter post content.."
+                                [ngClass]="{ 'is-invalid': form.submitted && f.content.invalid, 'is-valid': form.submitted && !f.content.invalid }"
+                                [required]="true" [sanitize]="true">
+                            </quill-editor>
+                            <div *ngIf="form.submitted && (f.content.invalid || f.content.errors?.required)"
+                                class="help-block mt-1 text-danger"> <i class="ft-alert-circle align-middle"></i> Post
+                                content is required</div>
+                        </div>
+                        <div>
+                            <label class="ml-3">Post Image:</label>
+                            <div class="row">
+                                <div class="col-12 col-md-6 px-4 my-3">
+                                    <app-file-upload (selectFile)="selectFile($event)"></app-file-upload>
+                                </div>
+                                <div class="col-12 col-md-6 px-4 my-3">
+                                    <app-image-cropper [imageFile]="imageFile" (imageCrop)="imageCrop($event)"
+                                        *ngIf="imageFile;else preview">
+                                    </app-image-cropper>
+                                    <ng-template #preview>
+                                        <div class="border text-center py-5">Image Preview & Crop</div>
+                                    </ng-template>
+                                </div>
+                            </div>
+                        </div>
+                        <app-alert></app-alert>
+                        <div class="d-flex justify-content-center mt-3">
+                            <app-button class="px-4 mb-2" type="submit" (submit)="formSubmit()">
+                                Publish Post
+                            </app-button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

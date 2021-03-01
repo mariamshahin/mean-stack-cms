@@ -5,7 +5,10 @@ import {
   MetaReducer,
 } from '@ngrx/store';
 import { routerReducer, RouterReducerState } from '@ngrx/router-store';
-import { localStorageSync } from 'ngrx-store-localstorage';
+import {
+  localStorageSync,
+  rehydrateApplicationState,
+} from 'ngrx-store-localstorage';
 import { logout } from 'app/modules/dashboard/store/login/login.actions';
 
 // --> Root reducer
@@ -27,17 +30,20 @@ export const currentRouteState = createSelector(
 
 // sync local storage with dashboard access state
 export function syncState(reducer: ActionReducer<any>): ActionReducer<any> {
-  return localStorageSync({
-    keys: [
-      {
-        dashboard: {
-          encrypt: (state: string) => btoa(state),
-          decrypt: (state: string) => atob(state),
+  return (state, action) => {
+    return localStorageSync({
+      keys: [
+        {
+          admin: {
+            encrypt: (state: string) => btoa(state),
+            decrypt: (state: string) => atob(state),
+          },
         },
-      },
-    ],
-    rehydrate: true,
-  })(reducer);
+      ],
+      storageKeySerializer: (key: string) => `__${key}`,
+      rehydrate: true,
+    })(reducer)(state, action);
+  };
 }
 
 // clear state when logout
