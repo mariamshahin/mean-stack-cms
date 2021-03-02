@@ -234,10 +234,6 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isNavbarSeachTextEmpty = true;
   }
 
-  checkNavbarSeachTextEmpty($event) {
-    this.isNavbarSeachTextEmpty = $event;
-  }
-
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     if (this.resizeTimeout) {

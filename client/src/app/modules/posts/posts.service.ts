@@ -6,20 +6,20 @@ import { PostData } from './posts.model';
 
 @Injectable({ providedIn: 'root' })
 export class PostsService {
-  private PostsApi = 'posts';
+  private postsApi = 'posts';
 
   constructor(private http: HttpClient) {}
 
   viewAllPosts(): Observable<{ data: Post[] }> {
-    return this.http.get<{ data: Post[] }>(this.PostsApi);
+    return this.http.get<{ data: Post[] }>(this.postsApi);
   }
 
   viewSinglePost(id: number): Observable<{ data: Post }> {
-    return this.http.get<{ data: Post }>(`${this.PostsApi}/${id}`);
+    return this.http.get<{ data: Post }>(`${this.postsApi}/${id}`);
   }
 
   deletePost(id: number): Observable<{ message: string }> {
-    return this.http.delete<{ message: string }>(`${this.PostsApi}/${id}`);
+    return this.http.delete<{ message: string }>(`${this.postsApi}/${id}`);
   }
 
   createPost(data: PostData): Observable<{ message: string }> {
@@ -27,17 +27,16 @@ export class PostsService {
     formData.append('title', data.title);
     formData.append('content', data.content);
     formData.append('image', data.image);
-    return this.http.post<{ message: string }>(this.PostsApi, formData);
+    return this.http.post<{ message: string }>(this.postsApi, formData);
   }
 
   updatePost({ data, id }): Observable<{ message: string }> {
-    console.log(data.image);
     const formData = new FormData();
     formData.append('title', data.title);
     formData.append('content', data.content);
     formData.append('image', data.image);
     return this.http.put<{ message: string }>(
-      `${this.PostsApi}/${id}`,
+      `${this.postsApi}/${id}`,
       formData
     );
   }

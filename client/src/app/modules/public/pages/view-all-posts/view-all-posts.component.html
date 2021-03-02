@@ -1,0 +1,37 @@
+<app-public-layout>
+    <ng-container *ngrxLet="postsData$ as posts">
+        <section id="gallery-hover-effects" class="p-5">
+            <div class="row justify-content-center">
+                <div class="post-wrapper col-8 col-md-4 col-lg-3 p-0 mx-4 my-3" *ngFor="let post of posts">
+                    <div class="card h-100">
+                        <div class="card-content">
+                            <div class="card-body p-0" itemscope itemtype="http://schema.org/ImageGallery">
+                                <div class="grid-hover">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <figure class="effect-lily">
+                                                <img *ngIf="post?.image_url;else placeholder"
+                                                    [src]="apiUrl + '/' + post.image_url" [alt]="post.title" />
+                                                <figcaption>
+                                                    <div>
+                                                        <h2 class="text-truncate">{{post.title}}</h2>
+                                                        <p>Read Article</p>
+                                                    </div>
+                                                </figcaption>
+                                            </figure>
+                                            <div class="content text-truncate">
+                                                <quill-view-html [content]="post.content" theme="snow">
+                                                </quill-view-html>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </ng-container>
+    <ng-template #placeholder><img src="https://via.placeholder.com/100/DBDEE5/6c757d?text=+"></ng-template>
+</app-public-layout>

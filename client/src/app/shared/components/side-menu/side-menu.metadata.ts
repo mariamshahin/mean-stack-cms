@@ -9,4 +9,5 @@ export interface RouteInfo {
   isExternalLink: boolean;
   roles?: string[];
   submenu: RouteInfo[];
+  isExact?: boolean;
 }

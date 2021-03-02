@@ -9,6 +9,7 @@ export class AdminService {
   private updateProfileApi = 'auth/profile';
   private updateImageApi = 'auth/profile-image';
   private changePasswordApi = 'auth/change-password';
+  private dashboardApi = 'users/dashboard';
 
   constructor(private http: HttpClient) {}
 
@@ -31,5 +32,9 @@ export class AdminService {
 
   changePassword(data: Password): Observable<{ message: string }> {
     return this.http.put<{ message: string }>(this.changePasswordApi, data);
+  }
+
+  getDashboardData(): Observable<{ data: any }> {
+    return this.http.get<{ data: any }>(this.dashboardApi);
   }
 }

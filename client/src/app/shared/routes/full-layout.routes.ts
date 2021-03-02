@@ -10,4 +10,9 @@ export const FULL_ROUTES: Routes = [
         (m) => m.DashboardModule
       ),
   },
+  {
+    path: '',
+    loadChildren: () =>
+      import('app/modules/public/public.module').then((m) => m.PublicModule),
+  },
 ];

@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivateChild {
 
   canActivateChild(route: ActivatedRouteSnapshot): Observable<boolean> {
     return this.store.select(selectAdmin).pipe(
-      map((state) => state?.auth?.data),
+      map((state) => state.auth.data),
       map((data) => {
         if (data) {
           if (route.data && route.data.roles) {

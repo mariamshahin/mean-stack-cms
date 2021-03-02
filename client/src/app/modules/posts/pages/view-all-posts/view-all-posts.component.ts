@@ -11,7 +11,6 @@ import { select, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DatatableComponent, ColumnMode } from '@swimlane/ngx-datatable';
-import { currentRouteState } from 'app/store';
 import { DataTableColumn, Role, UserData } from 'app/shared/models/data.model';
 import { selectAdmin } from 'app/modules/admin/store';
 import { ModalComponent } from 'app/shared/components/ui-elements/modal/modal.component';

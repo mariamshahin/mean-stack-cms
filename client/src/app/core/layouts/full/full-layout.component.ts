@@ -20,9 +20,9 @@ import { ConfigService } from 'app/shared/services/config.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FullLayoutComponent implements OnInit, OnDestroy {
+  @ViewChild('content-wrapper') wrapper!: ElementRef;
   public config: any = {};
   layoutSub: Subscription;
-  @ViewChild('content-wrapper') wrapper!: ElementRef;
 
   constructor(
     private configService: ConfigService,
@@ -31,7 +31,6 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef
   ) {
     this.config = this.configService.templateConf;
-    this.renderer.addClass(this.document.body, 'auth-page');
   }
 
   ngOnInit() {
@@ -47,6 +46,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
   }
 
   loadLayout() {
+    this.renderer.removeClass(this.document.body, 'vertical-menu');
     this.renderer.removeClass(this.document.body, 'menu-expanded');
     this.renderer.removeClass(this.document.body, 'navbar-static');
     this.renderer.removeClass(this.document.body, 'menu-open');
@@ -54,7 +54,6 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.renderer.removeClass(this.document.body, 'auth-page');
     if (this.layoutSub) {
       this.layoutSub.unsubscribe();
     }

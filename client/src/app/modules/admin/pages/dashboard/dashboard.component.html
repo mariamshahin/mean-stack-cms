@@ -1,1 +1,243 @@
-<h1>Dashboard</h1>
+<ng-container *ngrxLet="userData$ as user">
+    <div class="row" *ngIf="user.auth.data?.user?.role === roles.admin
+    || user.auth.data?.user?.role === roles.editor 
+    || user.auth.data?.user?.role === roles.author
+    || user.auth.data?.user?.role === roles.contributer">
+        <div class="col-12 m-2">
+            <h4>Your Activity</h4>
+        </div>
+        <div class="col-12" [ngClass]="{'col-md-6': user.auth.data?.user?.role !== roles.contributer}"
+            *ngIf="user.auth.data?.user?.role !== roles.contributer">
+            <div class="card">
+                <div class="card-header pb-2">
+                    <h4 class="card-title mb-1">Latest Pupblished Posts</h4>
+                </div>
+                <div class="card-content">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <div *ngIf="user.viewDashboard.data;else loading">
+                                <div *ngIf="user.viewDashboard.data?.user?.posts.length;else noPosts">
+                                    <table class="table text-center m-0">
+                                        <thead>
+                                            <tr>
+                                                <th *ngFor="let title of ['','Title','Content']">
+                                                    {{title}}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let post of user.viewDashboard.data?.user?.posts">
+                                                <td>
+                                                    <a [routerLink]="['/admin','posts',post._id]">
+                                                        <img *ngIf="post.image_url;else placeholder" class="post-image"
+                                                            [src]="apiUrl + '/' + post.image_url" [alt]="post.title">
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="post-content"
+                                                        [routerLink]="['/admin','posts',post._id]">{{post.title}}</a>
+                                                </td>
+                                                <td>
+                                                    <quill-view-html class="post-content" [content]="post.content"
+                                                        theme="snow"></quill-view-html>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12" [ngClass]="{'col-md-6': user.auth.data?.user?.role !== roles.contributer}">
+            <div class="card">
+                <div class="card-header pb-2">
+                    <h4 class="card-title mb-1">Latest Saved Drafts</h4>
+                </div>
+                <div class="card-content">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <div *ngIf="user.viewDashboard.data;else loading">
+                                <div *ngIf="user.viewDashboard.data?.user?.drafts.length;else noPosts">
+                                    <table class="table text-center m-0">
+                                        <thead>
+                                            <tr>
+                                                <th *ngFor="let title of ['','Title','Content']">
+                                                    {{title}}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let draft of user.viewDashboard.data?.user?.drafts">
+                                                <td>
+                                                    <a [routerLink]="['/admin','drafts',draft._id]">
+                                                        <img *ngIf="draft.image_url;else placeholder" class="post-image"
+                                                            [src]="apiUrl + '/' + draft.image_url" [alt]="draft.title">
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="post-content"
+                                                        [routerLink]="['/admin','drafts',draft._id]">
+                                                        {{draft.title}}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <quill-view-html class="post-content" [content]="draft.content"
+                                                        theme="snow"></quill-view-html>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4"
+        *ngIf="user.auth.data?.user?.role === roles.admin || user.auth.data?.user?.role === roles.editor">
+        <div class="col-12 m-2">
+            <h4>Users Activity</h4>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card">
+                <div class="card-header pb-2">
+                    <h4 class="card-title mb-1">Latest Users Posts</h4>
+                </div>
+                <div class="card-content">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <div *ngIf="user.viewDashboard.data;else loading">
+                                <div *ngIf="user.viewDashboard.data?.posts.length;else noPosts">
+                                    <table class="table text-center m-0">
+                                        <thead>
+                                            <tr>
+                                                <th *ngFor="let title of ['','Title','Content','Author','']">
+                                                    {{title}}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let post of user.viewDashboard.data?.posts">
+                                                <td>
+                                                    <a [routerLink]="['/admin','posts',post._id]">
+                                                        <img *ngIf="post.image_url;else placeholder" class="post-image"
+                                                            [src]="apiUrl + '/' + post.image_url" [alt]="post.title">
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="post-content"
+                                                        [routerLink]="['/admin','posts',post._id]">{{post.title}}</a>
+                                                </td>
+                                                <td>
+                                                    <quill-view-html class="post-content" [content]="post.content"
+                                                        theme="snow"></quill-view-html>
+                                                </td>
+                                                <td>
+                                                    <a *ngIf="user.auth.data?.user?.role === roles.admin && post.user;else userName"
+                                                        [routerLink]="['/admin','users',post.user?._id]">
+                                                        {{post.user.full_name ? post.user.full_name :
+                                                        post.user.username}}
+                                                    </a>
+                                                    <ng-template #userName>
+                                                        <div
+                                                            [ngClass]="{'text-primary':post.user,'text-danger':!post.user}">
+                                                            {{post.user? post.user.full_name + ' @' + post.user.username
+                                                            :'Deleted User'}}
+                                                        </div>
+                                                    </ng-template>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card">
+                <div class="card-header pb-2">
+                    <h4 class="card-title mb-1">Latest Users Drafts</h4>
+                </div>
+                <div class="card-content">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <div *ngIf="user.viewDashboard.data;else loading">
+                                <div *ngIf="user.viewDashboard.data?.drafts.length;else noPosts">
+                                    <table class="table text-center m-0">
+                                        <thead>
+                                            <tr>
+                                                <th *ngFor="let title of ['','Title','Content','Author']">
+                                                    {{title}}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let draft of user.viewDashboard.data?.drafts">
+                                                <td>
+                                                    <a [routerLink]="['/admin','drafts',draft._id]">
+                                                        <img *ngIf="draft.image_url;else placeholder" class="post-image"
+                                                            [src]="apiUrl + '/' + draft.image_url" [alt]="draft.title">
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="post-content"
+                                                        [routerLink]="['/admin','drafts',draft._id]">
+                                                        {{draft.title}}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <quill-view-html class="post-content" [content]="draft.content"
+                                                        theme="snow"></quill-view-html>
+                                                </td>
+                                                <td>
+                                                    <a *ngIf="user.auth.data?.user?.role === roles.admin && draft.user;else userName"
+                                                        [routerLink]="['/admin','users',draft.user?._id]">
+                                                        {{draft.user.full_name ? draft.user.full_name :
+                                                        draft.user.username}}
+                                                    </a>
+                                                    <ng-template #userName>
+                                                        <div
+                                                            [ngClass]="{'text-primary':draft.user,'text-danger':!draft.user}">
+                                                            {{draft.user? draft.user.full_name + ' @' +
+                                                            draft.user.username
+                                                            :'Deleted User'}}
+                                                        </div>
+                                                    </ng-template>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="user.auth.data?.user?.role === roles.subscriber">
+        <div class="col-12 text-center p-5">
+            <i class="ft-user font-large-2 text-primary"></i>
+            <h5 class="mt-3">Welcome! {{user.auth.data?.user.username}}</h5>
+            <span class="d-block mt-4">
+                You should ask admin to assign you a role to be able to add content
+            </span>
+            <span class="d-block mt-2">
+                You can go and <a [routerLink]="['/admin','account']">edit your profile</a> or just drink a cup of
+                coffee
+            </span>
+        </div>
+    </div>
+    <ng-template #loading>
+        <span class="text-center m-2">Loading...</span>
+    </ng-template>
+    <ng-template #noPosts>
+        <span class="text-center m-2">No Posts Found</span>
+    </ng-template>
+    <ng-template #placeholder><img src="https://via.placeholder.com/100/DBDEE5/6c757d?text=No+Image">
+    </ng-template>
+</ng-container>

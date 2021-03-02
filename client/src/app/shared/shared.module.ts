@@ -32,7 +32,10 @@ import { FormControlComponent } from './components/ui-elements/form-control/form
 import { ButtonComponent } from './components/ui-elements/button/button.component';
 import { AvatarComponent } from './components/ui-elements/avatar/avatar.component';
 import { ModalComponent } from './components/ui-elements/modal/modal.component';
-import { DashboardComponent } from './layouts/dashboard/dashboard.component';
+
+// LAYOUT COMPONENTS
+import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-layout.component';
+import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
 
 // DIRECTIVES
 import { SidebarLinkDirective } from './directives/sidebar-link.directive';
@@ -63,7 +66,8 @@ import { SidebarDirective } from './directives/sidebar.directive';
     FontAwesomeModule,
     FooterComponent,
     NavbarComponent,
-    DashboardComponent,
+    DashboardLayoutComponent,
+    PublicLayoutComponent,
     SideMenuComponent,
     AlertComponent,
     FormControlComponent,
@@ -77,7 +81,8 @@ import { SidebarDirective } from './directives/sidebar.directive';
   declarations: [
     FooterComponent,
     NavbarComponent,
-    DashboardComponent,
+    DashboardLayoutComponent,
+    PublicLayoutComponent,
     AlertComponent,
     SideMenuComponent,
     FormControlComponent,

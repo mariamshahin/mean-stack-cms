@@ -13,3 +13,32 @@
     padding: 0;
   }
 }
+.logo-wrapper {
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(127, 128, 129, 0.3);
+  border-radius: 25px;
+  .logo-img {
+    width: 40px;
+  }
+  .logo-text {
+    color: #342e49;
+    font-weight: 500;
+    letter-spacing: 2px;
+    font-size: 1.4rem;
+  }
+}
+
+.logo-nav-wrapper {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  .logo-img {
+    width: 30px;
+  }
+  .logo-text {
+    color: #342e49;
+    font-weight: 500;
+    letter-spacing: 1px;
+    font-size: 1.1rem;
+  }
+}

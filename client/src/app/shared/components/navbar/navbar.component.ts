@@ -5,6 +5,7 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   HostListener,
+  Input,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -20,6 +21,7 @@ import { logout } from 'app/modules/dashboard/store/login/login.actions';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
+  @Input() fullLayout = false;
   toggleClass = 'ft-maximize';
   isSmallScreen = false;
   hideSidebar = true;
@@ -28,6 +30,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   protected innerWidth: any;
   public isCollapsed = true;
   public config: any = {};
+  public logoUrl = 'assets/img/logo.png';
 
   userData$ = this.store.pipe(
     select(selectAdmin),
