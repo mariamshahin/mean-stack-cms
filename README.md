@@ -1,4 +1,3 @@
-[![Contributors][contributors-shield]][contributors-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
@@ -95,8 +94,6 @@ in both client and server then serve the built app
    ```sh
    npm start
    ```
-[contributors-shield]: https://img.shields.io/github/contributors/mariamshahin/mean-stack-cms.svg?style=for-the-badge
-[contributors-url]: https://github.com/mariamshahin/mean-stack-cms/graphs/traffic
 [stars-shield]: https://img.shields.io/github/stars/mariamshahin/mean-stack-cms.svg?style=for-the-badge
 [stars-url]: https://github.com/mariamshahin/mean-stack-cms/stargazers
 [issues-shield]: https://img.shields.io/github/issues/mariamshahin/mean-stack-cms.svg?style=for-the-badge
