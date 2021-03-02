@@ -65,11 +65,17 @@ export default class MongooseService {
    * @description Retrieve all documents from the Model
    * @param options {object} Optional: options for the query
    * @param sort {string} Optional: order finded records
+   * @param limit {number} Optional: Number of records to retrieve
    * @param ref {string} Required: reference in the model to populate
    * @returns {Promise} Returns the results of the query
    */
-  findAllAndPopulate(options, sort, ref) {
-    return this.model.find(options).sort(sort).populate(ref).exec();
+  findAllAndPopulate(options, sort, limit, ref) {
+    return this.model
+      .find(options)
+      .sort(sort)
+      .limit(limit)
+      .populate(ref)
+      .exec();
   }
 
   /**

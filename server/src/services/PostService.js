@@ -35,7 +35,12 @@ export default class PostService extends Mongoose {
       if (user && user.role !== roles.ADMIN && user.role !== roles.AUTHOR) {
         result = await this.findLast({ user: user._id }, '-updated_at', null);
       } else {
-        result = await this.findAllAndPopulate(null, '-updated_at', 'user');
+        result = await this.findAllAndPopulate(
+          null,
+          '-updated_at',
+          null,
+          'user'
+        );
       }
       return { result };
     } catch (error) {
@@ -62,12 +67,9 @@ export default class PostService extends Mongoose {
   }
 
   async updatePost({ user, body, file }, id) {
-    let image_url;
     const user_id = user._id;
     const { title, content } = body;
-    if (file) {
-      image_url = `static/${file.path}`;
-    }
+
     try {
       let result;
       const post = await this.findById(id);
@@ -78,11 +80,19 @@ export default class PostService extends Mongoose {
       ) {
         return { post, result };
       }
+      if (file) {
+        const image_url = `static/${file.path}`;
+        result = await this.updateOne(id, {
+          title,
+          content,
+          user: user_id,
+          image_url,
+        });
+      }
       result = await this.updateOne(id, {
         title,
         content,
         user: user_id,
-        image_url,
       });
       return { post, result };
     } catch (error) {
@@ -101,9 +111,15 @@ export default class PostService extends Mongoose {
     }
   }
 
-  async findlastPost(obj, sort, limit) {
+  async findlastPost(user) {
     try {
-      const result = await this.findLast(obj, sort, limit);
+      const result = await this.findLast(
+        {
+          user: user._id,
+        },
+        '-updated_at',
+        5
+      );
       return { result };
     } catch (error) {
       this.logger.error(error);
@@ -126,6 +142,21 @@ export default class PostService extends Mongoose {
       }
       result = await this.delete(id);
       return { post, result };
+    } catch (error) {
+      this.logger.error(error);
+      return { error };
+    }
+  }
+
+  async getPostsAndPopulate() {
+    try {
+      const result = await this.findAllAndPopulate(
+        null,
+        '-updated_at',
+        5,
+        'user'
+      );
+      return { result };
     } catch (error) {
       this.logger.error(error);
       return { error };

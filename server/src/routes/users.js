@@ -11,9 +11,27 @@ import UserController from '../controllers/UserController';
 
 const router = express.Router();
 
-const { getAll, getOne, deleteOne, changeRole } = new UserController();
+const {
+  getAll,
+  getOne,
+  deleteOne,
+  changeRole,
+  dashboard,
+} = new UserController();
 
 router.get('/', authMiddleware, authorization(roles.ADMIN), getAll);
+router.get(
+  '/dashboard',
+  authMiddleware,
+  authorization(
+    roles.ADMIN,
+    roles.EDITOR,
+    roles.AUTHOR,
+    roles.CONTRIBUTER,
+    roles.SUBSCRIBER
+  ),
+  dashboard
+);
 router.get(
   '/:id',
   authMiddleware,

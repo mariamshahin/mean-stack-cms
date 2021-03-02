@@ -150,20 +150,8 @@ export default class UserService extends Mongoose {
       let userResult, posts, drafts, result;
       if (user) {
         userResult = deletePw(user);
-        posts = await this.post.findlastPost(
-          {
-            user: id,
-          },
-          '-updated_at',
-          5
-        );
-        drafts = await this.draft.findlastPost(
-          {
-            user: id,
-          },
-          '-updated_at',
-          5
-        );
+        posts = await this.post.findlastPost(user);
+        drafts = await this.draft.findlastPost(user);
         result = { ...userResult, posts: posts.result, drafts: drafts.result };
       }
       return { result };
@@ -202,6 +190,34 @@ export default class UserService extends Mongoose {
     const options = { new: true };
     try {
       const result = await this.updateOne(id, { role }, options);
+      return { result };
+    } catch (error) {
+      this.logger.error(error);
+      return { error };
+    }
+  }
+
+  async getUserData(user) {
+    try {
+      let result;
+      if (user.role === roles.CONTRIBUTER) {
+        const drafts = await this.draft.findlastPost(user);
+        result = { user: { darfts: drafts.result } };
+      } else if (user.role === roles.AUTHOR) {
+        const posts = await this.post.findlastPost(user);
+        const drafts = await this.draft.findlastPost(user);
+        result = { user: { posts: posts.result, darfts: drafts.result } };
+      } else if (user.role === roles.EDITOR || user.role === roles.ADMIN) {
+        const posts = await this.post.findlastPost(user);
+        const drafts = await this.draft.findlastPost(user);
+        const lastPosts = await this.post.getPostsAndPopulate();
+        const lastDrafts = await this.draft.getPostsAndPopulate();
+        result = {
+          user: { posts: posts.result, drafts: drafts.result },
+          posts: lastPosts.result,
+          drafts: lastDrafts.result,
+        };
+      }
       return { result };
     } catch (error) {
       this.logger.error(error);

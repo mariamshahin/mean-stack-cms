@@ -52,4 +52,13 @@ export default class UserController extends Controller {
     }
     return this.updated(res, result);
   };
+
+  dashboard = async (req, res) => {
+    const { user } = req;
+    const { result, error } = await this.userService.getUserData(user);
+    if (error) {
+      return this.failed(res, error);
+    }
+    return this.found(res, result);
+  };
 }
