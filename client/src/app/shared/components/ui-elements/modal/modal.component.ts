@@ -27,17 +27,16 @@ export class ModalComponent {
     this.modalRef = this.modalService.open(this.modalContent, {
       size: 'lg',
       centered: true,
-      scrollable: true,
     });
   }
 
   close(): void {
-    this.modalRef.close();
+    this.modalRef?.close();
     this.cleanUp.emit();
   }
 
   dismiss(): void {
-    this.modalRef.dismiss();
+    this.modalRef?.dismiss();
     this.cleanUp.emit();
   }
 }

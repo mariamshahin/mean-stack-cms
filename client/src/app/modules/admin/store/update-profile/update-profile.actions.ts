@@ -18,6 +18,7 @@ export const updateSuccess = createAction(
   UpdateProfileActionsTypes.UpdateProfileSuccess,
   props<{
     response: string;
+    data: any;
   }>()
 );
 

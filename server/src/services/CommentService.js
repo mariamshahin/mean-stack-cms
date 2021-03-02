@@ -18,7 +18,7 @@ export default class CommentService extends Mongoose {
 
   async getAllComments() {
     try {
-      const result = await this.findAll();
+      const result = await this.findAll(null, '-created_at');
       return { result };
     } catch (error) {
       this.logger.error(error);
@@ -28,7 +28,7 @@ export default class CommentService extends Mongoose {
 
   async getAllPostComments(obj) {
     try {
-      const result = await this.find(obj);
+      const result = await this.find(obj, '-created_at');
       return { result };
     } catch (error) {
       this.logger.error(error);

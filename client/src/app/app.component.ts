@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-root',
@@ -10,8 +11,11 @@ import { filter } from 'rxjs/operators';
 export class AppComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
-  constructor(private router: Router) {
-  }
+  constructor(
+    private router: Router,
+    private readonly renderer: Renderer2,
+    private readonly store: Store
+  ) {}
 
   ngOnInit() {
     this.subscription = this.router.events

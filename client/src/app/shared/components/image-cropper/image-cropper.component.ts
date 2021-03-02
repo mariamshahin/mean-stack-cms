@@ -7,14 +7,15 @@ import { ImageCroppedEvent } from 'ngx-image-cropper';
   styleUrls: ['./image-cropper.component.scss'],
 })
 export class ImageCropperComponent {
+  @Input() imageFile: { file: Blob; name: string } = null;
+  @Input() round = false;
+  @Output() imageCrop = new EventEmitter<any>();
+
   isLoading = false;
   isError = false;
   errorMessage = null;
 
   constructor() {}
-
-  @Input() imageFile: { file: Blob; name: string } = null;
-  @Output() imageCrop = new EventEmitter<any>();
 
   imageCropped(event: ImageCroppedEvent) {
     const image = this.base64ToFile(event.base64, this.imageFile?.name);
@@ -44,7 +45,6 @@ export class ImageCropperComponent {
     while (n--) {
       u8arr[n] = bstr.charCodeAt(n);
     }
-
     return new File([u8arr], filename, { type: mime });
   }
 }

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { map, switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { switchMap, map, catchError, takeUntil } from 'rxjs/operators';
 import { AdminService } from '../../admin.service';
 import * as ImageActions from './update-image.actions';
-import * as LoginActions from 'app/modules/dashboard/store/login/login.actions';
+import * as AuthActions from '../auth/auth.actions';
 
 @Injectable()
 export class ImageEffects {
@@ -12,10 +13,14 @@ export class ImageEffects {
       ofType(ImageActions.updateImage),
       switchMap((action) =>
         this.adminService.updateImage(action.payload).pipe(
-          map(({ data }) =>
-            LoginActions.updateUser({
-              data,
-            })
+          map(({ data, message }) =>
+            ImageActions.updateSuccess({ data, response: message })
+          ),
+          catchError((error) => of(ImageActions.updateFail({ error }))),
+          takeUntil(
+            this.actions$.pipe(
+              ofType(ImageActions.updateSuccess, ImageActions.updateFail)
+            )
           )
         )
       )
@@ -24,8 +29,12 @@ export class ImageEffects {
 
   updateUser$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(LoginActions.updateUser),
-      map(() => ImageActions.updateSuccess({ response: 'user updated' }))
+      ofType(ImageActions.updateSuccess),
+      map(({ data }) =>
+        AuthActions.updateUser({
+          data,
+        })
+      )
     )
   );
 

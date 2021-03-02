@@ -18,7 +18,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
 
   response$ = this.store.pipe(
     select(selectAdmin),
-    withLatestFrom((state) => state.changePassword.response)
+    withLatestFrom((state) => state.changePassword?.response)
   );
   subscription: Subscription;
   passwordForm = new FormGroup(

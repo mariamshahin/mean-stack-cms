@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { map, switchMap, takeUntil } from 'rxjs/operators';
+import { switchMap, map, catchError, takeUntil } from 'rxjs/operators';
 import { DashboardService } from '../../dashboard.service';
 import * as LoginActions from './login.actions';
+import * as AuthActions from 'app/modules/admin/store/auth/auth.actions';
 import * as RouterActions from 'app/shared/store/router/router.actions';
 
 @Injectable()
@@ -19,13 +20,25 @@ export class LoginEffects {
               route: { path: ['/admin'] },
             })
           ),
-          takeUntil(this.actions$.pipe(ofType(LoginActions.loginSuccess)))
+          catchError((error) => of(LoginActions.loginFail({ error }))),
+          takeUntil(
+            this.actions$.pipe(
+              ofType(LoginActions.loginSuccess, LoginActions.loginFail)
+            )
+          )
         )
       )
     )
   );
 
   auth$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(LoginActions.loginSuccess),
+      map(({ data }) => AuthActions.authUser({ data }))
+    )
+  );
+
+  navigate$ = createEffect(() =>
     this.actions$.pipe(
       ofType(LoginActions.loginSuccess),
       map(({ route }) => RouterActions.routerNavigate({ route }))

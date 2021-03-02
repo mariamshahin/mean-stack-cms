@@ -9,12 +9,14 @@ import {
   HostListener,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
 import { ROUTES } from './navigation-routes.config';
-import { Router } from '@angular/router';
 import { customAnimations } from 'app/shared/animations/custom-animations';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { ConfigService } from 'app/shared/services/config.service';
 import { LayoutService } from 'app/shared/services/layout.service';
+import { AdminState, selectAdmin } from 'app/modules/admin/store';
 
 @Component({
   selector: 'app-side-menu',
@@ -29,11 +31,17 @@ export class SideMenuComponent implements OnInit, AfterViewInit, OnDestroy {
   protected innerWidth: any;
   layoutSub: Subscription;
   configSub: Subscription;
+  logoUrl = 'assets/img/logo.png';
   perfectScrollbarEnable = true;
   resizeTimeout;
 
+  userData$ = this.store.pipe(
+    select(selectAdmin),
+    map((state) => state.auth.data?.user)
+  );
+
   constructor(
-    private router: Router,
+    private store: Store<AdminState>,
     private layoutService: LayoutService,
     private configService: ConfigService,
     private cdr: ChangeDetectorRef,

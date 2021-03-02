@@ -6,6 +6,6 @@
   </div>
 </div>
 <app-alert [isOpen]="isError" [message]="errorMessage" *ngIf="isError"></app-alert>
-<image-cropper [imageFile]="imageFile?.file" [maintainAspectRatio]="true" [roundCropper]="true" [aspectRatio]="1 / 1"
-  format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
-  (loadImageFailed)="loadImageFailed()"></image-cropper>
+<image-cropper [imageFile]="imageFile?.file" [maintainAspectRatio]="true" [roundCropper]="round"
+  [aspectRatio]="round ? 1 / 1 : 4 / 3" format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
+  (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()"></image-cropper>

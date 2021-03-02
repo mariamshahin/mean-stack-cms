@@ -9,14 +9,14 @@ import { Observable } from 'rxjs';
 import { exhaustMap, map, takeUntil } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { Actions, ofType } from '@ngrx/effects';
-import { DashboardState, selectDashboard } from 'app/modules/dashboard/store';
+import { AdminState, selectAdmin } from 'app/modules/admin/store';
 import { logout } from 'app/modules/dashboard/store/login/login.actions';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(
     @Inject('API_BASE_URL') private apiUrl: string,
-    private store: Store<DashboardState>,
+    private store: Store<AdminState>,
     private actions$: Actions
   ) {}
 
@@ -25,8 +25,8 @@ export class AuthInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     const isApiUrl = req.url.startsWith(this.apiUrl);
-    return this.store.select(selectDashboard).pipe(
-      map((state) => state.login.data),
+    return this.store.select(selectAdmin).pipe(
+      map((state) => state.auth.data),
       exhaustMap((data) => {
         const isLoggedIn = data && data.user && data.token;
         if (isLoggedIn && isApiUrl) {

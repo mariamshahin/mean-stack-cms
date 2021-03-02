@@ -1,5 +1,5 @@
 import { createReducer, on, Action } from '@ngrx/store';
-import { loginSuccess, loginFail, updateUser } from './login.actions';
+import { loginSuccess, loginFail } from './login.actions';
 import { User } from 'app/shared/models/data.model';
 
 export const featureKey = 'login';
@@ -23,10 +23,6 @@ export const loginReducer = createReducer(
   on(loginFail, (state, { error }) => ({
     ...state,
     error,
-  })),
-  on(updateUser, (state, { data }) => ({
-    ...state,
-    data: { ...state.data, user: { ...state.data.user, ...data } },
   }))
 );
 

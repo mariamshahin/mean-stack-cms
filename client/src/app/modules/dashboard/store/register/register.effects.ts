@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { map, switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { switchMap, map, catchError, takeUntil } from 'rxjs/operators';
 import { DashboardService } from '../../dashboard.service';
 import { User } from 'app/shared/models/data.model';
 import * as RegisterActions from './register.actions';
@@ -14,15 +15,35 @@ export class RegisterEffects {
       switchMap((action) =>
         this.dashboardService.register(action.payload).pipe(
           map((data: User) =>
-            LoginActions.loginSuccess({
+            RegisterActions.registerSuccess({
               data,
-              route: {
-                path: ['/admin', 'profile'],
-                extras: { state: { redirect: true } },
-              },
             })
+          ),
+          catchError((error) => of(RegisterActions.registerFail({ error }))),
+          takeUntil(
+            this.actions$.pipe(
+              ofType(
+                RegisterActions.registerSuccess,
+                RegisterActions.registerFail
+              )
+            )
           )
         )
+      )
+    )
+  );
+
+  login$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(RegisterActions.registerSuccess),
+      map(({ data }) =>
+        LoginActions.loginSuccess({
+          data,
+          route: {
+            path: ['/admin', 'profile'],
+            extras: { state: { redirect: true } },
+          },
+        })
       )
     )
   );

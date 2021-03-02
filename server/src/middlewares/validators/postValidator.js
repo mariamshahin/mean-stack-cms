@@ -1,5 +1,9 @@
 import { required, checkId, checkFile } from '../../utils/validation';
 
-export const createPostValidator = [required('title'), required('content')];
+export const createPostValidator = [
+  // checkFile('image'),
+  required('title'),
+  required('content'),
+];
 
-export const updatePostValidator = [checkId('id'), ...createPostValidator];
+export const updatePostValidator = [...createPostValidator, checkId('id')];

@@ -22,7 +22,7 @@ export default class PostController extends Controller {
   };
 
   getAll = async (req, res) => {
-    const { result, error } = await this.postService.getAllPosts();
+    const { result, error } = await this.postService.getAllPosts(req);
     if (result) {
       return this.found(res, result);
     }
@@ -44,11 +44,14 @@ export default class PostController extends Controller {
   updateOne = async (req, res) => {
     const { user, body, file } = req;
     const { id } = req.params;
-    const { post, result, error } = await this.postService.updatePost(id, {
-      user,
-      body,
-      file,
-    });
+    const { post, result, error } = await this.postService.updatePost(
+      {
+        user,
+        body,
+        file,
+      },
+      id
+    );
     if (error) {
       return this.failed(res, error);
     }

@@ -7,11 +7,13 @@ export default class PostService extends Mongoose {
     super(model);
   }
 
-  async createPost(req) {
-    const { user, body, file } = req;
+  async createPost({ user, body, file }) {
+    let image_url;
     const { title, content } = body;
     const user_id = user._id;
-    const image_url = file ? `static/${file.path}` : null;
+    if (file) {
+      image_url = `static/${file.path}`;
+    }
     try {
       const result = await this.create({
         title,
@@ -26,9 +28,20 @@ export default class PostService extends Mongoose {
     }
   }
 
-  async getAllPosts() {
+  async getAllPosts(req) {
+    const { user } = req;
     try {
-      const result = await this.findAll();
+      let result;
+      if (user && user.role !== roles.ADMIN && user.role !== roles.AUTHOR) {
+        result = await this.findLast({ user: user._id }, '-updated_at', null);
+      } else {
+        result = await this.findAllAndPopulate(
+          null,
+          '-updated_at',
+          null,
+          'user'
+        );
+      }
       return { result };
     } catch (error) {
       this.logger.error(error);
@@ -53,11 +66,10 @@ export default class PostService extends Mongoose {
     }
   }
 
-  async updatePost(id, req) {
-    const { user, body, file } = req;
+  async updatePost({ user, body, file }, id) {
     const user_id = user._id;
     const { title, content } = body;
-    const image_url = file ? `static/${file.path}` : null;
+
     try {
       let result;
       const post = await this.findById(id);
@@ -68,11 +80,19 @@ export default class PostService extends Mongoose {
       ) {
         return { post, result };
       }
+      if (file) {
+        const image_url = `static/${file.path}`;
+        result = await this.updateOne(id, {
+          title,
+          content,
+          user: user_id,
+          image_url,
+        });
+      }
       result = await this.updateOne(id, {
         title,
         content,
         user: user_id,
-        image_url,
       });
       return { post, result };
     } catch (error) {
@@ -83,7 +103,23 @@ export default class PostService extends Mongoose {
 
   async findPost(obj) {
     try {
-      const result = await this.find(obj);
+      const result = await this.find(obj, '-updated_at');
+      return { result };
+    } catch (error) {
+      this.logger.error(error);
+      return { error };
+    }
+  }
+
+  async findlastPost(user) {
+    try {
+      const result = await this.findLast(
+        {
+          user: user._id,
+        },
+        '-updated_at',
+        5
+      );
       return { result };
     } catch (error) {
       this.logger.error(error);
@@ -106,6 +142,21 @@ export default class PostService extends Mongoose {
       }
       result = await this.delete(id);
       return { post, result };
+    } catch (error) {
+      this.logger.error(error);
+      return { error };
+    }
+  }
+
+  async getPostsAndPopulate() {
+    try {
+      const result = await this.findAllAndPopulate(
+        null,
+        '-updated_at',
+        5,
+        'user'
+      );
+      return { result };
     } catch (error) {
       this.logger.error(error);
       return { error };

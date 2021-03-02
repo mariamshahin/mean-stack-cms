@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { map, switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { switchMap, map, catchError, takeUntil } from 'rxjs/operators';
 import { AdminService } from '../../admin.service';
 import * as PasswordActions from './change-password.actions';
 
@@ -10,13 +11,17 @@ export class PasswordEffects {
     this.actions$.pipe(
       ofType(PasswordActions.changePassword),
       switchMap((action) =>
-        this.adminService
-          .changePassword(action.payload)
-          .pipe(
-            map(({ message }) =>
-              PasswordActions.changeSuccess({ response: message })
+        this.adminService.changePassword(action.payload).pipe(
+          map(({ message }) =>
+            PasswordActions.changeSuccess({ response: message })
+          ),
+          catchError((error) => of(PasswordActions.changeFail({ error }))),
+          takeUntil(
+            this.actions$.pipe(
+              ofType(PasswordActions.changeSuccess, PasswordActions.changeFail)
             )
           )
+        )
       )
     )
   );

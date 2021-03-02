@@ -22,51 +22,6 @@ export default class MongooseService {
   }
 
   /**
-   * @description Retrieve all documents from the Model
-   * @returns {Promise} Returns the results of the query
-   */
-  findAll() {
-    return this.model.find().exec();
-  }
-
-  /**
-   * @description Retrieve a single document matching the provided ID, from the Model
-   * @param id {string} Required: ID for the object to retrieve
-   * @returns {Promise} Returns the results of the query
-   */
-  findById(id) {
-    return this.model.findById(id).exec();
-  }
-
-  /**
-   * @description Retrieve all documents matching the provided keys, from the Model
-   * @param obj {object} Required: key and value for the object to retrieve
-   * @returns {Promise} Returns the results of the query
-   */
-  find(obj) {
-    return this.model.find(obj).exec();
-  }
-
-  /**
-   * @description Retrieve a single document matching the provided keys, from the Model
-   * @param obj {object} Required: key and value for the object to retrieve
-   * @returns {Promise} Returns the results of the query
-   */
-  findOne(obj) {
-    return this.model.findOne(obj).exec();
-  }
-
-  /**
-   * @description Retrieve a single document matching the provided ID, from the Model
-   * @param id {string} Required: ID for the object to retrieve
-   * @param ref {string} Required: reference in the model to populate
-   * @returns {Promise} Returns the results of the query
-   */
-  findByIdAndPopulate(id, ref) {
-    return this.model.findById(id).populate(ref).exec();
-  }
-
-  /**
    * @description Update a document matching the provided ID, with the body
    * @param id {string} ID for the document to update
    * @param body {object} Body to update the document with
@@ -94,6 +49,82 @@ export default class MongooseService {
    */
   delete(id) {
     return this.model.findByIdAndDelete(id).exec();
+  }
+
+  /**
+   * @description Retrieve all documents from the Model
+   * @param options {object} Optional: Query options to execute
+   * @param sort {string} Optional: order finded records
+   * @returns {Promise} Returns the results of the query
+   */
+  findAll(options, sort) {
+    return this.model.find(options).sort(sort).exec();
+  }
+
+  /**
+   * @description Retrieve all documents from the Model
+   * @param options {object} Optional: options for the query
+   * @param sort {string} Optional: order finded records
+   * @param limit {number} Optional: Number of records to retrieve
+   * @param ref {string} Required: reference in the model to populate
+   * @returns {Promise} Returns the results of the query
+   */
+  findAllAndPopulate(options, sort, limit, ref) {
+    return this.model
+      .find(options)
+      .sort(sort)
+      .limit(limit)
+      .populate(ref)
+      .exec();
+  }
+
+  /**
+   * @description Retrieve all documents matching the provided keys, from the Model
+   * @param obj {object} Required: key and value for the object to retrieve
+   * @param sort {string} Optional: order retreived records
+   * @returns {Promise} Returns the results of the query
+   */
+  find(obj, sort) {
+    return this.model.find(obj).sort(sort).exec();
+  }
+
+  /**
+   * @description Retrieve and sort by latest documents with limited documents matching the provided keys, from the Model
+   * @param obj {object} Required: key and value for the object to retrieve
+   * @param sort {string} Optional: order retreived records
+   * @param limit {number} Optional: Number of records to retrieve
+   * @returns {Promise} Returns the results of the query
+   */
+  findLast(obj, sort, limit) {
+    return this.model.find(obj).sort(sort).limit(limit).exec();
+  }
+
+  /**
+   * @description Retrieve a single document matching the provided ID, from the Model
+   * @param id {string} Required: ID for the object to retrieve
+   * @returns {Promise} Returns the results of the query
+   */
+  findById(id) {
+    return this.model.findById(id).exec();
+  }
+
+  /**
+   * @description Retrieve a single document matching the provided ID, from the Model
+   * @param id {string} Required: ID for the object to retrieve
+   * @param ref {string} Required: reference in the model to populate
+   * @returns {Promise} Returns the results of the query
+   */
+  findByIdAndPopulate(id, ref) {
+    return this.model.findById(id).populate(ref).exec();
+  }
+
+  /**
+   * @description Retrieve a single document matching the provided keys, from the Model
+   * @param obj {object} Required: key and value for the object to retrieve
+   * @returns {Promise} Returns the results of the query
+   */
+  findOne(obj) {
+    return this.model.findOne(obj).exec();
   }
 
   /**

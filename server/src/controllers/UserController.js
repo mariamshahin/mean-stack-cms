@@ -9,7 +9,8 @@ export default class UserController extends Controller {
   }
 
   getAll = async (req, res) => {
-    const { result, error } = await this.userService.getAllUsers();
+    const { user } = req;
+    const { result, error } = await this.userService.getAllUsers(user);
     if (result) {
       return this.found(res, result);
     }
@@ -49,6 +50,15 @@ export default class UserController extends Controller {
     if (!result) {
       return this.notFound(res);
     }
-    return this.updated(res);
+    return this.updated(res, result);
+  };
+
+  dashboard = async (req, res) => {
+    const { user } = req;
+    const { result, error } = await this.userService.getUserData(user);
+    if (error) {
+      return this.failed(res, error);
+    }
+    return this.found(res, result);
   };
 }

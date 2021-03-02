@@ -16,6 +16,7 @@ export const updateImage = createAction(
 export const updateSuccess = createAction(
   UpdateImageActionsTypes.UpdateImageSuccess,
   props<{
+    data: any;
     response: string;
   }>()
 );

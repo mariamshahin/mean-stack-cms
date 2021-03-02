@@ -1,4 +1,4 @@
-<section id="" class="bg-overlay">
+<section class="bg-overlay">
   <div class="row auth-height full-height-vh m-0">
     <div class="col-12 d-flex align-items-center justify-content-center">
       <div class="card overflow-hidden">
@@ -6,6 +6,12 @@
           <div class="card-body">
             <div class="row m-0">
               <div class="col-12 px-4 py-3">
+                <div class="d-flex justify-content-center mb-4">
+                  <a [routerLink]="['/']" class="float-left">
+                    <img class="logo-img mx-1" [src]="logoUrl" />
+                    <span class="logo-text align-middle mx-1">MEAN CMS</span>
+                  </a>
+                </div>
                 <ng-content></ng-content>
                 <div class="d-flex justify-content-between align-items-center">
                   <ngx-spinner></ngx-spinner>

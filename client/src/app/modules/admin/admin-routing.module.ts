@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginGuard } from 'app/core/guards/auto-login.guard';
+import { RouterStateGuard } from 'app/core/guards/router-state.guard';
 
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { AccountComponent } from './pages/account/account.component';
@@ -21,7 +21,7 @@ const routes: Routes = [
       {
         path: 'profile',
         component: ProfileComponent,
-        canActivate: [LoginGuard],
+        canActivate: [RouterStateGuard],
       },
     ],
   },

@@ -5,7 +5,6 @@ import { map } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
 import { ModalComponent } from 'app/shared/components/ui-elements/modal/modal.component';
-import { selectDashboard } from 'app/modules/dashboard/store';
 import { selectAdmin } from 'app/modules/admin/store';
 import { FormControlModel } from 'app/shared/components/ui-elements/form-control/form-control.model';
 import { updateProfile } from '../../store/update-profile/update-profile.actions';
@@ -20,17 +19,17 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   @ViewChild('modal') modalComponent: ModalComponent;
   faCamera = faCamera;
   userData$ = this.store.pipe(
-    select(selectDashboard),
-    map((state) => state.login.data?.user)
+    select(selectAdmin),
+    map((state) => state.auth.data?.user)
   );
   updateImage$ = this.store.pipe(
     select(selectAdmin),
-    map((state) => state.updateImage.response)
+    map((state) => state.updateImage?.response)
   );
 
-  userSubscription: Subscription;
-  formSubscription: Subscription;
-  imageSubscription: Subscription;
+  userSub: Subscription;
+  formSub: Subscription;
+  imageSub: Subscription;
   profileForm: FormGroup;
   user: {
     username: string;
@@ -61,10 +60,8 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   constructor(private store: Store) {}
 
   ngOnInit() {
-    this.userSubscription = this.userData$.subscribe(
-      (user) => (this.user = user)
-    );
-    this.imageSubscription = this.updateImage$.subscribe((res) => {
+    this.userSub = this.userData$.subscribe((user) => (this.user = user));
+    this.imageSub = this.updateImage$.subscribe(() => {
       this.modalComponent?.close();
       this.imageFile = null;
       this.selectText = this.initialSelectText;
@@ -74,7 +71,7 @@ export class EditProfileComponent implements OnInit, OnDestroy {
       full_name: new FormControl(this.user.full_name, [Validators.required]),
       summary: new FormControl(this.user.summary, [Validators.required]),
     });
-    this.formSubscription = this.profileForm.valueChanges.subscribe((data) =>
+    this.formSub = this.profileForm.valueChanges.subscribe((data) =>
       data.full_name !== this.user.full_name ||
       data.summary !== this.user.summary
         ? (this.isFormDisabled = false)
@@ -120,6 +117,7 @@ export class EditProfileComponent implements OnInit, OnDestroy {
     if (!this.croppedImage) {
       return;
     }
+    console.log(this.croppedImage);
     this.store.dispatch(
       updateImage({
         payload: {
@@ -130,8 +128,9 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.userSubscription.unsubscribe();
-    this.formSubscription.unsubscribe();
-    this.imageSubscription.unsubscribe();
+    this.modalComponent?.close();
+    this.userSub.unsubscribe();
+    this.formSub.unsubscribe();
+    this.imageSub.unsubscribe();
   }
 }

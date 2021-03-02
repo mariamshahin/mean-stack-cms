@@ -1,10 +1,20 @@
-<ng-container *ngrxLet="userData$ as user">
-  <ng-template [ngIf]="user.image_url" [ngIfElse]="placeholder">
-    <img class="avatar" [src]="apiUrl + '/' + user.image_url" [alt]="user.username" [width]="width" [height]="height" />
+<ng-template [ngIf]="profile" [ngIfElse]="avatar">
+  <ng-container *ngrxLet="userData$ as user">
+    <ng-template [ngIf]="user.image_url" [ngIfElse]="profilePlaceholder">
+      <img class="avatar" [src]="apiUrl + '/' + user.image_url" [width]="width" [height]="height" />
+    </ng-template>
+    <ng-template #profilePlaceholder>
+      <img class="avatar" [src]="'https://avatars.dicebear.com/4.5/api/initials/' + user.username + '.svg?chars=1'"
+        [width]="width" [height]="height" />
+    </ng-template>
+  </ng-container>
+</ng-template>
+<ng-template #avatar>
+  <ng-template [ngIf]="user?.image_url" [ngIfElse]="placeholder">
+    <img class="avatar" [src]="apiUrl + '/' + user?.image_url" [width]="width" [height]="height" />
   </ng-template>
   <ng-template #placeholder>
-    <img class="avatar" [src]="'https://avatars.dicebear.com/4.5/api/jdenticon/' + user.username + '.svg'"
-      [alt]="user.username" [width]="width" [height]="height" />
+    <img class="avatar" [src]="'https://avatars.dicebear.com/4.5/api/initials/' + user?.username + '.svg?chars=1'"
+      [width]="width" [height]="height" />
   </ng-template>
-  <ng-content></ng-content>
-</ng-container>
+</ng-template>

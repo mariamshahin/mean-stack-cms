@@ -6,29 +6,35 @@ import { User } from 'app/shared/models/data.model';
 
 @Injectable({ providedIn: 'root' })
 export class AdminService {
-  private updateProfileUrl = 'auth/profile';
-  private updateImageUrl = 'auth/profile-image';
-  private changePasswordUrl = 'auth/change-password';
+  private updateProfileApi = 'auth/profile';
+  private updateImageApi = 'auth/profile-image';
+  private changePasswordApi = 'auth/change-password';
+  private dashboardApi = 'users/dashboard';
 
   constructor(private http: HttpClient) {}
 
-  updateProfile(data: Profile): Observable<{ data: User; message: string }> {
+  updateProfile(data: Profile): Observable<{ data?: User; message: string }> {
     return this.http.put<{ data: User; message: string }>(
-      this.updateProfileUrl,
+      this.updateProfileApi,
       data
     );
   }
 
-  updateImage(data): Observable<{ data: User; message: string }> {
+  updateImage(data): Observable<{ data?: User; message: string }> {
+    console.log(data);
     const formData = new FormData();
     formData.append('image', data.image);
     return this.http.patch<{ data: User; message: string }>(
-      this.updateImageUrl,
+      this.updateImageApi,
       formData
     );
   }
 
   changePassword(data: Password): Observable<{ message: string }> {
-    return this.http.put<{ message: string }>(this.changePasswordUrl, data);
+    return this.http.put<{ message: string }>(this.changePasswordApi, data);
+  }
+
+  getDashboardData(): Observable<{ data: any }> {
+    return this.http.get<{ data: any }>(this.dashboardApi);
   }
 }

@@ -9,6 +9,7 @@ import { Color } from 'app/shared/models/style.model';
 export class ButtonComponent implements OnInit {
   @Input() type: 'button' | 'submit' = 'button';
   @Input() color: Color | 'primary' = 'primary';
+  @Input() class: string;
   @Input() round = false;
   @Input() outline = false;
   @Input() light = false;

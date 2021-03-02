@@ -1,13 +1,20 @@
 import {
-  Directive, HostBinding, Inject, Input, OnInit, OnDestroy, Output, EventEmitter, AfterViewInit
+  Directive,
+  HostBinding,
+  Inject,
+  Input,
+  OnInit,
+  OnDestroy,
+  Output,
+  EventEmitter,
+  AfterViewInit,
 } from '@angular/core';
-import { SidebarDirective } from "./sidebar.directive";
+import { SidebarDirective } from './sidebar.directive';
 
 @Directive({
-  selector: "[appSidebarlink]"
+  selector: '[appSidebarlink]',
 })
 export class SidebarLinkDirective implements OnInit, OnDestroy {
-
   @Input()
   public parent: string;
 
@@ -53,8 +60,7 @@ export class SidebarLinkDirective implements OnInit, OnDestroy {
 
   protected sideNav: SidebarDirective;
 
-  public constructor(
-    @Inject(SidebarDirective) sideNav: SidebarDirective) {
+  public constructor(@Inject(SidebarDirective) sideNav: SidebarDirective) {
     this.sideNav = sideNav;
   }
 
@@ -62,16 +68,12 @@ export class SidebarLinkDirective implements OnInit, OnDestroy {
     this.sideNav.addLink(this);
   }
 
-  public ngOnDestroy(): any {
-  }
+  public ngOnDestroy(): any {}
 
-  //when side menu (vertical menu) item gets clicked
+  // when side menu (vertical menu) item gets clicked
   public toggle(): any {
     this.open = !this.open;
-    if(this.open) {
-      this.sideNav.closeOtherLinks(this);
-    }
-    if (!this.open && this.level.toString() === "1" && this.hasSub) {
+    if (!this.open && this.level.toString() === '1' && this.hasSub) {
       this.sidebarGroupActive = false;
     }
   }

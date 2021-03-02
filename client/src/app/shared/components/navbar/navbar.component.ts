@@ -1,23 +1,18 @@
 import {
   Component,
-  Output,
-  EventEmitter,
   OnDestroy,
   OnInit,
   AfterViewInit,
   ChangeDetectorRef,
-  ViewChild,
-  ElementRef,
-  ViewChildren,
-  QueryList,
   HostListener,
+  Input,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { LayoutService } from 'app/shared/services/layout.service';
 import { ConfigService } from 'app/shared/services/config.service';
-import { DashboardState, selectDashboard } from 'app/modules/dashboard/store';
+import { AdminState, selectAdmin } from 'app/modules/admin/store';
 import { logout } from 'app/modules/dashboard/store/login/login.actions';
 
 @Component({
@@ -26,6 +21,7 @@ import { logout } from 'app/modules/dashboard/store/login/login.actions';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
+  @Input() fullLayout = false;
   toggleClass = 'ft-maximize';
   isSmallScreen = false;
   hideSidebar = true;
@@ -34,14 +30,15 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   protected innerWidth: any;
   public isCollapsed = true;
   public config: any = {};
+  public logoUrl = 'assets/img/logo.png';
 
   userData$ = this.store.pipe(
-    select(selectDashboard),
-    map((state) => state.login.data?.user)
+    select(selectAdmin),
+    map((state) => state.auth.data?.user)
   );
 
   constructor(
-    private store: Store<DashboardState>,
+    private store: Store<AdminState>,
     private layoutService: LayoutService,
     private configService: ConfigService,
     private cdr: ChangeDetectorRef

@@ -6,9 +6,12 @@ import {
   createSelector,
   ActionReducer,
 } from '@ngrx/store';
+import * as formAuth from './auth/auth.reducer';
+import * as formDashboard from './view-dashboard/view-dashboard.reducer';
 import * as formProfile from './update-profile/update-profile.reducer';
 import * as fromImage from './update-image/update-image.reducer';
 import * as fromPassword from './change-password/change-password.reducer';
+import { DashboardEffects } from './view-dashboard/view-dashboard.effects';
 import { ProfileEffects } from './update-profile/update-profile.effects';
 import { ImageEffects } from './update-image/update-image.effects';
 import { PasswordEffects } from './change-password/change-password.effects';
@@ -16,12 +19,16 @@ import { PasswordEffects } from './change-password/change-password.effects';
 export const featureKey = 'admin';
 
 export interface AdminState {
+  [formDashboard.featureKey]: formDashboard.State;
+  [formAuth.featureKey]: formAuth.State;
   [formProfile.featureKey]: formProfile.State;
   [fromImage.featureKey]: fromImage.State;
   [fromPassword.featureKey]: fromPassword.State;
 }
 
 export const reducers = combineReducers({
+  [formDashboard.featureKey]: formDashboard.reducer,
+  [formAuth.featureKey]: formAuth.reducer,
   [formProfile.featureKey]: formProfile.reducer,
   [fromImage.featureKey]: fromImage.reducer,
   [fromPassword.featureKey]: fromPassword.reducer,
@@ -43,4 +50,9 @@ export const selectAdmin = createFeatureSelector<AdminState>(featureKey);
 
 export const moduleState = createSelector(selectAdmin, (state) => state);
 
-export const moduleEffects = [ProfileEffects, ImageEffects, PasswordEffects];
+export const moduleEffects = [
+  DashboardEffects,
+  ProfileEffects,
+  ImageEffects,
+  PasswordEffects,
+];

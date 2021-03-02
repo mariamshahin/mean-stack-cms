@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store';
+import { User } from 'app/shared/models/data.model';
 import { Register } from '../../dashboard.model';
 
 export enum RegisterActionsTypes {
@@ -17,7 +18,7 @@ export const register = createAction(
 export const registerSuccess = createAction(
   RegisterActionsTypes.RegisterSuccess,
   props<{
-    response: string;
+    data: User;
   }>()
 );
 

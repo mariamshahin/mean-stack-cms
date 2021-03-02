@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-12">
+        <div class="content-header">Users</div>
+        <p class="content-sub-header mb-1">view and manage all users</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-content">
+                <div class="card-body">
+                    <ng-container *ngrxLet="usersData$ as users">
+                        <ngx-datatable class="bootstrap core-bootstrap" [columnMode]="ColumnMode.force"
+                            [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="limitRef"
+                            [scrollbarH]="true" [rows]="users" [columns]="columns">
+                        </ngx-datatable>
+                    </ng-container>
+                    <ng-template #avatar let-row="row" let-username="value" ngx-datatable-cell-template>
+                        <div class="d-flex align-items-center">
+                            <app-avatar [user]="row" [width]="35" [height]="35" [profile]="false"></app-avatar>
+                            <div class="cell-line-height ml-2">
+                                <a class="line-height-1 mb-0" [routerLink]="['/admin','users',row._id]">{{ username
+                                    }}</a>
+                            </div>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

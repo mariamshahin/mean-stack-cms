@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { ReactiveComponentModule } from '@ngrx/component';
+import { QuillModule } from 'ngx-quill';
 import { AdminRoutingModule } from './admin-routing.module';
 import { SharedModule } from 'app/shared/shared.module';
 import {
@@ -30,6 +31,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
     FormsModule,
     ReactiveFormsModule,
     ReactiveComponentModule,
+    QuillModule,
     StoreModule.forFeature(featureKey, reducerToken),
     EffectsModule.forFeature(moduleEffects),
   ],

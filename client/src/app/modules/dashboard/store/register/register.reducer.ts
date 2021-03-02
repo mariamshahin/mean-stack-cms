@@ -1,24 +1,24 @@
 import { createReducer, on, Action } from '@ngrx/store';
-
+import { User } from 'app/shared/models/data.model';
 import { registerSuccess, registerFail } from './register.actions';
 
 export const featureKey = 'register';
 
 export interface State {
-  response: string;
+  data: User;
   error: string;
 }
 
 export const initialState: Readonly<State> = {
-  response: null,
+  data: null,
   error: null,
 };
 
 export const registerReducer = createReducer(
   initialState,
-  on(registerSuccess, (state, { response }) => ({
+  on(registerSuccess, (state, { data }) => ({
     ...state,
-    response,
+    data,
   })),
   on(registerFail, (state, { error }) => ({
     ...state,

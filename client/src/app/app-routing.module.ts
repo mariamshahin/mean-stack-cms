@@ -12,6 +12,11 @@ import { AuthGuard } from './core/guards/auth.guard';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'posts',
+    pathMatch: 'full',
+  },
+  {
+    path: '',
     component: FullLayoutComponent,
     children: FULL_ROUTES,
   },
@@ -24,7 +29,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'pages/error',
+    redirectTo: 'posts',
   },
 ];
 

@@ -12,6 +12,7 @@ import {
   PERFECT_SCROLLBAR_CONFIG,
   PerfectScrollbarConfigInterface,
 } from 'ngx-perfect-scrollbar';
+import { QuillModule } from 'ngx-quill';
 
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
@@ -37,16 +38,17 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     BrowserAnimationsModule,
     AppRoutingModule,
     CoreModule,
+    SharedModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([]),
-    SharedModule,
     NgbModule,
     PerfectScrollbarModule,
     NgxSpinnerModule,
     ToastrModule.forRoot(),
+    QuillModule.forRoot(),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
-      logOnly: environment.production,
+      logOnly: !environment.production,
     }),
     StoreRouterConnectingModule.forRoot({
       serializer: CustomSerializer,
