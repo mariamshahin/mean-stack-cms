@@ -43,7 +43,7 @@ Main features:
 - Authentication with registeration and login capability, profile editing
 - Authorization with roles:
 
-**Admin: able to manage all users and content
+**Admin: able to manage all users and content<br />
 **Editor: able to manage all content
 **Author: able to manage all own content, posts and drafts
 **Contributer: able to manage drafts and not able to publish posts
