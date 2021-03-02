@@ -1,6 +1,6 @@
-@import '~@swimlane/ngx-datatable/index.css';
-@import '~@swimlane/ngx-datatable/themes/bootstrap.scss';
-@import '~@swimlane/ngx-datatable/assets/icons.css';
+@import "~@swimlane/ngx-datatable/index.css";
+@import "~@swimlane/ngx-datatable/themes/bootstrap.scss";
+@import "~@swimlane/ngx-datatable/assets/icons.css";
 @import "../core/variables/variables";
 @import "../core/variables/app-variables";
 @import "../core/colors/palette-variables";
@@ -44,7 +44,6 @@
         .datatable-body-cell {
           display: flex;
           align-items: center;
-
         }
       }
 
@@ -141,7 +140,6 @@
     }
 
     .datatable-footer .datatable-pager {
-
       .datatable-icon-left,
       .datatable-icon-skip,
       .datatable-icon-right,
@@ -185,7 +183,6 @@
 }
 
 html body.layout-dark {
-
   // for dark and transparent layouts
   .datatable-footer .pager li.disabled a {
     color: $dl-disabled-color;
@@ -206,7 +203,6 @@ html body.layout-dark {
         color: $dl-text-color;
 
         .pager li {
-
           &.disabled a,
           a {
             background-color: $dl-bg-color;
@@ -243,7 +239,6 @@ html body.layout-dark {
         color: $tl-text-color;
 
         .pager li {
-
           &.disabled a,
           a {
             background-color: $tl-card-bg-color;
