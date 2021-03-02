@@ -2,7 +2,7 @@
 [![Issues][issues-shield]][issues-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
-<!-- PROJECT LOGO -->
+<br />
 <br />
 <p align="center">
   <a href="https://github.com/mariamshahin/mean-stack-cms">
@@ -71,7 +71,7 @@ Make sure you have the latest nodejs and npm versions
 
 - Install angular cli - optional
   ```sh
-  npm install npm@latest -g
+  npm install @angular/cli
   ```
 
 ### Installation
