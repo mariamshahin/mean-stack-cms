@@ -44,7 +44,7 @@ Main features:
 - Authorization with roles:
 
 ** Admin: able to manage all users and content<br />
-  credentials: email-> admin@test.com, pw-> 654321
+=> Login: /dashboard/login<br />=> credentials: email-> admin@test.com, pw-> 654321
 ** Editor: able to manage all content<br />
 ** Author: able to manage all own content, posts and drafts<br />
 ** Contributer: able to manage drafts and not able to publish posts<br />
