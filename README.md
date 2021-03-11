@@ -1,6 +1,3 @@
-
-<br />
-<br />
 <p align="center">
   <a href="https://github.com/mariamshahin/mean-stack-cms">
     <img src="client/src/assets/img/logo.png" alt="Logo" width="50" height="50">
@@ -92,9 +89,3 @@ in both client and server then serve the built app
    ```sh
    npm start
    ```
-[stars-shield]: https://img.shields.io/github/stars/mariamshahin/mean-stack-cms.svg?style=for-the-badge
-[stars-url]: https://github.com/mariamshahin/mean-stack-cms/stargazers
-[issues-shield]: https://img.shields.io/github/issues/mariamshahin/mean-stack-cms.svg?style=for-the-badge
-[issues-url]: https://github.com/mariamshahin/mean-stack-cms/issues
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/mariamshahin
